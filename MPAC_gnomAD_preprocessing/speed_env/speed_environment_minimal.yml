@@ -1,0 +1,10 @@
+name: speedracer
+channels:
+  - r
+  - hcc
+  - defaults
+  - conda-forge
+  - bioconda
+dependencies:
+  - pypy
+prefix: /home/mcn26/.conda/envs/speedracer
