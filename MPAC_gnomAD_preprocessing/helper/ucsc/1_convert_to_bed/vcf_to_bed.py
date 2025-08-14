@@ -1,4 +1,3 @@
-#stock python, not in a particular env.
 #best run in pypy3 for speed. 
 
 import sys
