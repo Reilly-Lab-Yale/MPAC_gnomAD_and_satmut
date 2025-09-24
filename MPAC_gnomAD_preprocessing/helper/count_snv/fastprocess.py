@@ -37,10 +37,15 @@ def main():
                         vartype="snv"
 
 
-                #useful for validation
-                #spit=[ref,alt,str(MAF),vartype,varfreq]
+                if len(alt)>=10 or len(ref)>=10:
+                        varlen="long"
+                else:
+                        varlen="short"
 
-                spit=[vartype,varfreq]
+                #useful for validation
+                #spit=[ref,alt,str(MAF),vartype,varfreq,varlen]
+
+                spit=[vartype,varfreq,varlen]
                 
                 print('\t'.join(spit))
                 
