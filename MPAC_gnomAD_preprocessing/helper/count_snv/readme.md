@@ -26,16 +26,17 @@ Looking at the tail of output.txt we see
 (all SNVs are "short", of course.)
 
 "SNVs are the plurality of human common variation"
-
+```
 (13410979 snv common) / (794381 indel common long + 3917119 indel common short + 13410979 snv common short)
  = 13410979 / (794381 + 3917119 + 13410979)
  = 13410979 / 18122479
  = 74%
-
+```
 
 "indels < 10bp in length are the vast majority of common indels"
-
+```
 (3917119 indel   common  short)/(3917119 indel   common  short +  794381 indel   common  long)
 =3917119/(3917119+794381)
 =3917119/4711500
+```
 =83%
