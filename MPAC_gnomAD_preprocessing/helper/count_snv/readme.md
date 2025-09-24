@@ -14,12 +14,14 @@ Definitions:
 
 Looking at the tail of output.txt we see
 
+```
  794381 indel   common  long
 3917119 indel   common  short
 29627155 indel  rare    long
 71557092 indel  rare    short
 13410979 snv    common  short
 608421662 snv   rare    short
+```
 
 (all SNVs are "short", of course.)
 
