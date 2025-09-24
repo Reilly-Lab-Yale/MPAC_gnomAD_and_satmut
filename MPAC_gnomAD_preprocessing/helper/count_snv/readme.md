@@ -38,5 +38,5 @@ Looking at the tail of output.txt we see
 (3917119 indel   common  short)/(3917119 indel   common  short +  794381 indel   common  long)
 =3917119/(3917119+794381)
 =3917119/4711500
-```
 =83%
+```
