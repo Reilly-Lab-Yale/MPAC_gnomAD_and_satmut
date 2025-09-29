@@ -19,16 +19,12 @@ import os
 
 # ## Create spark session
 
-# In[2]:
+# In[ ]:
 
 
 if 'spark' in locals() and spark!=None:
     spark.stop()
 
-    #are we running the actual script, or just testing?
-for_real=True
-
-spark=None
 
 spark = SparkSession.builder.getOrCreate()
 
@@ -50,7 +46,7 @@ else:
 
 # ## load in data
 
-# In[19]:
+# In[ ]:
 
 
 #define the phylop tsv schema
@@ -60,15 +56,16 @@ phylop_schema = StructType([
     StructField("P_ANNO", FloatType(), True),
 ])
 
+#No phylop for indels !
 #read in the phylop tsv
-phylop_anno = spark.read \
-    .option("comment", "#") \
-    .option("delimiter", "\t") \
-    .schema(phylop_schema) \
-    .csv("/home/mcn26/varef/scripts/noon_data/1.0.format_zoonomia_phylop/out_processed.tsv", header=False)
+#phylop_anno = spark.read \
+#    .option("comment", "#") \
+#    .option("delimiter", "\t") \
+#    .schema(phylop_schema) \
+#    .csv("/home/mcn26/varef/scripts/noon_data/1.0.format_zoonomia_phylop/out_processed.tsv", header=False)
 
 
-# In[21]:
+# In[ ]:
 
 
 vcf_schema = StructType([
@@ -87,7 +84,7 @@ vcf = spark.read \
     .option("comment", "#") \
     .option("delimiter", "\t") \
     .schema(vcf_schema) \
-    .csv(f"/home/mcn26/varef/scripts/noon_data/0.merge/combined.{chromosome}.vcf.gz", header=False)
+    .csv(f"/home/mcn26/varef/scripts/noon_data/indel/0.merge/combined.{chromosome}.vcf.gz", header=False)
 
 
 # In[23]:
@@ -149,7 +146,6 @@ for key in keys_to_extract:
 #     - Remove low-quality variants not queried in a large number of individuals
 #     - Remove variants with a MAF of 0 (they don't really "vary") in the population if they dont exist.
 #     - Remove those variants that don't have all of the relevant metrics.
-#     - Remove non-SNP variants
 
 # In[5]:
 
@@ -237,10 +233,11 @@ for region in unique_list:
 
 # ## Add the phyloP annotations
 
-# In[31]:
+# In[ ]:
 
 
-phyloP_annotated = genomic_regions_added.join(phylop_anno, on=["CHROM", "POS"], how="inner")
+#NOT ADDING FOR INDELS
+phyloP_annotated = genomic_regions_added#.join(phylop_anno, on=["CHROM", "POS"], how="inner")
 #inner join means we'll drop all those variants without scores...
 
 
@@ -287,10 +284,10 @@ df = df.withColumn("category",
                     .otherwise("COMMON"))
 
 
-# In[34]:
+# In[ ]:
 
 
 df.write.option("codec", "org.apache.hadoop.io.compress.GzipCodec") \
     .option("delimiter", "\t") \
-    .csv(f"/home/mcn26/varef/scripts/noon_data/2.0.annotate/annotated_output_{chromosome}.csv.gz", header=True, mode="overwrite")
+    .csv(f"/home/mcn26/varef/scripts/noon_data/indel/2.0.annotate/annotated_output_{chromosome}.csv.gz", header=True, mode="overwrite")
 
