@@ -35,7 +35,7 @@ else:
 # In[5]:
 
 
-variant_path=f"/home/mcn26/varef/scripts/noon_data/2.2.add_roulette/{chromosome}/*.csv.gz"
+variant_path=f"/home/mcn26/varef/scripts/noon_data/indel/2.0.annotate/annotated_output_{chromosome}.csv.gz/*.csv.gz"
 
 variants=spark.read.option("delimiter","\t") \
     .csv(variant_path, header=True, inferSchema=True)
@@ -123,5 +123,5 @@ result = result.groupBy(*group_columns).agg(F.max("in_rep").alias("in_rep"))
 
 result.write.option("codec", "org.apache.hadoop.io.compress.GzipCodec") \
     .option("delimiter", "\t") \
-    .csv(f"/home/mcn26/varef/scripts/noon_data/2.3.add_transposons/{chromosome}.csv.gz", header=True, mode="overwrite")
+    .csv(f"/home/mcn26/varef/scripts/noon_data/indel/2.3.add_transposons/{chromosome}.csv.gz", header=True, mode="overwrite")
 
