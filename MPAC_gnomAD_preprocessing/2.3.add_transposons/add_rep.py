@@ -13,7 +13,20 @@ import os
 # In[3]:
 
 
-spark = SparkSession.builder.appName("add_TE").getOrCreate()
+#spark = SparkSession.builder.appName("add_TE").getOrCreate()
+spark = (
+    SparkSession.builder
+    .appName("add_TE")
+    # Increase task and stage retries
+    .config("spark.task.maxFailures", "10")
+    .config("spark.stage.maxConsecutiveAttempts", "10")
+    # If on YARN, optionally let the whole app retry more times
+    .config("spark.yarn.maxAppAttempts", "4")
+    # Be more patient with shuffle I/O hiccups
+    .config("spark.shuffle.io.maxRetries", "6")
+    .config("spark.shuffle.io.retryWait", "10s")
+    .getOrCreate()
+)
 
 
 # In[4]:
