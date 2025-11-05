@@ -20,8 +20,7 @@ spark = (
     # Increase task and stage retries
     .config("spark.task.maxFailures", "10")
     .config("spark.stage.maxConsecutiveAttempts", "10")
-    # If on YARN, optionally let the whole app retry more times
-    .config("spark.yarn.maxAppAttempts", "4")
+    .config("spark.local.dir", "/home/mcn26/palmer_scratch/spark_scratch")
     # Be more patient with shuffle I/O hiccups
     .config("spark.shuffle.io.maxRetries", "6")
     .config("spark.shuffle.io.retryWait", "10s")
@@ -32,23 +31,20 @@ spark = (
 # In[4]:
 
 
-chromosome="NONE"
-chromosome="chr22"
+chromosome=os.environ['which_chr']
+part=os.environ['part']
 
-if "which_chr" in os.environ:
-    chromosome = os.environ['which_chr']
 
-if chromosome=="NONE":
-    print("error : did not find which chromosome we are supposed to crunch!")
-    exit(-1)
-else:
-    print("only crunching chromosome "+chromosome)
+# In[ ]:
+
+
+root=f"/home/mcn26/varef/scripts/noon_data/indel/2.1_break/{chromosome}"
+files = sorted(f for f in os.listdir(root))
+variant_path = os.path.join(root, files[int(part)])
 
 
 # In[5]:
 
-
-variant_path=f"/home/mcn26/varef/scripts/noon_data/indel/2.0.annotate/annotated_output_{chromosome}.csv.gz/*.csv.gz"
 
 variants=spark.read.option("delimiter","\t") \
     .csv(variant_path, header=True, inferSchema=True)
@@ -131,10 +127,16 @@ result = result.groupBy(*group_columns).agg(F.max("in_rep").alias("in_rep"))
 
 
 
+# In[ ]:
+
+
+
+
+
 # In[39]:
 
 
 result.write.option("codec", "org.apache.hadoop.io.compress.GzipCodec") \
     .option("delimiter", "\t") \
-    .csv(f"/home/mcn26/varef/scripts/noon_data/indel/2.3.add_transposons/{chromosome}.csv.gz", header=True, mode="overwrite")
+    .csv(f"/home/mcn26/varef/scripts/noon_data/indel/2.3.add_transposons/{chromosome}/part_{part}.csv.gz", header=True, mode="overwrite")
 
