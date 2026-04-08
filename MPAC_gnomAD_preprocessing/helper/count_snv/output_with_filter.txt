@@ -1,0 +1,12 @@
+ 141811 indel	common	long	nonPASS
+ 652570 indel	common	long	PASS
+ 358045 indel	common	short	nonPASS
+3559074 indel	common	short	PASS
+15594025 indel	rare	long	nonPASS
+14033130 indel	rare	long	PASS
+18255480 indel	rare	short	nonPASS
+53301612 indel	rare	short	PASS
+ 827453 snv	common	short	nonPASS
+12583526 snv	common	short	PASS
+73730492 snv	rare	short	nonPASS
+534691170 snv	rare	short	PASS
