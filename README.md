@@ -12,8 +12,6 @@ Everything necessary is in the main branch *except* for indel prediction filteri
 
 See subdirectory READMEs for detailed content descriptions and software dependencies / setup instructions.
 
----
-
 Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu) and Mackenzie Noon (mackenzie DOT noon AT yale DOT edu). Contact corresponding authors or us with questions.
 
 ## MPAC_gnomAD_preprocessing
