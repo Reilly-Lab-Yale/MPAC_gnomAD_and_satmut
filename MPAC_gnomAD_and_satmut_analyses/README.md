@@ -13,13 +13,13 @@ Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk
 ## Content descriptions
 
 ### Scripts
-- **scripts/satmut_promoters_preprocess**: Preprocessing scripts for MPAC saturation mutagenesis predictions. Per-chromosome scripts annotate variants with promoter regions, phyloP conservation scores, exon/splice masks, and emVar classifications, then summarize at base, promoter, and TSS-distance levels with gene-level constraint and expression metadata.
-
-- **scripts/satmut_promoters_analysis**: Analyses and visualizations for MPAC saturation mutagenesis predictions (RMarkdown). Includes meta-promoter distance profiles, genome-wide heatmaps, cross-cell-line correlation analyses, stratified promoter analyses by gene constraint, individual promoter plots, and gene set enrichment analyses.
-
 - **scripts/gnomAD_selection_preprocess**: Preprocessing scripts for MPAC gnomAD predictions. Per-chromosome scripts for SNPs, indels, and VEP consequence analyses (VEP annotations are extracted from gnomAD VCFs) are run as Slurm array jobs, merging gnomAD variant calls with MPAC prediction files and additional annotations (Roulette mutation rates, phyloP conservation scores, TF ChIP-seq peaks, TF footprints, ENCODE cCREs), then combined into genome-wide summary tables.
 
 - **scripts/gnomAD_selection_analysis**: Analyses and visualizations for MPAC gnomAD predictions (RMarkdown). Includes purifying selection analyses for SNPs, indels, and VEP consequences, with comparisons across ENCODE cCRE classes using allelic skew, activity, emVar specificity, phyloP constraint, mutation rates, and singleton vs. common allele frequency tests.
+
+- **scripts/satmut_promoters_preprocess**: Preprocessing scripts for MPAC saturation mutagenesis predictions. Per-chromosome scripts annotate variants with promoter regions, phyloP conservation scores, exon/splice masks, and emVar classifications, then summarize at base, promoter, and TSS-distance levels with gene-level constraint and expression metadata.
+
+- **scripts/satmut_promoters_analysis**: Analyses and visualizations for MPAC saturation mutagenesis predictions (RMarkdown). Includes meta-promoter distance profiles, genome-wide heatmaps, cross-cell-line correlation analyses, stratified promoter analyses by gene constraint, individual promoter plots, and gene set enrichment analyses.
 
 ### Results
 - **results/satmut_promoters_analysis**: Corresponding results folder for scripts/satmut_promoters_analysis.
@@ -29,37 +29,37 @@ Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk
 ### Data
 - **data/gencode_filtered_regions**: Code and BED files for masking exonic and splice regions.
 
-- **data/gnomAD_genomes_v3**: gnomAD v3.1.2 VCFs and subsetted annotations.
-
-- **data/gnomAD_snp_predictions**: MPAC gnomAD SNP predictions.
-
-- **data/gnomAD_snp_summaries**: Per-chromosome and combined summary tables for gnomAD SNP analyses.
-
-- **data/gnomAD_indels_predictions**: MPAC gnomAD indel predictions.
-
-- **data/gnomAD_indels_summaries**: Per-chromosome and combined summary tables for gnomAD indel analyses.
-
-- **data/gnomAD_vep_summaries**: Per-chromosome and combined summary tables for gnomAD VEP consequence analyses.
-
-- **data/gnomAD_roulette_predictions**: Roulette mutation rate predictions.
-
-- **data/gnomAD_miscellaneous**: TF ChIP-seq peak and TF footprint annotation files.
-
-- **data/satmut_promoters_predictions**: Copies of MPAC saturation mutagenesis variant predictions.
-
-- **data/satmut_promoters_preprocess**: Preprocessed intermediate files for saturation mutagenesis analyses.
-
-- **data/satmut_promoters_meme_pwms**: PWM meme files for saturation mutagenesis motif analysis.
-
-- **data/reference_genomes**: Reference genome sequences (Ensembl GRCh38.p13 and UCSC hg38).
-
-- **data/zoonomia_phylop**: Zoonomia phyloP base-level annotations.
-
 - **data/gene_constraint_metrics**: GeneBayes s_het, gnomAD LOEUF/MOEUF, AlphaMissense gene constraint, ABC, and EDS annotations.
 
 - **data/gene_expression_catalogs**: Human Protein Atlas gene expression annotations for K562, HepG2, and SK-N-SH.
 
 - **data/gene_regulatory_elements**: ENCODE candidate cis-regulatory element (cCRE) annotations and cell-line-specific BigWig signal tracks.
+
+- **data/gnomAD_genomes_v3**: gnomAD v3.1.2 VCFs and subsetted annotations.
+
+- **data/gnomAD_indels_predictions**: MPAC gnomAD indel predictions.
+
+- **data/gnomAD_indels_summaries**: Per-chromosome and combined summary tables for gnomAD indel analyses.
+
+- **data/gnomAD_miscellaneous**: TF ChIP-seq peak and TF footprint annotation files.
+
+- **data/gnomAD_roulette_predictions**: Roulette mutation rate predictions.
+
+- **data/gnomAD_snp_predictions**: MPAC gnomAD SNP predictions.
+
+- **data/gnomAD_snp_summaries**: Per-chromosome and combined summary tables for gnomAD SNP analyses.
+
+- **data/gnomAD_vep_summaries**: Per-chromosome and combined summary tables for gnomAD VEP consequence analyses.
+
+- **data/reference_genomes**: Reference genome sequences (Ensembl GRCh38.p13 and UCSC hg38).
+
+- **data/satmut_promoters_meme_pwms**: PWM meme files for saturation mutagenesis motif analysis.
+
+- **data/satmut_promoters_predictions**: Copies of MPAC saturation mutagenesis variant predictions.
+
+- **data/satmut_promoters_preprocess**: Preprocessed intermediate files for saturation mutagenesis analyses.
+
+- **data/zoonomia_phylop**: Zoonomia phyloP base-level annotations.
 
 ### Misc
 - **misc**: Supplementary Tables.
