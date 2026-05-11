@@ -12,10 +12,10 @@ Everything necessary is in the main branch *except* for indel prediction filteri
 
 See subdirectory READMEs for detailed content descriptions and software dependencies / setup instructions.
 
+Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu) and Mackenzie Noon (mackenzie DOT noon AT yale DOT edu). Contact corresponding authors or us with questions.
+
 ### MPAC_gnomAD_preprocessing
 Contains code used to preprocess gnomAD predictions into intermediate files and summary tables. See README there for details. The "Helper" directory also contains analyses for many small tasks referenced elsewhere. Maintained by Mackenzie Noon.
 
 ### MPAC_gnomAD_and_satmut_analyses
 Contains code used to analyze and visualize data related to the gnomAD and promoter saturation mutagenesis work. See README therein for details. Maintained by Stephen Rong.
-
-Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu) and Mackenzie Noon (mackenzie DOT noon AT yale DOT edu). Contact corresponding authors or us with questions.
