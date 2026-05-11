@@ -8,6 +8,8 @@ Code used to analyze and visualize MPAC gnomAD and saturation mutagenesis predic
 
 **Citation**: John C. Butts, Stephen Rong, Sager J. Gosai, Rodrigo I. Castro, Mackenzie Noon, Kehinde Adeniran, Rohit Ghosh, Pardis C. Sabeti, Ryan Tewhey, Steven K. Reilly. Identifying non-coding variant effects at scale via machine learning models of cis-regulatory reporter assays. *bioRxiv* 2025. https://doi.org/10.1101/2025.04.16.648420
 
+--- 
+
 Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu). Contact corresponding authors or us with questions.
 
 ## Content descriptions
