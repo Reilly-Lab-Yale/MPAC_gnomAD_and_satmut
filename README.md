@@ -18,6 +18,4 @@ Contains code used to preprocess gnomAD predictions into intermediate files and 
 ### MPAC_gnomAD_and_satmut_analyses
 Contains code used to analyze and visualize data related to the gnomAD and promoter saturation mutagenesis work. See README therein for details. Maintained by Stephen Rong.
 
----
-
 Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu) and Mackenzie Noon (mackenzie DOT noon AT yale DOT edu). Contact corresponding authors or us with questions.
