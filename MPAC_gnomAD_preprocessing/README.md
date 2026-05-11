@@ -6,7 +6,7 @@ Code used to preprocess gnomAD predictions into intermediate files and summary t
 
 **Citation**: John C. Butts, Stephen Rong, Sager J. Gosai, Rodrigo I. Castro, Mackenzie Noon, Kehinde Adeniran, Rohit Ghosh, Pardis C. Sabeti, Ryan Tewhey, Steven K. Reilly. Identifying non-coding variant effects at scale via machine learning models of cis-regulatory reporter assays. *bioRxiv* 2025. https://doi.org/10.1101/2025.04.16.648420
 
-Contact corresponding authors or me (mackenzie.noon@yale.edu) with questions about these scripts. Last updated April 25th 2026.
+Contact corresponding authors or me (mackenzie DOT noon AT yale DOT edu) with questions about these scripts. Last updated April 25th 2026.
 
 # Purpose
 
