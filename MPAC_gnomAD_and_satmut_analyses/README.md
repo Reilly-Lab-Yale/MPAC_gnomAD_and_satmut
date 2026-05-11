@@ -29,11 +29,11 @@ Last updated April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk
 ### Data
 - **data/gencode_filtered_regions**: Code and BED files for masking exonic and splice regions.
 
-- **data/gene_constraint_metrics**: GeneBayes s_het, gnomAD LOEUF/MOEUF, AlphaMissense gene constraint, ABC, and EDS annotations.
+- **data/gene_constraint_metrics**: GeneBayes s_het, gnomAD LOEUF/MOEUF, AlphaMissense gene constraint, and ABC.
 
 - **data/gene_expression_catalogs**: Human Protein Atlas gene expression annotations for K562, HepG2, and SK-N-SH.
 
-- **data/gene_regulatory_elements**: ENCODE candidate cis-regulatory element (cCRE) annotations and cell-line-specific BigWig signal tracks.
+- **data/gene_regulatory_elements**: ENCODE cCRE annotations and cell-line-specific BigWig signal tracks.
 
 - **data/gnomAD_genomes_v3**: gnomAD v3.1.2 VCFs and subsetted annotations.
 
