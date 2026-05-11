@@ -3,8 +3,7 @@
 
 # OS / editor cruft
 .DS_Store
-Thumbs.db
-*.swp
+**/.DS_Store
 *~
 
 # R / RStudio
