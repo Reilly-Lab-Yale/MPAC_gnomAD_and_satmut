@@ -12,16 +12,13 @@ library(plyranges)
 library(rtracklayer)
 
 # load promoter/exon data
-satmut_promoters_promoter_regions_1kb <- readRDS("../../results/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_1kb.rds")
-satmut_promoters_promoter_regions_750bp <- readRDS("../../results/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_750bp.rds")
-satmut_promoters_promoter_regions_500bp <- readRDS("../../results/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_500bp.rds")
-satmut_promoters_promoter_regions_250bp <- readRDS("../../results/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_250bp.rds")
-satmut_promoters_promoter_regions_tss <- readRDS("../../results/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_tss.rds")
-
-satmut_promoters_exon_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.protein.coding.exons.autosomes.v2.bed")
-satmut_promoters_exon_splice_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.protein.coding.exons.splice.autosomes.v2.bed")
-satmut_promoters_all_exon_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.basic.annotation.exons.autosomes.v2.bed")
-satmut_promoters_all_exon_splice_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.basic.annotation.exons.splice.autosomes.v2.bed")
+satmut_promoters_promoter_regions_1kb <- readRDS("../../data/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_1kb.rds")
+satmut_promoters_promoter_regions_750bp <- readRDS("../../data/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_750bp.rds")
+satmut_promoters_promoter_regions_500bp <- readRDS("../../data/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_500bp.rds")
+satmut_promoters_promoter_regions_250bp <- readRDS("../../data/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_250bp.rds")
+satmut_promoters_promoter_regions_tss <- readRDS("../../data/satmut_promoters_preprocess/satmut_promoters_regions/satmut_promoters_promoter_regions_tss.rds")
+satmut_promoters_all_exon_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.basic.annotation.exons.autosomes.v2.bed", extraCols = c(id = "character"))
+satmut_promoters_all_exon_splice_regions <- rtracklayer::import("../../data/gencode_filtered_regions/gencode.v44.basic.annotation.exons.splice.autosomes.v2.bed", extraCols = c(id = "character"))
 
 # loop chromosomes
 for (chr in paste0("chr", c(22:1))) {
@@ -29,7 +26,7 @@ for (chr in paste0("chr", c(22:1))) {
 
 	# load predictions
 	satmut_promoters_pred <- as_tibble(fread(paste0("../../data/satmut_promoters_predictions/gencode.v44.canonical.protein.coding.1kb.promoters.sat.mut.updated.pos.", chr, ".vcf.gz")))
-	mpac_cols <- c("K562_ref_pred", "HepG2_ref_pred", "SKNSH_ref_pred", "K562_alt_pred", "HepG2_alt_pred", "SKNSH_alt_pred", "K562_skew_pred", "HepG2_skew_pred", "SKNSH_skew_pred")
+	mpac_cols <- c("K562_ref", "HepG2_ref", "SKNSH_ref", "K562_alt", "HepG2_alt", "SKNSH_alt", "K562_skew", "HepG2_skew", "SKNSH_skew")
 	satmut_promoters_pred <- satmut_promoters_pred %>% 
 		mutate(INFO = stri_split_fixed(INFO, ";")) %>% unnest(INFO) %>% mutate(INFO = as.numeric(gsub(".*=", "", INFO))) %>% 
 		(function(x) {x$TEMP <- rep(mpac_cols, nrow(x)/length(mpac_cols)); return(x)})(.) %>% pivot_wider(names_from="TEMP", values_from=INFO)
@@ -37,8 +34,8 @@ for (chr in paste0("chr", c(22:1))) {
 	# clean up formating
 	satmut_promoters_pred <- satmut_promoters_pred %>% 
 		mutate(id = gsub("\\.\\..*", "", id))
-	satmut_promoters_pred <- satmut_promoters_pred %>% 
-		distinct()  # gets rid of repeats due to original bed file used for prediction containing multiple promoters of some genes
+	# satmut_promoters_pred <- satmut_promoters_pred %>% 
+	# 	distinct()  # gets rid of repeats daue to original bed file used for prediction containing multiple promoters of some genes
 
 	# get strand  # and flip ref and alt
 	satmut_promoters_promoter_regions_1kb_strand <- satmut_promoters_promoter_regions_1kb %>% 
@@ -61,83 +58,61 @@ for (chr in paste0("chr", c(22:1))) {
 
 	# get final columns
 	satmut_promoters_pred <- satmut_promoters_pred %>% 
-		dplyr::select(chrom, pos, ref, alt, id, strand, tss_dist, everything())  # , ref_orig, alt_orig, everything())
+		dplyr::select(chrom, pos, ref, alt, id, strand, tss_dist, everything())
 
 	# get emVar summaries
 	satmut_promoters_pred <- satmut_promoters_pred %>% 
 		# activity - temp
 		mutate(
-			K562_activity_pred = pmax(K562_ref_pred, K562_alt_pred),
-			HepG2_activity_pred = pmax(HepG2_ref_pred, HepG2_alt_pred),
-			SKNSH_activity_pred = pmax(SKNSH_ref_pred, SKNSH_alt_pred)
+			K562_activity = pmax(K562_ref, K562_alt),
+			HepG2_activity = pmax(HepG2_ref, HepG2_alt),
+			SKNSH_activity = pmax(SKNSH_ref, SKNSH_alt)
 		) %>% 
 		# abs skew
 		mutate(
-			K562_abs_skew_pred = abs(K562_skew_pred),
-			HepG2_abs_skew_pred = abs(HepG2_skew_pred),
-			SKNSH_abs_skew_pred = abs(SKNSH_skew_pred)
+			K562_abs_skew = abs(K562_skew),
+			HepG2_abs_skew = abs(HepG2_skew),
+			SKNSH_abs_skew = abs(SKNSH_skew)
 		) %>% 
 		# mean activity
 		mutate(
-			avgKHS_ref_pred = (K562_ref_pred+HepG2_ref_pred+SKNSH_ref_pred)/3, 
-			avgKHS_alt_pred = (K562_alt_pred+HepG2_alt_pred+SKNSH_alt_pred)/3, 
-			avgKHS_skew_pred = (K562_skew_pred+HepG2_skew_pred+SKNSH_skew_pred)/3, 
-			avgKHS_activity_pred = (K562_activity_pred+HepG2_activity_pred+SKNSH_activity_pred)/3, 
-			avgKHS_abs_skew_pred = (K562_abs_skew_pred+HepG2_abs_skew_pred+SKNSH_abs_skew_pred)/3, 
-		) %>% 
-		# active
-		mutate(
-			K562_active = (K562_activity_pred >= 1), 
-			HepG2_active = (HepG2_activity_pred >= 1), 
-			SKNSH_active = (SKNSH_activity_pred >= 1),
-			avgKHS_active = (avgKHS_activity_pred >= 1),
-		) %>% 
-		mutate(
-			anyKHS_active = (K562_active | HepG2_active | avgKHS_active)
+			avgKHS_ref = (K562_ref+HepG2_ref+SKNSH_ref)/3, 
+			avgKHS_alt = (K562_alt+HepG2_alt+SKNSH_alt)/3, 
+			avgKHS_skew = (K562_skew+HepG2_skew+SKNSH_skew)/3, 
+			avgKHS_activity = (K562_activity+HepG2_activity+SKNSH_activity)/3, 
+			avgKHS_abs_skew = (K562_abs_skew+HepG2_abs_skew+SKNSH_abs_skew)/3, 
 		) %>% 
 		# emVars
 		mutate(
-			K562_emVar = ((K562_abs_skew_pred >= 0.5) & K562_active), 
-			HepG2_emVar = ((HepG2_abs_skew_pred >= 0.5) & HepG2_active), 
-			SKNSH_emVar = ((SKNSH_abs_skew_pred >= 0.5) & SKNSH_active), 
-			avgKHS_emVar = ((avgKHS_abs_skew_pred >= 0.5) & avgKHS_active), 
+			K562_emVar = (K562_abs_skew > 0.5),
+			HepG2_emVar = (HepG2_abs_skew > 0.5),
+			SKNSH_emVar = (SKNSH_abs_skew > 0.5),
+			avgKHS_emVar = (avgKHS_abs_skew > 0.5),
 		) %>% 
 		mutate(
-			anyKHS_emVar = (K562_emVar | HepG2_emVar | avgKHS_emVar)
+			anyKHS_emVar = (K562_emVar | HepG2_emVar | SKNSH_emVar)
 		) %>% 
 		# emVars pos
 		mutate(
-			K562_emVar_pos = ((K562_skew_pred >= 0.5) & K562_active), 
-			HepG2_emVar_pos = ((HepG2_skew_pred >= 0.5) & HepG2_active), 
-			SKNSH_emVar_pos = ((SKNSH_skew_pred >= 0.5) & SKNSH_active),
-			avgKHS_emVar_pos = ((avgKHS_skew_pred >= 0.5) & avgKHS_active)
+			K562_emVar_pos = (K562_skew > 0.5),
+			HepG2_emVar_pos = (HepG2_skew > 0.5),
+			SKNSH_emVar_pos = (SKNSH_skew > 0.5),
+			avgKHS_emVar_pos = (avgKHS_skew > 0.5),
 		) %>% 
 		mutate(
-			anyKHS_emVar_pos = (K562_emVar_pos | HepG2_emVar_pos | avgKHS_emVar_pos),
+			anyKHS_emVar_pos = (K562_emVar_pos | HepG2_emVar_pos | SKNSH_emVar_pos),
 		) %>% 
 		# emVars neg
 		mutate(
-			K562_emVar_neg = ((K562_skew_pred <= -0.5) & K562_active), 
-			HepG2_emVar_neg = ((HepG2_skew_pred <= -0.5) & HepG2_active), 
-			SKNSH_emVar_neg = ((SKNSH_skew_pred <= -0.5) & SKNSH_active), 
-			avgKHS_emVar_neg = ((avgKHS_skew_pred <= -0.5) & avgKHS_active), 
+			K562_emVar_neg = (K562_skew < -0.5),
+			HepG2_emVar_neg = (HepG2_skew < -0.5),
+			SKNSH_emVar_neg = (SKNSH_skew < -0.5),
+			avgKHS_emVar_neg = (avgKHS_skew < -0.5),
 		) %>% 
 		mutate(
-			anyKHS_emVar_neg = (K562_emVar_neg | HepG2_emVar_neg | avgKHS_emVar_neg)
+			anyKHS_emVar_neg = (K562_emVar_neg | HepG2_emVar_neg | SKNSH_emVar_neg)
 		) %>% 
 		# pleiotropy
-		mutate(active_category = 
-			case_when(
-				K562_active & SKNSH_active & HepG2_active ~ "K562+SKNSH+HepG2 active",
-				K562_active & SKNSH_active ~ "K562+SKNSH active",
-				K562_active & HepG2_active ~ "K562+HepG2 active",
-				SKNSH_active & HepG2_active ~ "SKNSH+HepG2 active",
-				K562_active ~ "K562 active",
-				HepG2_active ~ "HepG2 active",
-				SKNSH_active ~ "SKNSH active",
-				.default = "none"
-			)
-		) %>% 
 		mutate(emVar_category = 
 			case_when(
 				K562_emVar & SKNSH_emVar & HepG2_emVar ~ "K562+SKNSH+HepG2 emVar",
@@ -151,7 +126,6 @@ for (chr in paste0("chr", c(22:1))) {
 			)
 		) %>% 
 		mutate(
-			active_count = (K562_active + HepG2_active + SKNSH_active), 
 			emVar_count = (K562_emVar + HepG2_emVar + SKNSH_emVar)
 		)
 
@@ -223,5 +197,5 @@ for (chr in paste0("chr", c(22:1))) {
 		)
 
 	# save predictions
-	write_tsv(satmut_promoters_pred, gzfile(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_pred/satmut_promoters_pred_", chr, ".txt.gz")))
+	write_tsv(satmut_promoters_pred, gzfile(paste0("../../data/satmut_promoters_preprocess/satmut_promoters_pred/satmut_promoters_pred_", chr, ".txt.gz")))
 }

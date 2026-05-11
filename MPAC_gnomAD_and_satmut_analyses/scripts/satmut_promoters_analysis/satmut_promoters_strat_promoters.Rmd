@@ -16,249 +16,173 @@ library(data.table)
 library(viridis)
 library(corrplot)
 
-# load tables
-satmut_promoters_gene_metadata <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz"))
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
 
-# add corrplot
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/gene_constraint_measures_correlation_plot.pdf", height=3, width=3)
-corrplot(cor(satmut_promoters_gene_metadata[,c(10,12,14,18)], use = "pairwise.complete.obs"), 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black",
-	pch = ""
+# load tables
+satmut_promoters_gene_metadata <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz")) %>%
+  mutate(s_het_bin = ntile(s_het, 10)) %>%
+  mutate(loeuf_bin = ntile(loeuf, 10)) %>%
+  mutate(moeuf_bin = ntile(moeuf, 10)) %>%
+  mutate(alphmis_bin = ntile(alphmis, 10))
+
+# constraint measure correlation plot
+pdf(paste0(save_path, "satmut_prom_strat_constraint_corr.pdf"), height=3, width=3)
+corrplot(cor(satmut_promoters_gene_metadata %>% dplyr::select(s_het, loeuf, moeuf, alphmis),
+             use = "pairwise.complete.obs"), 
+  order="original", method="square", tl.pos="lt", type="upper", 
+  tl.col="black", tl.cex=0.6, tl.srt=90, 
+  addCoef.col="black",
+  pch = ""
 )
 dev.off()
 
 satmut_promoters_final_base <- list()
 for (chr in paste0("chr", c(1:22))) {
-	print(chr)
-	satmut_promoters_final_base[[chr]] <- as_tibble(fread(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz"))) %>% 
-		filter(in_promoter_250bp) %>% 
-		filter(!in_all_exon_splice)
+  print(chr)
+  satmut_promoters_final_base[[chr]] <- as_tibble(fread(paste0("../../data/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz"))) %>% 
+    filter(in_promoter_250bp) %>% 
+    filter(!in_all_exon_splice)
 }
 
 satmut_promoters_final_base <- satmut_promoters_final_base %>% 
-	bind_rows() %>% 
-	left_join(satmut_promoters_gene_metadata)
+  bind_rows() %>% 
+  left_join(satmut_promoters_gene_metadata)
 
-skew_pred_bins <- c(-Inf, -1.5, -1, -0.5, -0.2, -0.05, 0.05, 0.2, 0.5, 1, 1.5, Inf)
+skew_bins <- c(-Inf, -1.5, -1, -0.5, -0.2, -0.05, 0.05, 0.2, 0.5, 1, 1.5, Inf)
+```
+
+```{r helper-function}
+# Helper: compute phyloP-by-skew summary stratified by a constraint decile,
+# save table and plot
+plot_strat_phylop_by_skew <- function(df, bin_col, bin_label, file_tag,
+                                       dodge_width = 0.9) {
+  summary_df <- df %>% 
+    filter(in_promoter_250bp) %>% 
+    filter(!in_all_exon_splice) %>% 
+    filter(!is.na(.data[[bin_col]])) %>% 
+    group_by(
+      avgKHS_skew_base_bin = cut(avgKHS_skew_base, breaks = skew_bins), 
+      !!sym(bin_col) := as.factor(.data[[bin_col]])
+    ) %>% 
+    filter(dplyr::n() >= 50) %>% 
+    summarise(
+      count_n = dplyr::n(), 
+      phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = TRUE), 
+      phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = TRUE), 
+    ) %>% 
+    mutate(
+      phyloP_mam241_base_se = phyloP_mam241_base_sd / sqrt(count_n),
+      phyloP_mam241_base_lci = phyloP_mam241_base_mean - 1.96 * phyloP_mam241_base_se,
+      phyloP_mam241_base_uci = phyloP_mam241_base_mean + 1.96 * phyloP_mam241_base_se
+    ) %>% 
+    ungroup()
+  
+  write_tsv(summary_df, paste0(save_path, "satmut_prom_strat_phylop_by_skew_", file_tag, ".txt"))
+  
+  ggplot(summary_df) + 
+    geom_hline(yintercept = 0, color = "black") + 
+    geom_line(aes(x = avgKHS_skew_base_bin, y = phyloP_mam241_base_mean,
+                  color = .data[[bin_col]], group = .data[[bin_col]]),
+              position = position_dodge(width = dodge_width), alpha = 0.3) + 
+    geom_point(aes(x = avgKHS_skew_base_bin, y = phyloP_mam241_base_mean,
+                   color = .data[[bin_col]]),
+               position = position_dodge(width = dodge_width)) + 
+    geom_errorbar(aes(x = avgKHS_skew_base_bin, 
+      ymin = phyloP_mam241_base_mean - 1.96 * phyloP_mam241_base_se, 
+      ymax = phyloP_mam241_base_mean + 1.96 * phyloP_mam241_base_se, 
+      color = .data[[bin_col]]), 
+      width = 0.2, position = position_dodge(width = dodge_width)) + 
+    geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
+    theme_classic() + 
+    scale_color_viridis_d() + 
+    scale_fill_viridis_d() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank()) +   
+    labs(x = "Mean allelic skew", y = "Mean phyloP", color = bin_label) + 
+    guides(fill = "none") + 
+    ylim(c(0, 7))
+  ggsave(paste0(save_path, "satmut_prom_strat_phylop_by_skew_", file_tag, ".pdf"))
+
+  ggplot(summary_df) + 
+    geom_hline(yintercept = 0, color = "black") + 
+    geom_line(aes(x = avgKHS_skew_base_bin, y = phyloP_mam241_base_mean,
+                  color = .data[[bin_col]], group = .data[[bin_col]]),
+              position = position_dodge(width = dodge_width), alpha = 0.3) + 
+    geom_point(aes(x = avgKHS_skew_base_bin, y = phyloP_mam241_base_mean,
+                   color = .data[[bin_col]]),
+               position = position_dodge(width = dodge_width)) + 
+    geom_errorbar(aes(x = avgKHS_skew_base_bin, 
+      ymin = phyloP_mam241_base_mean - 1.96 * phyloP_mam241_base_se, 
+      ymax = phyloP_mam241_base_mean + 1.96 * phyloP_mam241_base_se, 
+      color = .data[[bin_col]]), 
+      width = 0.2, position = position_dodge(width = dodge_width)) + 
+    geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
+    theme_classic() + 
+    scale_color_viridis_d() + 
+    scale_fill_viridis_d() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +   
+    labs(x = "Mean allelic skew", y = "Mean phyloP", color = bin_label) + 
+    guides(fill = "none") + 
+    ylim(c(0, 7))
+  ggsave(paste0(save_path, "satmut_prom_strat_phylop_by_skew_", file_tag, "_skinny.pdf"))
+}
 ```
 
 ```{r stratify promoters}
-# plot phyloP by avgKHS allelic skew stratified by coding constraint
-
 # s_het
-satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_bin <- satmut_promoters_final_base %>% 
-	filter(in_promoter_250bp) %>% 
-	filter(!in_all_exon_splice) %>% 
-	filter(!is.na(s_het_bin)) %>% 
-	group_by(
-		avgKHS_skew_pred_base_bin = cut(avgKHS_skew_pred_base, breaks = skew_pred_bins), 
-		s_het_bin = as.factor(s_het_bin)
-	) %>% 
-	filter(dplyr::n() >= 50) %>% 
-	summarise(
-		count_n = dplyr::n(), 
-		phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = T), 
-		phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = T), 
-	) %>% 
-	mutate(
-		phyloP_mam241_base_se = phyloP_mam241_base_sd/sqrt(count_n),
-	) %>% 
-	mutate(
-		phyloP_mam241_base_lci = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se,
-		phyloP_mam241_base_uci = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se
-	) %>% 
-	ungroup()
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_bin, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_bin.txt")
+plot_strat_phylop_by_skew(satmut_promoters_final_base, "s_het_bin", expression(italic(s)[het] ~ "decile"), "s_het")
 
-ggplot(satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_bin) + 
-	geom_hline(yintercept = 0, color = "black") + 
-	geom_line(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = s_het_bin, group = s_het_bin), position = position_dodge(width = 0.9), alpha = 0.3) + 
-	geom_point(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = s_het_bin), position = position_dodge(width = 0.9)) + 
-	geom_errorbar(aes(x = avgKHS_skew_pred_base_bin, 
-		ymin = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se, 
-		ymax = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se, 
-		color = s_het_bin), 
-	width = 0.2, position = position_dodge(width = 0.9)) + 
-  geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
-	theme_classic() + 
-	scale_color_viridis_d() + 
-	scale_fill_viridis_d() + 
-	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.line.x = element_blank()) +	 
-	labs(x = "Mean allelic skew", y = "Mean phyloP", color = "s_het decile") + 
-	guides(fill = "none") + 
-	ylim(c(0, 7))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_bin.pdf")
-
-# loeuf
-satmut_promoters_final_base_avgKHS_skew_pred_base_loeuf_bin <- satmut_promoters_final_base %>% 
-	filter(in_promoter_250bp) %>% 
-	filter(!in_all_exon_splice) %>% 
-	filter(!is.na(loeuf_bin)) %>% 
-	group_by(
-		avgKHS_skew_pred_base_bin = cut(avgKHS_skew_pred_base, breaks = skew_pred_bins), 
-		loeuf_bin = as.factor(loeuf_bin)
-	) %>% 
-	filter(dplyr::n() >= 50) %>% 
-	summarise(
-		count_n = dplyr::n(), 
-		phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = T), 
-		phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = T), 
-	) %>% 
-	mutate(
-		phyloP_mam241_base_se = phyloP_mam241_base_sd/sqrt(count_n),
-	) %>% 
-	mutate(
-		phyloP_mam241_base_lci = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se,
-		phyloP_mam241_base_uci = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se
-	) %>% 
-	ungroup()
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_loeuf_bin, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_loeuf_bin.txt")
-
-ggplot(satmut_promoters_final_base_avgKHS_skew_pred_base_loeuf_bin) + 
-	geom_hline(yintercept = 0, color = "black") + 
-	geom_line(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = loeuf_bin, group = loeuf_bin), position = position_dodge(width = -0.9), alpha = 0.3) + 
-	geom_point(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = loeuf_bin), position = position_dodge(width=-0.9)) + 
-	geom_errorbar(aes(x = avgKHS_skew_pred_base_bin, 
-		ymin = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se, 
-		ymax = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se, 
-		color = loeuf_bin), 
-	width = 0.2, position = position_dodge(width=-0.9)) + 
-  geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
-	theme_classic() + 
-	scale_color_viridis_d() + 
-	scale_fill_viridis_d() + 
-	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.line.x = element_blank()) +	 
-	labs(x = "Mean allelic skew", y = "Mean phyloP", color = "LOEUF decile") + 
-	guides(fill = "none") + 
-	ylim(c(0, 7))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_loeuf_bin.pdf")
+# loeuf (negative dodge for reversed scale)
+plot_strat_phylop_by_skew(satmut_promoters_final_base, "loeuf_bin", "LOEUF decile", "loeuf",
+                          dodge_width = -0.9)
 
 # alphmis
-satmut_promoters_final_base_avgKHS_skew_pred_base_alphmis_bin <- satmut_promoters_final_base %>% 
-	filter(in_promoter_250bp) %>% 
-	filter(!in_all_exon_splice) %>% 
-	filter(!is.na(alphmis_bin)) %>% 
-	group_by(
-		avgKHS_skew_pred_base_bin = cut(avgKHS_skew_pred_base, breaks = skew_pred_bins), 
-		alphmis_bin = as.factor(alphmis_bin)
-	) %>% 
-	filter(dplyr::n() >= 50) %>% 
-	summarise(
-		count_n = dplyr::n(), 
-		phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = T), 
-		phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = T), 
-	) %>% 
-	mutate(
-		phyloP_mam241_base_se = phyloP_mam241_base_sd/sqrt(count_n),
-	) %>% 
-	mutate(
-		phyloP_mam241_base_lci = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se,
-		phyloP_mam241_base_uci = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se
-	) %>% 
-	ungroup()
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_alphmis_bin, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_alphmis_bin.txt")
+plot_strat_phylop_by_skew(satmut_promoters_final_base, "alphmis_bin", "AlphMis decile", "alphmis")
 
-ggplot(satmut_promoters_final_base_avgKHS_skew_pred_base_alphmis_bin) + 
-	geom_hline(yintercept = 0, color = "black") + 
-	geom_line(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = alphmis_bin, group = alphmis_bin), position = position_dodge(width = 0.9), alpha = 0.3) + 
-	geom_point(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = alphmis_bin), position = position_dodge(width = 0.9)) + 
-	geom_errorbar(aes(x = avgKHS_skew_pred_base_bin, 
-		ymin = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se, 
-		ymax = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se, 
-		color = alphmis_bin), 
-	width = 0.2, position = position_dodge(width = 0.9)) + 
-  geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
-	theme_classic() + 
-	scale_color_viridis_d() + 
-	scale_fill_viridis_d() + 
-	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.line.x = element_blank()) +	 
-	labs(x = "Mean allelic skew", y = "Mean phyloP", color = "AlphMis decile") + 
-	guides(fill = "none") + 
-	ylim(c(0, 7))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_alphmis_bin.pdf")
-
-# moeuf
-satmut_promoters_final_base_avgKHS_skew_pred_base_moeuf_bin <- satmut_promoters_final_base %>% 
-	filter(in_promoter_250bp) %>% 
-	filter(!in_all_exon_splice) %>% 
-	filter(!is.na(moeuf_bin)) %>% 
-	group_by(
-		avgKHS_skew_pred_base_bin = cut(avgKHS_skew_pred_base, breaks = skew_pred_bins), 
-		moeuf_bin = as.factor(moeuf_bin)
-	) %>% 
-	filter(dplyr::n() >= 50) %>% 
-	summarise(
-		count_n = dplyr::n(), 
-		phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = T), 
-		phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = T), 
-	) %>% 
-	mutate(
-		phyloP_mam241_base_se = phyloP_mam241_base_sd/sqrt(count_n),
-	) %>% 
-	mutate(
-		phyloP_mam241_base_lci = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se,
-		phyloP_mam241_base_uci = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se
-	) %>% 
-	ungroup()
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_moeuf_bin, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_moeuf_bin.txt")
-
-ggplot(satmut_promoters_final_base_avgKHS_skew_pred_base_moeuf_bin) + 
-	geom_hline(yintercept = 0, color = "black") + 
-	geom_line(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = moeuf_bin, group = moeuf_bin), position = position_dodge(width = -0.9), alpha = 0.3) + 
-	geom_point(aes(x = avgKHS_skew_pred_base_bin, y = phyloP_mam241_base_mean, color = moeuf_bin), position = position_dodge(width=-0.9)) + 
-	geom_errorbar(aes(x = avgKHS_skew_pred_base_bin, 
-		ymin = phyloP_mam241_base_mean - 2*phyloP_mam241_base_se, 
-		ymax = phyloP_mam241_base_mean + 2*phyloP_mam241_base_se, 
-		color = moeuf_bin), 
-	width = 0.2, position = position_dodge(width=-0.9)) + 
-  geom_hline(yintercept = 2.27, color = "orange", linetype = "dashed") + 
-	theme_classic() + 
-	scale_color_viridis_d() + 
-	scale_fill_viridis_d() + 
-	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), axis.line.x = element_blank()) +	 
-	labs(x = "Mean allelic skew", y = "Mean phyloP", color = "MOEUF decile") + 
-	guides(fill = "none") + 
-	ylim(c(0, 7))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_moeuf_bin.pdf")
+# moeuf (negative dodge for reversed scale)
+plot_strat_phylop_by_skew(satmut_promoters_final_base, "moeuf_bin", "MOEUF decile", "moeuf",
+                          dodge_width = -0.9)
 ```
 
 ```{r correlation change with s_het}
-# stratified correlations, phyloP and skew by shet
-satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_cor <- satmut_promoters_final_base  %>% 
+# stratified correlations, phyloP and skew by s_het
+strat_cor <- satmut_promoters_final_base %>% 
   filter(!is.na(s_het_bin)) %>% 
   group_by(s_het_bin) %>%
-  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_pred_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
+  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
   ungroup()
 
-# global correlations, phyloP and skew
-satmut_promoters_final_base_avgKHS_skew_pred_base_cor <- satmut_promoters_final_base  %>% 
-  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_pred_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
+# global correlation, phyloP and skew
+global_cor <- satmut_promoters_final_base %>% 
+  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
   ungroup()
 
-# global correlations, phyloP and shet
-satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_only_cor <- satmut_promoters_final_base  %>% 
+# global correlation, phyloP and s_het only
+global_shet_cor <- satmut_promoters_final_base %>% 
   summarise(cor_abs_avgKHS_phyloP_pos = cor(s_het, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
   ungroup()
 
-# weighted correlations, phyloP and skew x shet
-satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_weighted_cor <- satmut_promoters_final_base  %>% 
-  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_pred_base*s_het, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
+# weighted correlation, phyloP and skew x s_het
+weighted_cor <- satmut_promoters_final_base %>% 
+  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base*s_het, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
   ungroup()
 
-ggplot(satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_cor) + 
-  geom_hline(aes(yintercept = satmut_promoters_final_base_avgKHS_skew_pred_base_cor$cor_abs_avgKHS_phyloP_pos), linetype = "dashed") + 
+ggplot(strat_cor) + 
+  geom_hline(aes(yintercept = global_cor$cor_abs_avgKHS_phyloP_pos), linetype = "dashed") + 
   geom_point(aes(as.factor(s_het_bin), cor_abs_avgKHS_phyloP_pos, color = as.factor(s_het_bin)), size = 3) + 
-	theme_classic() + 
-	scale_color_viridis_d() + 
+  theme_classic() + 
+  scale_color_viridis_d() + 
   ylim(c(0, 0.3)) + 
-  xlab("s_het decile") + 
-  ylab("Spearman's rho(max(0, phyloP), |allelic skew||)") + 
+  xlab(expression(italic(s)[het] ~ "decile")) + 
+  ylab(expression("Spearman's" ~ rho * "(" * "max(0, phyloP), |allelic skew|" * ")")) + 
   guides(color = "none") + 
   labs(color = "s_het decile") + 
-  theme(aspect.ratio = 1.6)
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_cor.pdf", scale = 0.6)
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_cor, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_s_het_cor.txt")
-write_tsv(satmut_promoters_final_base_avgKHS_skew_pred_base_cor, "../../results/satmut_promoters_analysis/satmut_promoters_strat_promoters/satmut_promoters_final_base_avgKHS_skew_pred_base_cor.txt")
+  theme(aspect.ratio = 1/1.6)
+ggsave(paste0(save_path, "satmut_prom_strat_cor_by_shet.pdf"), scale = 0.7)
+
+write_tsv(strat_cor, paste0(save_path, "satmut_prom_strat_cor_by_shet.txt"))
+write_tsv(global_cor, paste0(save_path, "satmut_prom_strat_cor_global.txt"))
 ```

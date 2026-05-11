@@ -1,13 +1,12 @@
 #!/bin/sh
 
-# MPAC gnomAD analyses of purifying selection
-Rscript -e "rmarkdown::render('gnomAD_purifying_selection_v2.Rmd')"
+# conda activate mpac
 
-# Ensembl VEP analyses of purifying selection
-Rscript -e "rmarkdown::render('gnomAD_ensembl_vep_v2.Rmd')"
+# gnomAD MPAC snp analyses
+Rscript -e "rmarkdown::render('gnomAD_selection_snp.Rmd')"
 
-# Miscellaneous analyses of mean predictions
-Rscript gnomAD_miscellaneous_calculations_avgs.R
+# gnomAD MPAC vep analyses
+Rscript -e "rmarkdown::render('gnomAD_selection_vep.Rmd')"
 
-# Miscellaneous analyses of TF enrichment
-Rscript gnomAD_miscellaneous_calculations_TFs.R
+# gnomAD MPAC indels analyses
+Rscript -e "rmarkdown::render('gnomAD_selection_indels.Rmd')"

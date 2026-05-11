@@ -19,6 +19,9 @@ library(GGally)
 library(ggrepel)
 library(ggpubr)
 
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+
 gene_class_map <- c(
   clingen_hi = "Haploinsufficient",
   autosomal_dominant = "Autosomal dominant", 
@@ -30,9 +33,9 @@ gene_class_map <- c(
   olfactory = "Olfactory"
 )
 
-satmut_promoters_gene_metadata <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz"))
+satmut_promoters_gene_metadata <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz"))
 
-satmut_promoters_pred_final_prom_level <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_final_prom/satmut_promoters_final_prom_all.txt.gz"))
+satmut_promoters_pred_final_prom_level <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_final_prom/satmut_promoters_final_prom_all.txt.gz"))
 
 satmut_promoters_pred_final_prom_level <- satmut_promoters_pred_final_prom_level %>% 
   left_join(satmut_promoters_gene_metadata) %>% 
@@ -64,27 +67,53 @@ satmut_promoters_pred_final_prom_level <- satmut_promoters_pred_final_prom_level
       ifelse((correlation_mam241_vs_avgKHS_rho_padj_neg < threshold_fdr) & (correlation_mam241_vs_avgKHS_rho_est_neg < threshold_neg), "neg", "nonsig"))))
 table(satmut_promoters_pred_final_prom_level_real$sig_pos_0.999_neg_0.001)
 
-write_tsv(satmut_promoters_pred_final_prom_level, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level.txt.gz"))
+write_tsv(satmut_promoters_pred_final_prom_level, gzfile(paste0(save_path, "satmut_prom_prom_level_all.txt.gz")))
 
 satmut_promoters_pred_final_prom_level_null <- satmut_promoters_pred_final_prom_level %>% 
-  filter(analysis_version == "shuffled_promoter_250bp")
-write_tsv(satmut_promoters_pred_final_prom_level_null, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_null.txt.gz"))
+  filter(analysis_version == "shuffled_promoter_250bp") %>% 
+  filter(!is.na(correlation_mam241_vs_avgKHS_rho_est_pos) & !is.na(correlation_mam241_vs_avgKHS_rho_est_neg))
+write_tsv(satmut_promoters_pred_final_prom_level_null, gzfile(paste0(save_path, "satmut_prom_prom_level_null.txt.gz")))
 
 satmut_promoters_pred_final_prom_level_real <- satmut_promoters_pred_final_prom_level %>% 
-  filter(analysis_version == "promoter_250bp")
-write_tsv(satmut_promoters_pred_final_prom_level_real, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real.txt.gz"))
+  filter(analysis_version == "promoter_250bp") %>% 
+  filter(!is.na(correlation_mam241_vs_avgKHS_rho_est_pos) & !is.na(correlation_mam241_vs_avgKHS_rho_est_neg))
+write_tsv(satmut_promoters_pred_final_prom_level_real, gzfile(paste0(save_path, "satmut_prom_prom_level_real.txt.gz")))
+
+# what percentage higher than ldlr
+ldlr_neg <- filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$correlation_mam241_vs_avgKHS_rho_est_neg
+prop_ldlr <- nrow(filter(satmut_promoters_pred_final_prom_level_real, correlation_mam241_vs_avgKHS_rho_est_neg < ldlr_neg))/nrow(satmut_promoters_pred_final_prom_level_real)
+
+# what is the rho for ldlr, tnks2, and cc10
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$correlation_mam241_vs_avgKHS_rho_est_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$correlation_mam241_vs_avgKHS_rho_est_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$correlation_mam241_vs_avgKHS_rho_est_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$correlation_mam241_vs_avgKHS_rho_est_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$correlation_mam241_vs_avgKHS_rho_est_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$correlation_mam241_vs_avgKHS_rho_est_pos
+
+# what is the p for ldlr, tnks2, and cc10
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$correlation_mam241_vs_avgKHS_rho_pval_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$correlation_mam241_vs_avgKHS_rho_pval_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$correlation_mam241_vs_avgKHS_rho_pval_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$correlation_mam241_vs_avgKHS_rho_pval_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$correlation_mam241_vs_avgKHS_rho_pval_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$correlation_mam241_vs_avgKHS_rho_pval_pos
+
+# how many n for each of ldlr, tnks2, and ccr10
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$flag_correlation_mam241_vs_avgKHS_n_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "LDLR")$flag_correlation_mam241_vs_avgKHS_n_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$flag_correlation_mam241_vs_avgKHS_n_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "TNKS2")$flag_correlation_mam241_vs_avgKHS_n_pos
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$flag_correlation_mam241_vs_avgKHS_n_neg
+filter(satmut_promoters_pred_final_prom_level_real, gene_name == "CCR10")$flag_correlation_mam241_vs_avgKHS_n_pos
 ```
 
 ```{r univariate density map abs}
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_abs)
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_abs)/
-  sum(table(satmut_promoters_pred_final_prom_level_real$sig_0.999_abs))
-
 p <- ggdensity(satmut_promoters_pred_final_prom_level, 
   x = "correlation_mam241_vs_avgKHS_rho_est_abs",
    add = "none", rug = FALSE, 
    color = "analysis_version", fill = "analysis_version",
-   palette = c("#66c2a5", "grey80")  #fc8d62
+   palette = c("#66c2a5", "grey80")
   ) + 
   geom_vline(
     aes(xintercept = threshold_abs),
@@ -92,22 +121,22 @@ p <- ggdensity(satmut_promoters_pred_final_prom_level,
     linetype = "dashed"
   ) + 
   scale_color_manual(
-    values = c("promoter_250bp" = "#66c2a5", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#66c2a5", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   scale_fill_manual(
-    values = c("promoter_250bp" = "#66c2a5", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#66c2a5", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   labs(x = "Spearman's ρ", y = "Density") +
   theme(
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey95"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_line(color = "grey95"), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "grey95"),
+    panel.grid.minor.y = element_line(color = "grey95"),
+    axis.line.y = element_blank()
   )
 
 d <- ggplot_build(p)$data[[1]] %>% 
@@ -115,19 +144,15 @@ d <- ggplot_build(p)$data[[1]] %>%
 
 p + geom_area(data = subset(d, x > threshold_abs), aes(x=x, y=y), fill="#66c2a5", alpha = 0.7)
 
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_univariate_abs.pdf", scale=0.6, device = cairo_pdf)
+ggsave(paste0(save_path, "satmut_prom_density_rho_abs.pdf"), scale=0.6, device = cairo_pdf)
 ```
 
 ```{r univariate density map pos}
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_pos)
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_pos)/
-  sum(table(satmut_promoters_pred_final_prom_level_real$sig_0.999_pos))
-
 p <- ggdensity(satmut_promoters_pred_final_prom_level, 
   x = "correlation_mam241_vs_avgKHS_rho_est_pos",
    add = "none", rug = FALSE, 
    color = "analysis_version", fill = "analysis_version",
-   palette = c("#8da0cb", "grey80")  #fc8d62
+   palette = c("#8da0cb", "grey80")
   ) + 
   geom_vline(
     aes(xintercept = threshold_pos),
@@ -135,44 +160,40 @@ p <- ggdensity(satmut_promoters_pred_final_prom_level,
     linetype = "dashed"
   ) + 
   scale_color_manual(
-    values = c("promoter_250bp" = "#8da0cb", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#8da0cb", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   scale_fill_manual(
-    values = c("promoter_250bp" = "#8da0cb", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#8da0cb", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   labs(x = "Spearman's ρ", y = "Density") +
   theme(
     aspect.ratio = 1/5, 
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey95"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_line(color = "grey95"), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "grey95"),
+    panel.grid.minor.y = element_line(color = "grey95"),
+    axis.line.y = element_blank()
   )
 
 d <- ggplot_build(p)$data[[1]] %>% 
   filter(colour == "#8da0cb")
 
 p + geom_area(data = subset(d, x > threshold_pos), aes(x=x, y=y), fill="#8da0cb", alpha = 0.7) + 
-  theme(aspect.ratio=1/3)  # + coord_flip()
+  theme(aspect.ratio=1/3)
 
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_univariate_pos.pdf", scale=0.6, device = cairo_pdf)
+ggsave(paste0(save_path, "satmut_prom_density_rho_pos.pdf"), scale=0.6, device = cairo_pdf)
 ```
 
 ```{r univariate density map neg}
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_neg)
-table(satmut_promoters_pred_final_prom_level_real$sig_0.999_neg)/
-  sum(table(satmut_promoters_pred_final_prom_level_real$sig_0.999_neg))
-
 p <- ggdensity(satmut_promoters_pred_final_prom_level, 
   x = "correlation_mam241_vs_avgKHS_rho_est_neg",
    add = "none", rug = FALSE, 
    color = "analysis_version", fill = "analysis_version",
-   palette = c("#fc8d62", "grey80")  #fc8d62
+   palette = c("#fc8d62", "grey80")
   ) + 
   geom_vline(
     aes(xintercept = threshold_neg),
@@ -180,23 +201,23 @@ p <- ggdensity(satmut_promoters_pred_final_prom_level,
     linetype = "dashed"
   ) + 
   scale_color_manual(
-    values = c("promoter_250bp" = "#fc8d62", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#fc8d62", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   scale_fill_manual(
-    values = c("promoter_250bp" = "#fc8d62", "shuffled_promoter_250bp" = "grey80"),  #fc8d62
+    values = c("promoter_250bp" = "#fc8d62", "shuffled_promoter_250bp" = "grey80"),
     labels = c("promoter_250bp" = "Real", "shuffled_promoter_250bp" = "Shuffled"),
     name = "Promoter"
   ) +
   labs(x = "Spearman's ρ", y = "Density") +
   theme(
     aspect.ratio = 1/5, 
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey95"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_line(color = "grey95"), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "grey95"),
+    panel.grid.minor.y = element_line(color = "grey95"),
+    axis.line.y = element_blank()
   )
 
 d <- ggplot_build(p)$data[[1]] %>% 
@@ -205,7 +226,7 @@ d <- ggplot_build(p)$data[[1]] %>%
 p + geom_area(data = subset(d, x < threshold_neg), aes(x=x, y=y), fill="#fc8d62", alpha = 0.7) + 
   theme(aspect.ratio=1/3)
 
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_univariate_neg.pdf", scale=0.6, device = cairo_pdf)
+ggsave(paste0(save_path, "satmut_prom_density_rho_neg.pdf"), scale=0.6, device = cairo_pdf)
 ```
 
 ```{r bivariate density map pos neg}
@@ -218,7 +239,7 @@ top_select_genes <- satmut_promoters_pred_final_prom_level_real %>%
   group_by(sig_pos_0.999_neg_0.001) %>% 
   slice(1:10) %>% 
   ungroup()
-write_tsv(top_select_genes, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_select_genes.txt")
+write_tsv(top_select_genes, paste0(save_path, "satmut_prom_scatter_rho_pos_vs_neg_top_select_genes.txt"))
 
 top_ordered_genes <- satmut_promoters_pred_final_prom_level_real %>% 
   mutate(correlation_mam241_vs_avgKHS_rho_est_pos_temp = ifelse(sig_pos_0.999_neg_0.001 == "neg", 0, correlation_mam241_vs_avgKHS_rho_est_pos)) %>% 
@@ -227,20 +248,31 @@ top_ordered_genes <- satmut_promoters_pred_final_prom_level_real %>%
   dplyr::select(-correlation_mam241_vs_avgKHS_rho_est_pos_temp, -correlation_mam241_vs_avgKHS_rho_est_neg_temp) %>% 
   group_by(sig_pos_0.999_neg_0.001) %>% 
   ungroup()
-write_tsv(top_ordered_genes, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_ordered_genes.txt.gz"))
+write_tsv(top_ordered_genes, gzfile(paste0(save_path, "satmut_prom_scatter_rho_pos_vs_neg_top_ordered_genes.txt.gz")))
 
+# make gene lists
 top_ordered_genes_both <- filter(top_ordered_genes, sig_pos_0.999_neg_0.001 == "both")$gene_name
 top_ordered_genes_neg <- filter(top_ordered_genes, sig_pos_0.999_neg_0.001 == "neg")$gene_name
 top_ordered_genes_pos <- filter(top_ordered_genes, sig_pos_0.999_neg_0.001 == "pos")$gene_name
 top_ordered_genes_nonsig <- filter(top_ordered_genes, sig_pos_0.999_neg_0.001 == "nonsig")$gene_name
 top_ordered_genes_background <- filter(top_ordered_genes, !is.na(correlation_mam241_vs_avgKHS_rho_est_pos) | !is.na(correlation_mam241_vs_avgKHS_rho_est_neg))$gene_name
-write(top_ordered_genes_both, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_both.txt")
-write(top_ordered_genes_neg, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_neg.txt")
-write(top_ordered_genes_pos, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_pos.txt")
-write(top_ordered_genes_nonsig, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_nonsig.txt")
-write(top_ordered_genes_background, "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_background.txt")
 
-genes_to_highlight <- c("LDLR", "ARNT", "EMILIN2", "CCR10")  # , top_ordered_genes_nonsig[1])
+# inspect gene lists
+head(top_ordered_genes_both); length(top_ordered_genes_both)
+head(top_ordered_genes_neg); length(top_ordered_genes_neg)
+head(top_ordered_genes_pos); length(top_ordered_genes_pos)
+head(top_ordered_genes_nonsig); length(top_ordered_genes_nonsig)
+head(top_ordered_genes_background); length(top_ordered_genes_background)
+
+# save gene lists
+write(top_ordered_genes_both, paste0(save_path, "satmut_prom_genelist_both.txt"))
+write(top_ordered_genes_neg, paste0(save_path, "satmut_prom_genelist_neg.txt"))
+write(top_ordered_genes_pos, paste0(save_path, "satmut_prom_genelist_pos.txt"))
+write(top_ordered_genes_nonsig, paste0(save_path, "satmut_prom_genelist_nonsig.txt"))
+write(top_ordered_genes_background, paste0(save_path, "satmut_prom_genelist_background.txt"))
+
+# highlight genes
+genes_to_highlight <- c("LDLR", "TNKS2", "CCR10")
 
 ggscatter(satmut_promoters_pred_final_prom_level_real, 
   x = "correlation_mam241_vs_avgKHS_rho_est_neg", 
@@ -264,186 +296,306 @@ ggscatter(satmut_promoters_pred_final_prom_level_real,
   ), 
   data = filter(satmut_promoters_pred_final_prom_level_real, gene_name %in% genes_to_highlight), 
   max.overlaps = Inf)
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_v2.pdf", device = cairo_pdf)
+ggsave(paste0(save_path, "satmut_prom_scatter_rho_pos_vs_neg.pdf"), device = cairo_pdf)
+
+# highlight genes (top ranked)
+genes_to_highlight <- c("LDLR", top_ordered_genes_neg[1:3], top_ordered_genes_both[1:3])
+
+ggscatter(satmut_promoters_pred_final_prom_level_real, 
+  x = "correlation_mam241_vs_avgKHS_rho_est_neg", 
+  y = "correlation_mam241_vs_avgKHS_rho_est_pos", 
+  color = "sig_pos_0.999_neg_0.001", fill = "sig_pos_0.999_neg_0.001",
+  palette = c("#984ea3", "#fc8d62", "#e3e1ef", "#8da0cb"), 
+  alpha = 0.5
+) + 
+  xlab("Spearman's ρ (max(0, phyloP), allelic skew-)") + 
+  ylab("Spearman's ρ (max(0, phyloP), allelic skew+)") + 
+  theme(aspect.ratio = 1) + 
+  geom_point(aes(
+    x = correlation_mam241_vs_avgKHS_rho_est_neg, 
+    y = correlation_mam241_vs_avgKHS_rho_est_pos, 
+  ), color = "black", fill = "black",  alpha = 0.5, 
+  data = filter(satmut_promoters_pred_final_prom_level_real, gene_name %in% genes_to_highlight)) + 
+  geom_text_repel(aes(
+    x = correlation_mam241_vs_avgKHS_rho_est_neg, 
+    y = correlation_mam241_vs_avgKHS_rho_est_pos, 
+    label = gene_name, 
+  ), 
+  data = filter(satmut_promoters_pred_final_prom_level_real, gene_name %in% genes_to_highlight), 
+  max.overlaps = Inf)
+ggsave(paste0(save_path, "satmut_prom_scatter_rho_pos_vs_neg_top_labeled.pdf"), device = cairo_pdf)
 ```
 
 ```{r compare these sets by distribution of genic constraint}
-ggviolin(
-  filter(satmut_promoters_pred_final_prom_level_real, !is.na(sig_pos_0.999_neg_0.001)), 
-  x = "sig_pos_0.999_neg_0.001", y = "s_het",
-  fill = "sig_pos_0.999_neg_0.001", 
-  palette = c("#e3e1ef", "#fc8d62", "#984ea3", "#8da0cb"), 
-  draw_quantiles = c(0.5)
-  ) + 
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.10))) + 
-  geom_pwc(
-    method = "wilcox_test", label = "p.format", 
-    hide.ns = TRUE
-  ) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), axis.line.x = element_blank()) + 
-  theme(
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_blank(), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
-  ) + 
-  theme(aspect.ratio = 1.6) + 
-  labs(y = "s_het", x = "")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_rho_by_genic_s_het.pdf", scale = 0.7, device = cairo_pdf)
+# readable labels for significance classes
+sig_labels <- c(
+  "nonsig" = "Non-significant",
+  "neg"    = "Negative",
+  "pos"    = "Positive",
+  "both"   = "Both"
+)
+sig_palette <- c(
+  "Non-significant" = "#e3e1ef",
+  "Negative"        = "#fc8d62",
+  "Both"            = "#984ea3",
+  "Positive"        = "#8da0cb"
+)
 
-ggviolin(
-  filter(satmut_promoters_pred_final_prom_level_real, !is.na(sig_pos_0.999_neg_0.001)), 
-  x = "sig_pos_0.999_neg_0.001", y = "loeuf",
-  fill = "sig_pos_0.999_neg_0.001", 
-  palette = c("#e3e1ef", "#fc8d62", "#984ea3", "#8da0cb"), 
-  draw_quantiles = c(0.5)
-  ) + 
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.10))) + 
-  geom_pwc(
-    method = "wilcox_test", label = "p.format", 
-    hide.ns = TRUE
-  ) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), axis.line.x = element_blank()) + 
-  theme(
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_blank(), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
-  ) + 
-  theme(aspect.ratio = 1.6) + 
-  labs(y = "LOEUF", x = "")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_rho_by_genic_loeuf.pdf", scale = 0.7, device = cairo_pdf)
+metrics <- list(
+  list(col = "s_het",   label = expression(italic(s)[het])),
+  list(col = "loeuf",   label = "LOEUF"),
+  list(col = "moeuf",   label = "MOEUF"),
+  list(col = "alphmis", label = "AlphaMissense"), 
+  list(col = "tau_tissue", label = "Tissue specificity (τ)"), 
+  list(col = "tau_celltype", label = "Cell-type specificity (τ)"), 
+  list(col = "log_median_nTPM_tissue", label = "Median expression (tissue)"),
+  list(col = "log_median_nCPM_celltype", label = "Median expression (cell type)"), 
+  list(col = "eds", label = "Enhancer domain score"),
+  list(col = "mean_frac_distal_count", label = "ABC distal fraction (count)"),
+  list(col = "mean_frac_distal_score", label = "ABC distal fraction (score)"),
+  list(col = "avgKHS_activity_prom", label = "Mean promoter activity")
+)
 
-ggviolin(
-  filter(satmut_promoters_pred_final_prom_level_real, !is.na(sig_pos_0.999_neg_0.001)), 
-  x = "sig_pos_0.999_neg_0.001", y = "moeuf",
-  fill = "sig_pos_0.999_neg_0.001", 
-  palette = c("#e3e1ef", "#fc8d62", "#984ea3", "#8da0cb"), 
-  draw_quantiles = c(0.5)
-  ) + 
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.10))) + 
-  geom_pwc(
-    method = "wilcox_test", label = "p.format", 
-    hide.ns = TRUE
-  ) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), axis.line.x = element_blank()) + 
-  theme(
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_blank(), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
-  ) + 
-  theme(aspect.ratio = 1.6) + 
-  labs(y = "MOEUF", x = "")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_rho_by_genic_moeuf.pdf", scale = 0.7, device = cairo_pdf)
+# collect test statistics across all metrics
+violin_stats <- list()
 
-ggviolin(
-  filter(satmut_promoters_pred_final_prom_level_real, !is.na(sig_pos_0.999_neg_0.001)), 
-  x = "sig_pos_0.999_neg_0.001", y = "alphmis",
-  fill = "sig_pos_0.999_neg_0.001", 
-  palette = c("#e3e1ef", "#fc8d62", "#984ea3", "#8da0cb"), 
-  draw_quantiles = c(0.5)
+for (m in metrics) {
+  df_plot <- satmut_promoters_pred_final_prom_level_real %>%
+    filter(!is.na(sig_pos_0.999_neg_0.001)) %>%
+    mutate(sig_class = factor(sig_labels[sig_pos_0.999_neg_0.001],
+                              levels = names(sig_palette)))
+  
+  p <- ggviolin(
+    df_plot, 
+    x = "sig_class", y = m$col,
+    fill = "sig_class", 
+    palette = sig_palette, 
+    draw_quantiles = c(0.5)
   ) + 
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.10))) + 
-  geom_pwc(
-    method = "wilcox_test", label = "p.format", 
-    hide.ns = TRUE
-  ) + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), axis.line.x = element_blank()) + 
-  theme(
-    panel.grid.major.x = element_blank(),   # Remove vertical major grid lines
-    panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-    panel.grid.minor.y = element_blank(), # Optional: lighter horizontal minor grid lines
-    axis.line.y = element_blank()          # Remove the y-axis line
-  ) + 
-  theme(aspect.ratio = 1.6) + 
-  labs(y = "AlphaMissense", x = "")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_rho_by_genic_alphmis.pdf", scale = 0.7, device = cairo_pdf)
-```
+    scale_y_continuous(expand = expansion(mult = c(0.05, 0.20))) + 
+    geom_pwc(method = "wilcox_test", p.adjust.method = "BH",
+             label = "p.adj.format", hide.ns = TRUE, bracket.nudge.y = 0.15) + 
+    theme(
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      axis.line.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.y = element_line(color = "grey90"),
+      panel.grid.minor.y = element_blank(),
+      axis.line.y = element_blank(),
+      aspect.ratio = 1.6
+    ) + 
+    labs(y = m$label, x = "", fill = "")
+  if (m$col %in% c("s_het")) {
+    p <- p + scale_y_log10(expand = expansion(mult = c(0.05, 0.15)))
+  } else {
+    p <- p + scale_y_continuous(expand = expansion(mult = c(0.05, 0.15)))
+  }
+  print(p)
+  ggsave(paste0(save_path, "satmut_prom_violin_", m$col, ".pdf"), scale = 0.9, device = cairo_pdf)
+  
+  # write per-metric summary table
+  summary_df <- df_plot %>%
+    group_by(sig_class) %>%
+    summarise(
+      n = sum(!is.na(.data[[m$col]])),
+      median = median(.data[[m$col]], na.rm = TRUE),
+      mean = mean(.data[[m$col]], na.rm = TRUE),
+      sd = sd(.data[[m$col]], na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    mutate(metric = m$col)
+  violin_stats[[m$col]] <- summary_df
+}
 
-```{r bivariate comparison of predicted and real expression}
-ggscatter(satmut_promoters_pred_final_prom_level_real,
-  x = "logTPM_K562", 
-  y = "K562_ref_pred_prom", 
-  alpha = 0.1, 
-  color = "#47928B"
-) + 
-  xlab(expression(log[2] ~ "TPM K562")) +
-  ylab("K562 activity (250bp mean)") +
-  theme(
-    panel.grid.major.x = element_line(color = "grey90"),   # Remove vertical major grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-  ) + 
-  theme(aspect.ratio = 1) + 
-  stat_cor(method = "pearson", 
-           cor.coef.name = "r", 
-           label.x = Inf, label.y = Inf, 
-           hjust = 1, vjust = 1)
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_real_vs_pred_K562_expr.pdf", scale = 0.6, device = cairo_pdf)
-
-ggscatter(satmut_promoters_pred_final_prom_level_real,
-  x = "logTPM_HepG2", 
-  y = "HepG2_ref_pred_prom", 
-  alpha = 0.1, 
-  color = "#DBAE65"
-) + 
-  xlab(expression(log[2] ~ "TPM HepG2")) +
-  ylab("HepG2 activity (250bp mean)") +
-  theme(
-    panel.grid.major.x = element_line(color = "grey90"),   # Remove vertical major grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-  ) + 
-  theme(aspect.ratio = 1) + 
-  stat_cor(method = "pearson", 
-           cor.coef.name = "r", 
-           label.x = Inf, label.y = Inf, 
-           hjust = 1, vjust = 1)
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_real_vs_pred_HepG2_expr.pdf", scale = 0.6, device = cairo_pdf)
-
-ggscatter(satmut_promoters_pred_final_prom_level_real,
-  x = "logTPM_SKNSH", 
-  y = "SKNSH_ref_pred_prom", 
-  alpha = 0.1, 
-  color = "#C44543"
-) + 
-  xlab(expression(log[2] ~ "TPM SKNSH")) +
-  ylab("SKNSH activity (250bp mean)") +
-  theme(
-    panel.grid.major.x = element_line(color = "grey90"),   # Remove vertical major grid lines
-    panel.grid.major.y = element_line(color = "grey90"), # Customize horizontal grid lines
-  ) + 
-  theme(aspect.ratio = 1) + 
-  stat_cor(method = "pearson", 
-           cor.coef.name = "r", 
-           label.x = Inf, label.y = Inf, 
-           hjust = 1, vjust = 1)
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_real_vs_pred_SKNSH_expr.pdf", scale = 0.6, device = cairo_pdf)
+# write combined violin summary stats
+write_tsv(bind_rows(violin_stats), paste0(save_path, "satmut_prom_violin_summary_stats.txt"))
 ```
 
 ```{r prom emVar pos emVar neg and cors}
-ggdensity(satmut_promoters_pred_final_prom_level_real %>% filter(!is.na(sig_pos_0.999_neg_0.001)), 
-  x = "avgKHS_emVar_neg_prom", 
-  alpha = 0.2, 
-  color = "sig_pos_0.999_neg_0.001", 
-  palette = c("#984ea3", "#fc8d62", "#e3e1ef", "#8da0cb")
-) + 
-  labs(x = "Number of negative emVars", y = "Density", color = "") + 
-  theme(aspect.ratio = 1/2) + 
-  xlim(c(0, 160))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_cell_emVar_neg_prom.pdf", device = cairo_pdf)
+emvar_metrics <- list(
+  list(col = "avgKHS_emVar_neg_prom", label = "Number of negative emVars"),
+  list(col = "avgKHS_emVar_pos_prom", label = "Number of positive emVars")
+)
 
-ggdensity(satmut_promoters_pred_final_prom_level_real %>% filter(!is.na(sig_pos_0.999_neg_0.001)), 
-  x = "avgKHS_emVar_pos_prom", 
-  alpha = 0.2, 
-  color = "sig_pos_0.999_neg_0.001", 
-  palette = c("#984ea3", "#fc8d62", "#e3e1ef", "#8da0cb")
-) + 
-  labs(x = "Number of positive emVars", y = "Density", color = "") + 
-  theme(aspect.ratio = 1/2) + 
-  xlim(c(0, 160))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_cell_emVar_pos_prom.pdf", device = cairo_pdf)
+for (m in emvar_metrics) {
+  df_plot <- satmut_promoters_pred_final_prom_level_real %>%
+    filter(!is.na(sig_pos_0.999_neg_0.001)) %>%
+    mutate(sig_class = factor(sig_labels[sig_pos_0.999_neg_0.001],
+                              levels = names(sig_palette)))
+  
+  p <- ggviolin(
+    df_plot, 
+    x = "sig_class", y = m$col,
+    fill = "sig_class", 
+    palette = sig_palette, 
+    draw_quantiles = c(0.5)
+  ) + 
+    scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) + 
+    geom_pwc(method = "wilcox_test", p.adjust.method = "BH",
+             label = "p.adj.format", hide.ns = TRUE, bracket.nudge.y = 0.15) + 
+    theme(
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      axis.line.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.y = element_line(color = "grey90"),
+      panel.grid.minor.y = element_blank(),
+      axis.line.y = element_blank(),
+      aspect.ratio = 1.6
+    ) + 
+    labs(y = m$label, x = "", fill = "")
+  print(p)
+  ggsave(paste0(save_path, "satmut_prom_violin_", m$col, ".pdf"), scale = 0.9, device = cairo_pdf)
+}
+```
+
+```{r pairwise comparison of activity and gene expression}
+cell_lines <- list(
+  list(x = "logTPM_K562",  y = "K562_activity_prom",  label = "K562",  color = "#47928B"),
+  list(x = "logTPM_HepG2", y = "HepG2_activity_prom", label = "HepG2", color = "#DBAE65"),
+  list(x = "logTPM_SKNSH", y = "SKNSH_activity_prom", label = "SK-N-SH", color = "#C44543")
+)
+
+df <- satmut_promoters_pred_final_prom_level_real
+
+# compute shared axis limits
+x_range <- range(c(df$logTPM_K562, df$logTPM_HepG2, df$logTPM_SKNSH), na.rm = TRUE)
+y_range <- range(c(df$K562_activity_prom, df$HepG2_activity_prom, df$SKNSH_activity_prom), na.rm = TRUE)
+
+expr_stats <- list()
+
+for (cl in cell_lines) {
+  df_tmp <- df
+  
+  # compute exact spearman rho and p-value
+  x <- df_tmp[[cl$x]]
+  y <- df_tmp[[cl$y]]
+  complete <- complete.cases(x, y)
+  x <- x[complete]
+  y <- y[complete]
+  n <- length(x)
+  rho <- cor(x, y, method = "spearman")
+  t_stat <- rho * sqrt((n - 2) / (1 - rho^2))
+  log_p <- log(2) + pt(abs(t_stat), df = n - 2, lower.tail = FALSE, log.p = TRUE)
+  p_val <- exp(log_p)
+
+  if (p_val < 1e-300) {
+    cor_label <- sprintf("rho == %.3f ~~ ',' ~~ italic(p) < 10^{-300}", rho)
+  } else {
+    cor_label <- sprintf("rho == %.3f ~~ ',' ~~ italic(p) == %.2e", rho, p_val)
+  }
+  message(sprintf("%s: rho = %.4f, n = %d, p = %s", cl$label, rho, n,
+    ifelse(p_val < 1e-300, sprintf("< 10^%.0f", ceiling(log_p / log(10))), sprintf("%.4e", p_val))))
+
+  expr_stats[[cl$label]] <- tibble(
+    cell_line = cl$label, comparison = "activity_vs_expression",
+    rho = rho, n = n, log10_p = log_p / log(10)
+  )
+
+  ggscatter(df_tmp,
+    x = cl$x, y = cl$y,
+    alpha = 0.1, color = cl$color
+  ) + 
+    xlab(bquote(.(cl$label) ~ "gene expression," ~ log[2](TPM + 1))) +
+    ylab(paste0(cl$label, " predicted CRE activity")) +
+    xlim(x_range) +
+    ylim(y_range) +
+    theme(
+      panel.grid.major.x = element_line(color = "grey90"),
+      panel.grid.major.y = element_line(color = "grey90"),
+      aspect.ratio = 1
+    ) + 
+    annotate("text", x = Inf, y = Inf, label = cor_label,
+             parse = TRUE, hjust = 1.05, vjust = 1.5, size = 3.5)
+  print(last_plot())
+  ggsave(paste0(save_path, "satmut_prom_expr_vs_activity_", cl$label, ".png"), scale = 0.7)
+}
+
+write_tsv(bind_rows(expr_stats), paste0(save_path, "satmut_prom_expr_vs_activity_stats.txt"))
+```
+
+```{r pairwise comparison of DNase, H3K27ac, H3K4me3 and gene expression 250bp}
+cell_lines <- list(
+  list(x = "logTPM_K562",  y_suffix = "K562",  label = "K562",  color = "#47928B"),
+  list(x = "logTPM_HepG2", y_suffix = "HepG2", label = "HepG2", color = "#DBAE65"),
+  list(x = "logTPM_SKNSH", y_suffix = "SKNSH", label = "SK-N-SH", color = "#C44543")
+)
+assays <- list(
+  list(prefix = "DNase",   label = "DNase"),
+  list(prefix = "H3K27ac", label = "H3K27ac"),
+  list(prefix = "H3K4me3", label = "H3K4me3")
+)
+
+df <- satmut_promoters_pred_final_prom_level_real
+
+# precompute log2(signal + 1) columns
+for (assay in assays) {
+  for (cl in cell_lines) {
+    raw_col <- paste0(assay$prefix, "_", cl$y_suffix, "_250bp")
+    log_col <- paste0("log_", assay$prefix, "_", cl$y_suffix, "_250bp")
+    df[[log_col]] <- log2(df[[raw_col]] + 1)
+  }
+}
+
+# shared x-axis limits (gene expression)
+x_range <- range(c(df$logTPM_K562, df$logTPM_HepG2, df$logTPM_SKNSH), na.rm = TRUE)
+
+epigenome_stats <- list()
+
+for (assay in assays) {
+  # shared y-axis limits per assay across cell lines
+  y_cols <- paste0("log_", assay$prefix, "_", sapply(cell_lines, `[[`, "y_suffix"), "_250bp")
+  y_range <- range(sapply(y_cols, function(col) range(df[[col]], na.rm = TRUE)))
+
+  for (cl in cell_lines) {
+    y_col <- paste0("log_", assay$prefix, "_", cl$y_suffix, "_250bp")
+    df_tmp <- df
+
+    # compute exact spearman rho and p-value
+    x <- df_tmp[[cl$x]]
+    y <- df_tmp[[y_col]]
+    complete <- complete.cases(x, y)
+    x <- x[complete]
+    y <- y[complete]
+    n <- length(x)
+    rho <- cor(x, y, method = "spearman")
+    t_stat <- rho * sqrt((n - 2) / (1 - rho^2))
+    log_p <- log(2) + pt(abs(t_stat), df = n - 2, lower.tail = FALSE, log.p = TRUE)
+    p_val <- exp(log_p)
+
+    if (p_val < 1e-300) {
+      cor_label <- sprintf("rho == %.3f ~~ ',' ~~ italic(p) < 10^{-300}", rho)
+    } else {
+      cor_label <- sprintf("rho == %.3f ~~ ',' ~~ italic(p) == %.2e", rho, p_val)
+    }
+    message(sprintf("%s %s: rho = %.4f, n = %d, p = %s", cl$label, assay$label, rho, n,
+      ifelse(p_val < 1e-300, "< 10^-300", sprintf("%.4e", p_val))))
+
+    epigenome_stats[[paste0(cl$label, "_", assay$prefix)]] <- tibble(
+      cell_line = cl$label, assay = assay$label,
+      rho = rho, n = n, log10_p = log_p / log(10)
+    )
+
+    ggscatter(df_tmp, 
+      x = cl$x, y = y_col,
+      alpha = 0.1, color = cl$color
+    ) + 
+      xlab(bquote(.(cl$label) ~ "gene expression," ~ log[2](TPM + 1))) +
+      ylab(bquote(.(cl$label) ~ .(assay$label) ~ "," ~ log[2](signal + 1))) +
+      xlim(x_range) +
+      ylim(y_range) +
+      theme(
+        panel.grid.major.x = element_line(color = "grey90"),
+        panel.grid.major.y = element_line(color = "grey90"),
+        aspect.ratio = 1
+      ) + 
+      annotate("text", x = Inf, y = Inf, label = cor_label,
+               parse = TRUE, hjust = 1.05, vjust = 1.5, size = 3.5)
+    print(last_plot())
+    ggsave(paste0(save_path, "satmut_prom_expr_vs_", assay$prefix, "_", cl$label, "_250bp.png"), scale = 0.7)
+  }
+}
+
+write_tsv(bind_rows(epigenome_stats), paste0(save_path, "satmut_prom_expr_vs_epigenome_stats.txt"))
 ```

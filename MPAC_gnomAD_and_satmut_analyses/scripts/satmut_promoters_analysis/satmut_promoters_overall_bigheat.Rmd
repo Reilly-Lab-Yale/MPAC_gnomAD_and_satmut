@@ -19,23 +19,173 @@ library(corrplot)
 library(ComplexHeatmap)
 library(GGally)
 
-# load tables
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_bigheat_promoter/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+
+# initialize accumulators
+n_emVars_1kb <- 0
+n_positive_skew_1kb <- 0
+n_negative_skew_1kb <- 0
+sum_pos_skew_1kb <- 0
+n_pos_skew_1kb <- 0
+sum_neg_skew_1kb <- 0
+n_neg_skew_1kb <- 0
+
+n_emVars_250bp <- 0
+n_positive_skew_250bp <- 0
+n_negative_skew_250bp <- 0
+sum_pos_skew_250bp <- 0
+n_pos_skew_250bp <- 0
+sum_neg_skew_250bp <- 0
+n_neg_skew_250bp <- 0
+
+# load and process variants
+for (chr in paste0("chr", c(1:22))) {
+  print(chr)
+
+  df <- fread(
+    paste0("../../data/satmut_promoters_preprocess/satmut_promoters_final/satmut_promoters_final_", chr, ".txt.gz"),
+    select = c(
+      "in_promoter_1kb", "in_promoter_250bp",
+      "K562_emVar", "HepG2_emVar", "SKNSH_emVar",
+      "K562_skew", "HepG2_skew", "SKNSH_skew"
+    )
+  )
+
+  df_1kb <- df[in_promoter_1kb == 1]
+  df_250bp <- df[in_promoter_250bp == 1]
+
+  for (cl in c("K562", "HepG2", "SKNSH")) {
+    em <- paste0(cl, "_emVar")
+    sk <- paste0(cl, "_skew")
+
+    em_1kb <- df_1kb[[em]] == 1
+    sk_1kb <- df_1kb[[sk]]
+
+    n_emVars_1kb <- n_emVars_1kb + sum(em_1kb, na.rm = TRUE)
+    n_positive_skew_1kb <- n_positive_skew_1kb + sum(em_1kb & sk_1kb > 0, na.rm = TRUE)
+    n_negative_skew_1kb <- n_negative_skew_1kb + sum(em_1kb & sk_1kb < 0, na.rm = TRUE)
+
+    pos_idx <- em_1kb & sk_1kb > 0
+    neg_idx <- em_1kb & sk_1kb < 0
+
+    sum_pos_skew_1kb <- sum_pos_skew_1kb + sum(sk_1kb[pos_idx], na.rm = TRUE)
+    n_pos_skew_1kb <- n_pos_skew_1kb + sum(pos_idx, na.rm = TRUE)
+
+    sum_neg_skew_1kb <- sum_neg_skew_1kb + sum(sk_1kb[neg_idx], na.rm = TRUE)
+    n_neg_skew_1kb <- n_neg_skew_1kb + sum(neg_idx, na.rm = TRUE)
+
+    em_250bp <- df_250bp[[em]] == 1
+    sk_250bp <- df_250bp[[sk]]
+
+    n_emVars_250bp <- n_emVars_250bp + sum(em_250bp, na.rm = TRUE)
+    n_positive_skew_250bp <- n_positive_skew_250bp + sum(em_250bp & sk_250bp > 0, na.rm = TRUE)
+    n_negative_skew_250bp <- n_negative_skew_250bp + sum(em_250bp & sk_250bp < 0, na.rm = TRUE)
+
+    pos_idx <- em_250bp & sk_250bp > 0
+    neg_idx <- em_250bp & sk_250bp < 0
+
+    sum_pos_skew_250bp <- sum_pos_skew_250bp + sum(sk_250bp[pos_idx], na.rm = TRUE)
+    n_pos_skew_250bp <- n_pos_skew_250bp + sum(pos_idx, na.rm = TRUE)
+
+    sum_neg_skew_250bp <- sum_neg_skew_250bp + sum(sk_250bp[neg_idx], na.rm = TRUE)
+    n_neg_skew_250bp <- n_neg_skew_250bp + sum(neg_idx, na.rm = TRUE)
+  }
+}
+
+# final means
+mean_pos_skew_1kb <- sum_pos_skew_1kb / n_pos_skew_1kb
+mean_neg_skew_1kb <- sum_neg_skew_1kb / n_neg_skew_1kb
+
+mean_pos_skew_250bp <- sum_pos_skew_250bp / n_pos_skew_250bp
+mean_neg_skew_250bp <- sum_neg_skew_250bp / n_neg_skew_250bp
+
+prop_emVars_250bp <- n_emVars_250bp/n_emVars_1kb
+
+prop_positive_skew_1kb <- n_positive_skew_1kb/n_emVars_1kb
+prop_negative_skew_1kb <- n_negative_skew_1kb/n_emVars_1kb
+
+prop_positive_skew_250bp <- n_positive_skew_250bp/n_emVars_250bp
+prop_negative_skew_250bp <- n_negative_skew_250bp/n_emVars_250bp
+
+# print results
+n_emVars_1kb
+n_positive_skew_1kb
+n_negative_skew_1kb
+mean_pos_skew_1kb
+mean_neg_skew_1kb
+
+n_emVars_250bp
+n_positive_skew_250bp
+n_negative_skew_250bp
+mean_pos_skew_250bp
+mean_neg_skew_250bp
+
+prop_emVars_250bp
+prop_positive_skew_1kb
+prop_negative_skew_1kb
+prop_positive_skew_250bp
+prop_negative_skew_250bp
+```
+
+```{r base tables}
+# clear variant tables
+satmut_promoters_pred_final_level <- NULL
+
+# load base tables
 satmut_promoters_pred_final_base_level <- list()
 for (chr in paste0("chr", c(1:22))) {
 	print(chr)
-	satmut_promoters_pred_final_base_level[[chr]] <- as_tibble(fread(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz"))) %>%  
-		filter(!in_all_exon_splice)
+	satmut_promoters_pred_final_base_level[[chr]] <- as_tibble(fread(paste0("../../data/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz")))
 }
 
 satmut_promoters_pred_final_base_level <- satmut_promoters_pred_final_base_level %>% 
 	bind_rows()
+
+# counts before filtering
+nrow(satmut_promoters_pred_final_base_level)
+length(unique(satmut_promoters_pred_final_base_level$id))
+head(sort(table(satmut_promoters_pred_final_base_level$id)), n = 20)
+
+satmut_promoters_pred_final_base_level <- satmut_promoters_pred_final_base_level %>% 
+  filter(!in_all_exon_splice)
+
+# counts after filtering
+nrow(satmut_promoters_pred_final_base_level)
+length(unique(satmut_promoters_pred_final_base_level$id))
+head(sort(table(satmut_promoters_pred_final_base_level$id)), n = 20)
+
+# counts for 250bp promoters after filtering
+satmut_promoters_pred_final_base_level_temp <- 
+  satmut_promoters_pred_final_base_level %>% 
+  filter(in_promoter_250bp) 
+
+nrow(satmut_promoters_pred_final_base_level_temp)
+length(unique(satmut_promoters_pred_final_base_level_temp$id))
+head(sort(table(satmut_promoters_pred_final_base_level_temp$id)), n = 20)
+
+satmut_promoters_pred_final_base_level_temp <- satmut_promoters_pred_final_base_level_temp %>% 
+  mutate(
+    flag_correlation_mam241_vs_avgKHS_n_pos = sum(!((is.na(phyloP_mam241_base) | (phyloP_mam241_base == 0)) | is.na(avgKHS_pos_skew_base))),
+    flag_correlation_mam241_vs_avgKHS_n_neg = sum(!((is.na(phyloP_mam241_base) | (phyloP_mam241_base == 0)) | is.na(avgKHS_neg_skew_base))),
+    .by = id
+  ) %>% 
+  mutate(
+    filter_correlation_mam241_vs_avgKHS_n_pos = (flag_correlation_mam241_vs_avgKHS_n_pos >= 50), 
+    filter_correlation_mam241_vs_avgKHS_n_neg = (flag_correlation_mam241_vs_avgKHS_n_neg >= 50)
+  ) %>% 
+  filter(filter_correlation_mam241_vs_avgKHS_n_pos, filter_correlation_mam241_vs_avgKHS_n_neg)
+
+nrow(satmut_promoters_pred_final_base_level_temp)
+length(unique(satmut_promoters_pred_final_base_level_temp$id))
+head(sort(table(satmut_promoters_pred_final_base_level_temp$id)), n = 20)
 ```
 
 ```{r col order}
-# save col order from ref
+# determine column order from activity heatmap clustering
 satmut_promoters_pred_final_base_level_bigheat <- satmut_promoters_pred_final_base_level %>% 
-	dplyr::select(id, tss_dist, avgKHS_ref_pred_base) %>% 
-	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_ref_pred_base) %>% 
+	dplyr::select(id, tss_dist, avgKHS_activity_base) %>% 
+	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_activity_base) %>% 
 	column_to_rownames(var="id") %>% 
 	as.matrix() %>% 
 	t() %>%
@@ -45,7 +195,7 @@ satmut_promoters_pred_final_base_level_bigheat[
 	which(is.na(satmut_promoters_pred_final_base_level_bigheat))] <- 0
 
 bigheat <- Heatmap(satmut_promoters_pred_final_base_level_bigheat,
-	heatmap_legend_param = list(title = "Mean reference activity", direction = "horizontal", title_position = "topcenter"),
+	heatmap_legend_param = list(title = "Mean activity", direction = "horizontal", title_position = "topcenter"),
 	show_column_names = FALSE,
 	show_row_names = FALSE,
 	show_column_dend = FALSE,
@@ -56,7 +206,6 @@ col_ord <- column_order(bigheat)
 ```
 
 ```{r phyloP}
-# phyloP
 satmut_promoters_pred_final_base_level_bigheat_phyloP <- satmut_promoters_pred_final_base_level %>% 
 	dplyr::select(id, tss_dist, phyloP_mam241_base) %>% 
 	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = phyloP_mam241_base) %>% 
@@ -67,7 +216,7 @@ satmut_promoters_pred_final_base_level_bigheat_phyloP <- satmut_promoters_pred_f
 
 satmut_promoters_pred_final_base_level_bigheat_phyloP <- satmut_promoters_pred_final_base_level_bigheat_phyloP[,col_ord]
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_bigheat_promoter/satmut_promoters_pred_final_base_level_bigheat_phyloP.pdf", width=45, height=15)
+pdf(paste0(save_path, "satmut_prom_bigheat_phylop.pdf"), width=45, height=15)
 col_fun = circlize::colorRamp2(c(0, 5), c("#FFFFFF", "#08519c"))
 bigheat_phyloP <- Heatmap(satmut_promoters_pred_final_base_level_bigheat_phyloP,
 	heatmap_legend_param = list(title = "Mammalian max(0, phyloP)", direction = "horizontal", title_position = "topcenter"),
@@ -84,10 +233,9 @@ print(bigheat_phyloP)
 ```
 
 ```{r skew}
-# skew
 satmut_promoters_pred_final_base_level_bigheat_skew <- satmut_promoters_pred_final_base_level %>% 
-	dplyr::select(id, tss_dist, avgKHS_skew_pred_base) %>% 
-	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_skew_pred_base) %>% 
+	dplyr::select(id, tss_dist, avgKHS_skew_base) %>% 
+	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_skew_base) %>% 
 	column_to_rownames(var="id") %>% 
 	as.matrix() %>% 
 	t() %>%
@@ -95,7 +243,7 @@ satmut_promoters_pred_final_base_level_bigheat_skew <- satmut_promoters_pred_fin
 
 satmut_promoters_pred_final_base_level_bigheat_skew <- satmut_promoters_pred_final_base_level_bigheat_skew[,col_ord]
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_bigheat_promoter/satmut_promoters_pred_final_base_level_bigheat_skew.pdf", width=45, height=15)
+pdf(paste0(save_path, "satmut_prom_bigheat_skew.pdf"), width=45, height=15)
 col_fun = circlize::colorRamp2(c(-0.5, 0, 0.5), c("#a50f15", "#FFFFFF", "#08519c"))
 bigheat_skew <- Heatmap(satmut_promoters_pred_final_base_level_bigheat_skew,
 	heatmap_legend_param = list(title = "Mean allelic skew", direction = "horizontal", title_position = "topcenter"),
@@ -111,22 +259,21 @@ dev.off()
 print(bigheat_skew)
 ```
 
-```{r ref}
-# ref
-satmut_promoters_pred_final_base_level_bigheat_ref <- satmut_promoters_pred_final_base_level %>% 
-	dplyr::select(id, tss_dist, avgKHS_ref_pred_base) %>% 
-	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_ref_pred_base) %>% 
+```{r activity}
+satmut_promoters_pred_final_base_level_bigheat_activity <- satmut_promoters_pred_final_base_level %>% 
+	dplyr::select(id, tss_dist, avgKHS_activity_base) %>% 
+	pivot_wider(names_from = tss_dist, names_prefix = "tss_dist_", values_from = avgKHS_activity_base) %>% 
 	column_to_rownames(var="id") %>% 
 	as.matrix() %>% 
 	t() %>%
 	apply(., 2, rev)
 
-satmut_promoters_pred_final_base_level_bigheat_ref <- satmut_promoters_pred_final_base_level_bigheat_ref[,col_ord]
+satmut_promoters_pred_final_base_level_bigheat_activity <- satmut_promoters_pred_final_base_level_bigheat_activity[,col_ord]
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_bigheat_promoter/satmut_promoters_pred_final_base_level_bigheat_ref.pdf", width=45, height=15)
+pdf(paste0(save_path, "satmut_prom_bigheat_activity.pdf"), width=45, height=15)
 col_fun = circlize::colorRamp2(c(-1, 0, 8), c("#a50f15", "#FFFFFF", "#08519c"))
-bigheat_ref <- Heatmap(satmut_promoters_pred_final_base_level_bigheat_ref,
-	heatmap_legend_param = list(title = "Mean reference activity", direction = "horizontal", title_position = "topcenter"),
+bigheat_activity <- Heatmap(satmut_promoters_pred_final_base_level_bigheat_activity,
+	heatmap_legend_param = list(title = "Mean activity", direction = "horizontal", title_position = "topcenter"),
 	show_column_names = FALSE,
 	show_row_names = FALSE,
 	show_column_dend = FALSE,
@@ -134,7 +281,7 @@ bigheat_ref <- Heatmap(satmut_promoters_pred_final_base_level_bigheat_ref,
 	cluster_columns = FALSE,
 	col = col_fun
 )
-draw(bigheat_ref, heatmap_legend_side = "bottom")
+draw(bigheat_activity, heatmap_legend_side = "bottom")
 dev.off()
-print(bigheat_ref)
+print(bigheat_activity)
 ```

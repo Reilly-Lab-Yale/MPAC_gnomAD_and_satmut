@@ -18,18 +18,24 @@ library(patchwork)
 library(corrplot)
 library(GGally)
 
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+
 # load tables
-satmut_promoters_final_dist_all <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_final_dist/satmut_promoters_final_dist_all.txt.gz")) %>% 
+satmut_promoters_final_dist_all <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_final_dist/satmut_promoters_final_dist_all.txt")) %>% 
 	filter(in_promoter_250bp)
 
-p_fimo_scan <- readRDS("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_scan_coverage.rds")
-p_fimo_scan + theme(aspect.ratio = 1/5) + 
+p_fimo_scan <- readRDS("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_prom_motif_fimo_coverage.rds")
+p_fimo_scan <- p_fimo_scan +
   geom_vline(xintercept = -26, linetype="dashed", color="grey50") + 
 	geom_vline(xintercept = -42, linetype="dashed", color="grey50")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/satmut_promoters_final_fimo_scan_coverage_plot.pdf")
+ggsave(paste0(save_path, "satmut_prom_dist_fimo_coverage.pdf"))
 ```
 
 ```{r meta promoters}
+# Write source table for all distance profile plots
+write_tsv(satmut_promoters_final_dist_all, paste0(save_path, "satmut_prom_dist_all.txt"))
+
 p_phyloP <- ggplot(satmut_promoters_final_dist_all) + 
 	geom_line(aes(x = tss_dist, y = phyloP_mam241_dist), color = "black") + 
 	geom_vline(xintercept = -26, linetype="dashed", color="grey50") + 
@@ -37,32 +43,34 @@ p_phyloP <- ggplot(satmut_promoters_final_dist_all) +
 	theme_classic() + 
 	labs(x = "Distance to TSS", y = "Mean phyloP", color = "Cell line")
 p_phyloP
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/satmut_promoters_final_dist_all_phyloP.pdf")
+ggsave(paste0(save_path, "satmut_prom_dist_phylop.pdf"))
 
-p_ref_pred <- ggplot(satmut_promoters_final_dist_all) + 
-	geom_line(aes(x = tss_dist, y = K562_ref_pred_dist, color = "K562")) + 
-	geom_line(aes(x = tss_dist, y = HepG2_ref_pred_dist, color = "HepG2")) + 
-	geom_line(aes(x = tss_dist, y = SKNSH_ref_pred_dist, color = "SKNSH")) + 
+p_activity <- ggplot(satmut_promoters_final_dist_all) + 
+	geom_line(aes(x = tss_dist, y = K562_activity_dist, color = "K562")) + 
+	geom_line(aes(x = tss_dist, y = HepG2_activity_dist, color = "HepG2")) + 
+	geom_line(aes(x = tss_dist, y = SKNSH_activity_dist, color = "SKNSH")) + 
 	geom_vline(xintercept = -26, linetype="dashed", color="grey50") + 
 	geom_vline(xintercept = -42, linetype="dashed", color="grey50") + 
 	theme_classic() + 
 	scale_color_manual(values = c("K562" = "#00A79D", "HepG2" = "#FBB040", "SKNSH" = "#ED1C24")) + 
 	labs(x = "Distance to TSS", y = "Mean activity", color = "Cell line")
-p_ref_pred
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/satmut_promoters_final_dist_all_ref_pred.pdf")
+p_activity
+ggsave(paste0(save_path, "satmut_prom_dist_activity.pdf"))
 
-p_skew_pred <- ggplot(satmut_promoters_final_dist_all) + 
-	geom_line(aes(x = tss_dist, y = K562_skew_pred_dist, color = "K562")) + 
-	geom_line(aes(x = tss_dist, y = HepG2_skew_pred_dist, color = "HepG2")) + 
-	geom_line(aes(x = tss_dist, y = SKNSH_skew_pred_dist, color = "SKNSH")) + 
+p_skew <- ggplot(satmut_promoters_final_dist_all) + 
+	geom_line(aes(x = tss_dist, y = K562_skew_dist, color = "K562")) + 
+	geom_line(aes(x = tss_dist, y = HepG2_skew_dist, color = "HepG2")) + 
+	geom_line(aes(x = tss_dist, y = SKNSH_skew_dist, color = "SKNSH")) + 
 	geom_vline(xintercept = -26, linetype="dashed", color="grey50") + 
 	geom_vline(xintercept = -42, linetype="dashed", color="grey50") + 
 	theme_classic() + 
 	scale_color_manual(values = c("K562" = "#00A79D", "HepG2" = "#FBB040", "SKNSH" = "#ED1C24")) + 
 	labs(x = "Distance to TSS", y = "Mean allelic skew", color = "Cell line")
-p_skew_pred
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/satmut_promoters_final_dist_all_skew_pred.pdf")
+p_skew
+ggsave(paste0(save_path, "satmut_prom_dist_skew.pdf"))
 
-p_phyloP / p_skew_pred / (p_ref_pred + guides(color = "none"))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_overall_dist/satmut_promoters_final_dist_all_combined_v1.pdf")
+p_activity / (p_skew + guides(color = "none")) / p_phyloP # / p_fimo_scan +
+  plot_layout(heights = c(1, 1, 1, 2))
+ggsave(paste0(save_path, "satmut_prom_dist_combined.pdf"),
+	width = 6, height = 6)
 ```

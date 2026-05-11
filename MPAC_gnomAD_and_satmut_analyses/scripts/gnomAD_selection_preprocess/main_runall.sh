@@ -1,7 +1,16 @@
 #!/bin/sh
 
-# Take gnomAD tables, remap factors, collapse along dimensions, and perform statistical tests
-Rscript gnomAD_purifying_selection_tables.R
+# # check Roulette MR range
+# sbatch check_roulette_mr_range.sh
 
-# Take VEP tables, remap factors, collapse along dimensions, and perform statistical tests
-Rscript gnomAD_ensembl_vep_tables.R
+# gnomAD MPAC SNP analyses
+sbatch gnomAD_selection_snp_per_chr.sh
+Rscript gnomAD_selection_snp_combine_chr.R
+
+# gnomAD VEP SNP analyses
+sbatch gnomAD_selection_vep_per_chr.sh
+Rscript gnomAD_selection_vep_combine_chr.R
+
+# gnomAD MPAD indels anlayses
+sbatch gnomAD_selection_indels_per_chr.sh
+Rscript gnomAD_selection_indels_combine_chr.R

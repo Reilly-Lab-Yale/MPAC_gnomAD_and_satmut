@@ -16,122 +16,227 @@ library(tidyverse)
 library(data.table)
 library(viridis)
 library(ggpubr)
-library(patchwork)
 library(scales)
+library(cowplot)
+library(patchwork)
 
-satmut_promoters_gene_metadata <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz"))
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_individual_promoters/"
+genelist_path <- "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
 
-satmut_promoters_final_prom_all <- as_tibble(fread("../../results/satmut_promoters_preprocess/satmut_promoters_final_prom/satmut_promoters_final_prom_all.txt.gz")) %>% 
+satmut_promoters_gene_metadata <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_gene_metadata/satmut_promoters_gene_metadata.txt.gz"))
+
+satmut_promoters_final_prom_all <- as_tibble(fread("../../data/satmut_promoters_preprocess/satmut_promoters_final_prom/satmut_promoters_final_prom_all.txt.gz")) %>% 
   filter(analysis_version == "promoter_250bp")
 
-load_satmut_for_gene <- function(gene) {
-  gene_meta <- satmut_promoters_gene_metadata %>% filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
-  gene_chr <- gene_tb %>% .$seqnames
-  gene_id <- gene_meta %>% .$id
-  satmut_promoters_final <- as_tibble(fread(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_final/satmut_promoters_final_", gene_chr, ".txt.gz"))) %>% 
-    filter(in_promoter_250bp, !in_all_exon_splice) %>%  # masked
-    filter(id == gene_id)
-  return(satmut_promoters_final)
-}
-
+# Helper: load base-level data for one gene
 load_satmut_base_for_gene <- function(gene) {
-  gene_meta <- satmut_promoters_gene_metadata %>% filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
-  gene_chr <- gene_meta %>% .$seqnames
-  gene_id <- gene_meta %>% .$id
-  satmut_promoters_final <- as_tibble(fread(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", gene_chr, ".txt.gz"))) %>% 
-    filter(in_promoter_250bp, !in_all_exon_splice) %>%  # masked
-    filter(id == gene_id)
-  return(satmut_promoters_final)
+  gene_meta <- satmut_promoters_gene_metadata %>%
+    filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
+  gene_chr <- gene_meta$seqnames
+  gene_id  <- gene_meta$id
+  as_tibble(fread(paste0(
+    "../../data/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_",
+    gene_chr, ".txt.gz"
+  ))) %>%
+    filter(in_promoter_250bp, !in_all_exon_splice, id == gene_id)
 }
 
-plot_satmut_for_gene <- function(gene) {
-  print(paste0("Loading satmut base for ", gene))
-  gene_base_tb <- load_satmut_base_for_gene(gene)
-  write_tsv(gene_base_tb, gzfile(paste0("../../results/satmut_promoters_analysis/satmut_promoters_individual_promoters/satmut_promoters_individual_promoters_", gene, ".txt.gz")))
-  gene_meta <- satmut_promoters_gene_metadata %>% filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
-  gene_chr <- gene_meta %>% .$seqnames
-  gene_id <- gene_meta %>% .$id
-  
-  skew_pos_rho <- filter(satmut_promoters_final_prom_all, id == gene_id) %>% .$correlation_mam241_vs_avgKHS_rho_est_pos
-  skew_pos_pval <- filter(satmut_promoters_final_prom_all, id == gene_id) %>% .$correlation_mam241_vs_avgKHS_rho_pval_pos
-  skew_neg_rho <- filter(satmut_promoters_final_prom_all, id == gene_id) %>% .$correlation_mam241_vs_avgKHS_rho_est_neg
-  skew_neg_pval <- filter(satmut_promoters_final_prom_all, id == gene_id) %>% .$correlation_mam241_vs_avgKHS_rho_pval_neg
-  
-  print(paste0("Plotting satmut for ", gene))
-  
-  gene_coord_tss <- ifelse(gene_base_tb[1,]$strand == "+", gene_base_tb[1,]$pos - gene_base_tb[1,]$tss_dist, gene_base_tb[1,]$pos + gene_base_tb[1,]$tss_dist)
-  gene_coord_250 <- ifelse(gene_base_tb[1,]$strand == "+", gene_coord_tss - 250, gene_coord_tss + 250)
-  gene_coord <- paste0(" (", gene_base_tb$chrom[[1]], ":", gene_coord_tss, "-", gene_coord_250, ")")
-  
-  dist_plot <- ggplot(gene_base_tb) + 
-    geom_point(aes(x = tss_dist, y = avgKHS_skew_pred_base, color = phyloP_mam241_pos_base)) +
-    theme_bw() + 
-    theme(
-      aspect.ratio = 1/3, 
-      plot.title = element_text(hjust = 0.5), # Center the title, 
-      panel.grid.major.x = element_line(color = "grey95"),   # Remove vertical major grid lines
-      panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-      panel.grid.major.y = element_line(color = "grey95"), # Customize horizontal grid lines
-      panel.grid.minor.y = element_blank(), # Optional: lighter horizontal minor grid lines
-    ) + 
-   ggtitle(bquote(italic(.(gene)) ~ .(gene_coord))) + # Combine italic and plain text
+# Shared theme for grid-friendly panels
+shared_theme <- theme_cowplot(font_size = 9) +
+  theme(
+    aspect.ratio = 1/3,
+    plot.title = element_text(hjust = 0.5, size = 9, face = "italic"),
+    axis.line = element_blank(),
+    axis.ticks = element_line(linewidth = 0.25),
+    axis.title = element_text(size = 8),
+    axis.text = element_text(size = 7),
+    legend.title = element_text(size = 7),
+    legend.text = element_text(size = 6),
+    plot.margin = margin(2, 4, 2, 4)
+  )
+
+# Distance-to-TSS plot
+make_dist_plot <- function(tb, gene, show_x_title = TRUE, show_y_title = TRUE, show_gene_title = TRUE) {
+  p <- ggplot(tb) +
+    geom_hline(yintercept = 0, color = "black", linewidth = 0.25) +
+    geom_point(aes(x = tss_dist, y = avgKHS_skew_base, color = phyloP_mam241_pos_base), size = 0.8) +
+    shared_theme +
     scale_colour_gradient2(
-      low = "#a6611a",
-      mid = "grey90",
-      high = "#66c2a5",
-      midpoint = 0, 
-      limits = c(0, 9)
+      low = "#a6611a", mid = "grey90", high = "#66c2a5",
+      midpoint = 0, limits = c(0, 9)
     ) +
     labs(
-      x = "Distance to TSS", 
-      y = "Mean allelic skew", 
+      x = if (show_x_title) "Distance to TSS" else NULL,
+      y = if (show_y_title) "Mean allelic skew" else NULL,
       color = "max(0, phyloP)"
-    ) + 
-    ylim(c(-2.1, 2.1)) +
-    xlim(c(-250,0))
+    ) +
+    ylim(global_skew_ylim) +
+    xlim(c(-250, 0))
 
-  print(paste0("Plotting satmut base for ", gene))
-  skew_plot <- ggplot(gene_base_tb) + 
-    geom_point(aes(x = avgKHS_skew_pred_base, y = phyloP_mam241_pos_base, color = avgKHS_skew_pred_base)) + 
-    geom_smooth(aes(x = avgKHS_skew_pred_base, y = phyloP_mam241_pos_base, color = avgKHS_skew_pred_base)) + 
-    geom_vline(xintercept = 0, color = "grey50", linewidth = 0.1) + 
-    theme_bw() + 
-    theme(
-      aspect.ratio = 1/3, 
-      plot.title = element_text(hjust = 0.5), # Center the title, 
-      panel.grid.major.x = element_line(color = "grey95"),   # Remove vertical major grid lines
-      panel.grid.minor.x = element_blank(),   # Remove vertical minor grid lines
-      panel.grid.major.y = element_line(color = "grey95"), # Customize horizontal grid lines
-      panel.grid.minor.y = element_blank()  # Optional: lighter horizontal minor grid lines
-    ) + 
+  if (show_gene_title) {
+    p <- p + ggtitle(bquote(italic(.(gene))))
+  } else {
+    p <- p + ggtitle(NULL)
+  }
+  p
+}
+
+# Skew-vs-phyloP plot
+make_skew_plot <- function(tb, gene_id, show_x_title = TRUE, show_y_title = TRUE) {
+  prom <- filter(satmut_promoters_final_prom_all, id == gene_id)
+  rho_pos  <- prom$correlation_mam241_vs_avgKHS_rho_est_pos
+  pval_pos <- prom$correlation_mam241_vs_avgKHS_rho_pval_pos
+  rho_neg  <- prom$correlation_mam241_vs_avgKHS_rho_est_neg
+  pval_neg <- prom$correlation_mam241_vs_avgKHS_rho_pval_neg
+
+  ggplot(tb) +
+    geom_hline(yintercept = 0, color = "black", linewidth = 0.25) +
+    geom_vline(xintercept = 0, color = "black", linewidth = 0.25) +
+    geom_point(aes(x = avgKHS_skew_base, y = phyloP_mam241_pos_base, color = avgKHS_skew_base), size = 0.8) +
+    geom_smooth(aes(x = avgKHS_skew_base, y = phyloP_mam241_pos_base), linewidth = 0.6) +
+    shared_theme +
+    theme(plot.title = element_blank()) +
     scale_colour_gradient2(
-      low = "#fc8d62",
-      mid = "grey95",
-      high = "#8da0cb",
-      midpoint = 0, 
-      limits = c(-2.1, 2.1)
+      low = "#fc8d62", mid = "grey95", high = "#8da0cb",
+      midpoint = 0, limits = c(-2.1, 2.1)
     ) +
     labs(
-      x = "Mean allelic skew", 
-      y = "max(0, phyloP)", 
-      color = "Mean allelic skew", 
-      shape = "SNV"
-    ) +  
-    xlim(c(-2.1, 2.1)) + 
-    ylim(c(0, 11)) + 
-    annotate("text", x = -Inf, y = Inf, label = paste0("ρ = ", signif(skew_neg_rho, 2), ", p = ", signif(skew_neg_pval, 2)), hjust = -0.1, vjust = 1.2, size = 3.5) + 
-    annotate("text", x = Inf, y = Inf, label = paste0("ρ = ", signif(skew_pos_rho, 2), ", p = ", signif(skew_pos_pval, 2)), hjust = 1.1, vjust = 1.2, size = 3.5)
-
-  dist_plot / skew_plot
-  
-  print(paste0("Saving satmut for ", gene))
-  ggsave(paste0("../../results/satmut_promoters_analysis/satmut_promoters_individual_promoters/satmut_promoters_individual_promoters_", gene, ".pdf"), scale=0.75, device = cairo_pdf)
+      x = if (show_x_title) "Mean allelic skew" else NULL,
+      y = if (show_y_title) "max(0, phyloP)" else NULL,
+      color = "Mean allelic skew"
+    ) +
+    xlim(c(-2.1, 2.1)) +
+    ylim(c(0, 11)) +
+    annotate("text", x = -Inf, y = Inf,
+             label = paste0("\u03c1 = ", signif(rho_neg, 2), ", p = ", signif(pval_neg, 2)),
+             hjust = -0.05, vjust = 1.3, size = 2) +
+    annotate("text", x = Inf, y = Inf,
+             label = paste0("\u03c1 = ", signif(rho_pos, 2), ", p = ", signif(pval_pos, 2)),
+             hjust = 1.05, vjust = 1.3, size = 2)
 }
 
-top_select_genes <- as_tibble(fread("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_select_genes.txt"))
-top_ordered_genes_pos <- as_tibble(fread("../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/satmut_promoters_pred_final_prom_level_real_bivariate_pos_neg_top_genes_pos.txt"))
+# Build a single gene panel (for individual saves)
+make_gene_panel <- function(gene) {
+  tb <- load_satmut_base_for_gene(gene)
+  write_tsv(tb, gzfile(paste0(save_path, "satmut_prom_individual_", gene, ".txt.gz")))
 
-for (gene in c("LDLR", top_select_genes$gene_name, top_ordered_genes_pos$gene_name)) {
-  plot_satmut_for_gene(gene)
+  gene_meta <- satmut_promoters_gene_metadata %>%
+    filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
+  gene_id <- gene_meta$id
+
+  d <- make_dist_plot(tb, gene, show_x_title = FALSE, show_y_title = TRUE, show_gene_title = TRUE)
+  s <- make_skew_plot(tb, gene_id, show_x_title = TRUE, show_y_title = TRUE)
+
+  d / s + plot_layout(ncol = 1, guides = "collect") &
+    theme(legend.position = "bottom", legend.direction = "horizontal")
 }
+
+# Build composite grid
+# genes: character vector of gene names
+# ncol_genes: number of gene columns
+build_composite <- function(genes, ncol_genes) {
+  n <- length(genes)
+  nrow_genes <- ceiling(n / ncol_genes)
+
+  dist_plots <- vector("list", n)
+  skew_plots <- vector("list", n)
+
+  for (i in seq_along(genes)) {
+    gene <- genes[i]
+    row_idx <- ceiling(i / ncol_genes)
+    col_idx <- ((i - 1) %% ncol_genes) + 1
+
+    is_left   <- col_idx == 1
+    is_bottom <- row_idx == nrow_genes
+
+    tb <- load_satmut_base_for_gene(gene)
+    gene_meta <- satmut_promoters_gene_metadata %>%
+      filter((gene_name == gene) | (id == gene) | (ensembl_gene == gene) | (ensembl_tx == gene))
+    gene_id <- gene_meta$id
+
+    dist_plots[[i]] <- make_dist_plot(tb, gene,
+      show_x_title = FALSE,
+      show_y_title = is_left,
+      show_gene_title = TRUE
+    )
+    skew_plots[[i]] <- make_skew_plot(tb, gene_id,
+      show_x_title = is_bottom,
+      show_y_title = is_left
+    )
+  }
+
+  # Interleave: for each gene-row, all dist plots then all skew plots
+  ordered <- list()
+  for (row in seq_len(nrow_genes)) {
+    idx_start <- (row - 1) * ncol_genes + 1
+    idx_end   <- min(row * ncol_genes, n)
+    ordered <- c(ordered, dist_plots[idx_start:idx_end])
+    ordered <- c(ordered, skew_plots[idx_start:idx_end])
+  }
+
+  wrap_plots(ordered, ncol = ncol_genes) +
+    plot_layout(guides = "collect") &
+    theme(legend.position = "bottom", legend.direction = "horizontal")
+}
+
+# Load gene lists
+top_genes_both <- fread(paste0(genelist_path, "satmut_prom_genelist_both.txt"), header = FALSE, col.names = "gene_name") |> as_tibble()
+top_genes_pos  <- fread(paste0(genelist_path, "satmut_prom_genelist_pos.txt"),  header = FALSE, col.names = "gene_name") |> as_tibble()
+top_genes_neg  <- fread(paste0(genelist_path, "satmut_prom_genelist_neg.txt"),  header = FALSE, col.names = "gene_name") |> as_tibble()
+
+# Featured trio
+trio_genes <- c("LDLR", "CCR10", "TNKS2")
+
+# 3x5 sets (top 12, with exclusions)
+genes_3x5_both <- head(top_genes_both %>% filter(gene_name != "CCR10") %>% .$gene_name, 20)
+genes_3x5_neg  <- head(top_genes_neg  %>% filter(gene_name != "TNKS2") %>% .$gene_name, 20)
+genes_3x5_pos  <- head(top_genes_pos  %>% .$gene_name, 20)
+
+all_genes <- unique(c(trio_genes, genes_3x5_both, genes_3x5_neg, genes_3x5_pos))
+
+# Pre-compute global y-limits across all genes
+print("Pre-computing global y-limits across all genes...")
+global_skew_range <- c(Inf, -Inf)
+for (gene in all_genes) {
+  tb <- load_satmut_base_for_gene(gene)
+  r <- range(tb$avgKHS_skew_base, na.rm = TRUE)
+  global_skew_range[1] <- min(global_skew_range[1], r[1])
+  global_skew_range[2] <- max(global_skew_range[2], r[2])
+}
+global_skew_max <- ceiling(max(abs(global_skew_range)) * 10) / 10
+global_skew_ylim <- c(-global_skew_max, global_skew_max)
+print(paste0("Global skew y-limits: [", global_skew_ylim[1], ", ", global_skew_ylim[2], "]"))
+
+# Save individual gene panels
+for (gene in all_genes) {
+  print(paste0("Saving individual panel for ", gene))
+  p <- make_gene_panel(gene)
+  ggsave(paste0(save_path, "satmut_prom_individual_", gene, "_combined.pdf"),
+         plot = p, width = 4, height = 4, device = cairo_pdf)
+}
+
+# 3x1 composite: LDLR, CCR10, TNKS2
+print("Building 3x1 trio composite...")
+p_trio <- build_composite(trio_genes, ncol_genes = 4)
+ggsave(paste0(save_path, "satmut_prom_composite_trio.pdf"),
+       plot = p_trio, width = 7, height = 4, device = cairo_pdf)
+
+# 3x5 composites
+print("Building 3x5 composite: both...")
+p_both <- build_composite(genes_3x5_both, ncol_genes = 4)
+ggsave(paste0(save_path, "satmut_prom_composite_3x5_both.pdf"),
+       plot = p_both, width = 9, height = 11, device = cairo_pdf)
+
+print("Building 3x5 composite: neg...")
+p_neg <- build_composite(genes_3x5_neg, ncol_genes = 4)
+ggsave(paste0(save_path, "satmut_prom_composite_3x5_neg.pdf"),
+       plot = p_neg, width = 9, height = 11, device = cairo_pdf)
+
+print("Building 3x5 composite: pos...")
+p_pos <- build_composite(genes_3x5_pos, ncol_genes = 4)
+ggsave(paste0(save_path, "satmut_prom_composite_3x5_pos.pdf"),
+       plot = p_pos, width = 9, height = 11, device = cairo_pdf)
+
+print("Done!")
 ```

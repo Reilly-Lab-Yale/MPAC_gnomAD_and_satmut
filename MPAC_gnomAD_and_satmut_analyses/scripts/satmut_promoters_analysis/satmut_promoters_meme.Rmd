@@ -22,6 +22,9 @@ library(tidyverse)
 library(data.table)
 library(ComplexHeatmap)
 
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+
 # helper functions
 extend_granges <- function(x, upstream=0, downstream=0) {
   # from https://support.bioconductor.org/p/78652/
@@ -39,8 +42,7 @@ extend_granges <- function(x, upstream=0, downstream=0) {
 motifs_colors <- c("TATA"="#E37D73", "SP1"="#CA9742", "NRF1"="#98AB4F", "ELK1"="#58B157", "NFYC"="#5CB79E", "CREB1"="#88CCE9", "YY1"="#9AADD7", "CTCF"="#AB7EB2", "ZNF143"="#D872A6")
 
 # load genomic ranges
-#   non-standard bed file
-satmut_promoters_final_gr <- as_tibble(fread("../../data/gencode_filtered_regions/gencode.v44.protein.coding.canonical.autosomes.0.based.bed"))
+satmut_promoters_final_gr <- as_tibble(fread("../../data/gencode_filtered_regions/gencode.v44.protein.coding.1kb.promoters.autosomes.v2.bed"))
 names(satmut_promoters_final_gr) <- c("seqnames", "start", "end", "gene_name", "score", "strand", "id")
 satmut_promoters_final_gr <- satmut_promoters_final_gr %>% mutate(start = start + 1)  # 0 to 1-index)
 satmut_promoters_final_gr <- extend_granges(GRanges(satmut_promoters_final_gr), -750+50, 100+50)  # 250 bp promoter
@@ -50,76 +52,60 @@ names(satmut_promoters_final_dna) <- satmut_promoters_final_gr$id
 # manual motifs
 # core promoter motifs
 # https://www.sciencedirect.com/science/article/pii/S0968000415000080
-motif_tata <- read_meme("../../data/satmut_promoters_meme_pwms/MA0108.3.meme"); motif_tata@name <- "TATA"  # https://jaspar.elixir.no/matrix/MA0108.3/
-
-# additional motifs
-# https://genome.cshlp.org/content/14/8/1562.full.pdf overlapping
-# https://www.science.org/doi/abs/10.1126/science.adj0116
-motif_nfy <- read_meme("../../data/satmut_promoters_meme_pwms/MA1644.1.meme"); motif_nfy@name <- "NFYC"  # https://jaspar.elixir.no/matrix/MA1644.1/  # represent NFY
-motif_nrf1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0506.1.meme"); motif_nrf1@name <- "NRF1"  # https://jaspar.elixir.no/matrix/MA0506.1/
-motif_ets <- read_meme("../../data/satmut_promoters_meme_pwms/MA0028.2.meme"); motif_ets@name <- "ELK1"  # https://jaspar.elixir.no/matrix/MA0028.2/  # represent ETS
-motif_creb <- read_meme("../../data/satmut_promoters_meme_pwms/MA0018.3.meme"); motif_creb@name <- "CREB1"  # https://jaspar.elixir.no/matrix/MA0018.3/
-motif_yy1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0095.2.meme"); motif_yy1@name <- "YY1"  # https://jaspar.elixir.no/matrix/MA0095.2/  # different from consensus?
-motif_sp1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0079.5.meme"); motif_sp1@name <- "SP1"  # https://jaspar.elixir.no/matrix/MA0079.5/
-motif_znf143 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0088.2.meme"); motif_znf143@name <- "ZNF143"  # https://jaspar.elixir.no/matrix/MA0088.2/
-motif_ctcf <- read_meme("../../data/satmut_promoters_meme_pwms/MA0139.1.meme"); motif_ctcf@name <- "CTCF"  # https://jaspar.elixir.no/matrix/MA0139.1/
+motif_tata <- read_meme("../../data/satmut_promoters_meme_pwms/MA0108.3.meme"); motif_tata@name <- "TATA"
+motif_nfy <- read_meme("../../data/satmut_promoters_meme_pwms/MA1644.1.meme"); motif_nfy@name <- "NFYC"
+motif_nrf1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0506.1.meme"); motif_nrf1@name <- "NRF1"
+motif_ets <- read_meme("../../data/satmut_promoters_meme_pwms/MA0028.2.meme"); motif_ets@name <- "ELK1"
+motif_creb <- read_meme("../../data/satmut_promoters_meme_pwms/MA0018.3.meme"); motif_creb@name <- "CREB1"
+motif_yy1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0095.2.meme"); motif_yy1@name <- "YY1"
+motif_sp1 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0079.5.meme"); motif_sp1@name <- "SP1"
+motif_znf143 <- read_meme("../../data/satmut_promoters_meme_pwms/MA0088.2.meme"); motif_znf143@name <- "ZNF143"
+motif_ctcf <- read_meme("../../data/satmut_promoters_meme_pwms/MA0139.1.meme"); motif_ctcf@name <- "CTCF"
 
 motif_manual <- list(
-  # "BRE"=motif_bre,
-  # "BREd"=motif_bre_d,
-  "TATA"=motif_tata,
-  # "INR"=motif_inr,
-  # "MTE"=motif_mte,
-  # "DPE"=motif_dpe,
-  # "DCE"=motif_dpe,
-  "NFYC"=motif_nfy,  # NFY
-  "YY1"=motif_yy1,
-  "CREB1"=motif_creb,
-  "ELK1"=motif_ets,  # ETS
-  "SP1"=motif_sp1,
-  "NRF1"=motif_nrf1,
-  "ZNF143"=motif_znf143,
-  "CTCF"=motif_ctcf
+  "TATA" = motif_tata,
+  "NFYC" = motif_nfy,
+  "YY1" = motif_yy1,
+  "CREB1" = motif_creb,
+  "ELK1" = motif_ets,
+  "SP1" = motif_sp1,
+  "NRF1" = motif_nrf1,
+  "ZNF143" = motif_znf143,
+  "CTCF" = motif_ctcf
 )
 
 # perform motif enrichment
 satmut_promoters_final_ame_scan <- runAme(satmut_promoters_final_dna, database = motif_manual)
 head(data.table(satmut_promoters_final_ame_scan), n=20)
-
-# save motif enrichments
-write_tsv(satmut_promoters_final_ame_scan, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_ame_scan.txt.gz"))
+write_tsv(satmut_promoters_final_ame_scan, gzfile(paste0(save_path, "satmut_prom_motif_ame_scan.txt.gz")))
 
 # perform motif scanning
-#  from https://meme-suite.org/meme/doc/fimo-tutorial.html
-#   false-positives/promoter = (2 * promoter length) * p-value threshold
-#   which here is 2*250*4e-04 = 0.2
-satmut_promoters_final_fimo_scan <- runFimo(satmut_promoters_final_dna, motifs = motif_manual, thresh = 4e-04)  # 1e-03)
+satmut_promoters_final_fimo_scan <- runFimo(satmut_promoters_final_dna, motifs = motif_manual, thresh = 4e-04)
 satmut_promoters_final_fimo_scan <- as_tibble(satmut_promoters_final_fimo_scan)
 table(satmut_promoters_final_fimo_scan$motif_id)
-
-# save motif locations
-write_tsv(satmut_promoters_final_fimo_scan, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_scan.txt.gz"))
+write_tsv(satmut_promoters_final_fimo_scan, gzfile(paste0(save_path, "satmut_prom_motif_fimo_scan.txt.gz")))
 
 # compute coverage
 satmut_promoters_final_fimo_scan_temp <- satmut_promoters_final_fimo_scan %>% mutate(seqnames = "promoter")
 satmut_promoters_final_fimo_scan_temp <- satmut_promoters_final_fimo_scan_temp %>% 
-  mutate(start_temp = ((start + end)/2), end_temp = ((start+end)/2)) %>%  # get mid points
+  mutate(start_temp = ((start + end)/2), end_temp = ((start+end)/2)) %>%
   mutate(start = start_temp, end = end_temp) %>% 
   dplyr::select(-start_temp, -end_temp)
 satmut_promoters_final_fimo_scan_list <- GRangesList(split(satmut_promoters_final_fimo_scan_temp, satmut_promoters_final_fimo_scan_temp$motif_id))
 satmut_promoters_final_fimo_coverage <- lapply(satmut_promoters_final_fimo_scan_list, function(x) {
   x %>% coverage() %>% as_tibble() %>% mutate(position = row_number() - 250-50) %>% dplyr::select(-group, -group_name) %>% mutate(density = value/sum(value)) %>% dplyr::rename(coverage = value)}) %>% 
   bind_rows(.id = "motif_id")
-write_tsv(satmut_promoters_final_fimo_coverage, gzfile("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_coverage.txt.gz"))
+write_tsv(satmut_promoters_final_fimo_coverage, gzfile(paste0(save_path, "satmut_prom_motif_fimo_coverage.txt.gz")))
 
 motif_max <- satmut_promoters_final_fimo_coverage %>% group_by(motif_id) %>% summarise(max = max(coverage))
 print(motif_max)
+write_tsv(motif_max, paste0(save_path, "satmut_prom_motif_fimo_peak_positions.txt"))
 
 for (i in motif_max$motif_id) {
   print(satmut_promoters_final_fimo_coverage %>% filter(motif_id == i, coverage == filter(motif_max, motif_id == i)$max))
 }
 
-# visualize motif coverage
+# visualize motif coverage (faceted)
 ggplot(filter(satmut_promoters_final_fimo_coverage) %>% 
     mutate(motif_id = factor(motif_id, levels = names(motifs_colors)))) + 
   geom_vline(xintercept = 0, color = "grey50", linetype = "dashed") + 
@@ -131,9 +117,9 @@ ggplot(filter(satmut_promoters_final_fimo_coverage) %>%
   theme(strip.background = element_blank(), legend.position = "none") + 
   scale_color_manual(values = motifs_colors, breaks = names(motifs_colors)) + 
   xlim(c(-250, -1+100))
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_coverage_facet.pdf")
+ggsave(paste0(save_path, "satmut_prom_motif_fimo_coverage_facet.pdf"))
 
-# visualize motif coverage
+# visualize motif coverage (combined, all motifs)
 ggplot(filter(satmut_promoters_final_fimo_coverage, position >= -250, position <= -1) %>% 
     mutate(motif_id = factor(motif_id, levels = names(motifs_colors)))) + 
   geom_line(aes(position, coverage, color = motif_id)) + 
@@ -143,9 +129,10 @@ ggplot(filter(satmut_promoters_final_fimo_coverage, position >= -250, position <
   theme(strip.background = element_blank(), aspect.ratio = 1/2) + 
   scale_color_manual(values = motifs_colors, breaks = names(motifs_colors)) + 
   labs(color = "Motif")
-ggsave("../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_scan_coverage.pdf")
+ggsave(paste0(save_path, "satmut_prom_motif_fimo_coverage_all.pdf"))
 
-satmut_promoters_final_fimo_scan_coverage_plot <- ggplot(filter(satmut_promoters_final_fimo_coverage, position >= -250, position <= -1, motif_id %in% c("SP1", "TATA", "NRF1", "ELK1", "CREB1", "NFYC")) %>% 
+# visualize motif coverage (combined, core motifs only, saved as RDS for reuse)
+satmut_prom_motif_fimo_coverage_plot <- ggplot(filter(satmut_promoters_final_fimo_coverage, position >= -250, position <= -1, motif_id %in% c("SP1", "TATA", "NRF1", "ELK1", "CREB1", "NFYC")) %>% 
     mutate(motif_id = factor(motif_id, levels = names(motifs_colors)))) + 
   geom_line(aes(position, coverage, color = motif_id)) + 
   xlab("Distance to TSS") + 
@@ -154,6 +141,6 @@ satmut_promoters_final_fimo_scan_coverage_plot <- ggplot(filter(satmut_promoters
   theme(strip.background = element_blank()) + 
   scale_color_manual(values = motifs_colors, breaks = names(motifs_colors)) + 
   labs(color = "Motif")
-satmut_promoters_final_fimo_scan_coverage_plot
-saveRDS(satmut_promoters_final_fimo_scan_coverage_plot, "../../results/satmut_promoters_analysis/satmut_promoters_meme_analysis/satmut_promoters_final_fimo_scan_coverage.rds")
+satmut_prom_motif_fimo_coverage_plot
+saveRDS(satmut_prom_motif_fimo_coverage_plot, paste0(save_path, "satmut_prom_motif_fimo_coverage.rds"))
 ```

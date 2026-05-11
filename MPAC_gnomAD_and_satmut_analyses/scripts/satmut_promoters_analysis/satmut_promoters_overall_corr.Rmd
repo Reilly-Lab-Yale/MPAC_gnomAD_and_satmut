@@ -18,11 +18,14 @@ library(patchwork)
 library(corrplot)
 library(GGally)
 
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/"
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+
 # load tables
 satmut_promoters_pred_final_base_level <- list()
 for (chr in paste0("chr", c(1:22))) {
 	print(chr)
-	satmut_promoters_pred_final_base_level[[chr]] <- as_tibble(fread(paste0("../../results/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz"))) %>%  
+	satmut_promoters_pred_final_base_level[[chr]] <- as_tibble(fread(paste0("../../data/satmut_promoters_preprocess/satmut_promoters_final_base/satmut_promoters_final_base_", chr, ".txt.gz"))) %>%  
 		filter(!in_all_exon_splice)
 }
 
@@ -56,285 +59,168 @@ sum(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp)$avgKHS_emV
   sum(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp)$avgKHS_emVar_base)
 
 # of the negative emVars, what is their mean allelic-skew
-mean(filter(satmut_promoters_pred_final_base_level, in_promoter_1kb, avgKHS_emVar_neg_base > 0)$avgKHS_skew_pred_base, na.rm=T)
-mean(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp, avgKHS_emVar_neg_base > 0)$avgKHS_skew_pred_base, na.rm=T)
+mean(filter(satmut_promoters_pred_final_base_level, in_promoter_1kb, avgKHS_emVar_neg_base > 0)$avgKHS_skew_base, na.rm=T)
+mean(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp, avgKHS_emVar_neg_base > 0)$avgKHS_skew_base, na.rm=T)
 
 # of the positive emVars, what is their mean allelic-skew
-mean(filter(satmut_promoters_pred_final_base_level, in_promoter_1kb, avgKHS_emVar_pos_base > 0)$avgKHS_skew_pred_base, na.rm=T)
-mean(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp, avgKHS_emVar_pos_base > 0)$avgKHS_skew_pred_base, na.rm=T)
+mean(filter(satmut_promoters_pred_final_base_level, in_promoter_1kb, avgKHS_emVar_pos_base > 0)$avgKHS_skew_base, na.rm=T)
+mean(filter(satmut_promoters_pred_final_base_level, in_promoter_250bp, avgKHS_emVar_pos_base > 0)$avgKHS_skew_base, na.rm=T)
+```
+
+```{r helper-function}
+# Helper: compute correlation matrix, save corrplot PDF and source TSV
+save_corrplot <- function(df, columns, rename_map, file_stem, width = 3, height = 3) {
+  cor_mat <- cor(
+    df %>% dplyr::select(all_of(columns)) %>% dplyr::rename(!!!rename_map),
+    use = "na.or.complete",
+    method = "spearman"
+  )
+  # Save source table
+  write.csv(cor_mat, paste0(save_path, file_stem, ".csv"))
+  # Save corrplot
+  pdf(paste0(save_path, file_stem, ".pdf"), width = width, height = height)
+  corrplot(cor_mat,
+    order = "original", method = "square", tl.pos = "lt", type = "upper",
+    tl.col = "black", tl.cex = 0.6, tl.srt = 90,
+    addCoef.col = "black",
+    pch = ""
+  )
+  dev.off()
+}
 ```
 
 ```{r correlations}
-# cor variant features
-satmut_promoters_pred_final_base_level_cor <- cor(satmut_promoters_pred_final_base_level %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_abs_skew_pred_base, 
-		HepG2_abs_skew_pred_base, 
-		SKNSH_abs_skew_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 |allelic skew|` = K562_abs_skew_pred_base,
-	  `HepG2 |allelic skew|` = HepG2_abs_skew_pred_base,
-	  `SKNSH |allelic skew|` = SKNSH_abs_skew_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# Skew correlations
+
+# All positions
+save_corrplot(
+  satmut_promoters_pred_final_base_level,
+  columns = c("phyloP_mam241_pos_base", "K562_abs_skew_base", "HepG2_abs_skew_base", "SKNSH_abs_skew_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 |allelic skew|` = "K562_abs_skew_base",
+    `HepG2 |allelic skew|` = "HepG2_abs_skew_base",
+    `SKNSH |allelic skew|` = "SKNSH_abs_skew_base"
+  ),
+  file_stem = "satmut_prom_corr_skew"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_skew_cor.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-satmut_promoters_pred_final_base_level_cor <- cor(satmut_promoters_pred_final_base_level %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_ref_pred_base, 
-		HepG2_ref_pred_base, 
-		SKNSH_ref_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 activity` = K562_ref_pred_base,
-	  `HepG2 activity` = HepG2_ref_pred_base,
-	  `SKNSH activity` = SKNSH_ref_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 250bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_250bp),
+  columns = c("phyloP_mam241_pos_base", "K562_abs_skew_base", "HepG2_abs_skew_base", "SKNSH_abs_skew_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 |allelic skew|` = "K562_abs_skew_base",
+    `HepG2 |allelic skew|` = "HepG2_abs_skew_base",
+    `SKNSH |allelic skew|` = "SKNSH_abs_skew_base"
+  ),
+  file_stem = "satmut_prom_corr_skew_250bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_ref_cor.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-# cor variant features 250bp
-satmut_promoters_pred_final_base_level_cor_250bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_250bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_abs_skew_pred_base, 
-		HepG2_abs_skew_pred_base, 
-		SKNSH_abs_skew_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 |allelic skew|` = K562_abs_skew_pred_base,
-	  `HepG2 |allelic skew|` = HepG2_abs_skew_pred_base,
-	  `SKNSH |allelic skew|` = SKNSH_abs_skew_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 251-500bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_500bp, !in_promoter_250bp),
+  columns = c("phyloP_mam241_pos_base", "K562_abs_skew_base", "HepG2_abs_skew_base", "SKNSH_abs_skew_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 |allelic skew|` = "K562_abs_skew_base",
+    `HepG2 |allelic skew|` = "HepG2_abs_skew_base",
+    `SKNSH |allelic skew|` = "SKNSH_abs_skew_base"
+  ),
+  file_stem = "satmut_prom_corr_skew_500bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_skew_cor_250bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_250bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-satmut_promoters_pred_final_base_level_cor_250bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_250bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_ref_pred_base, 
-		HepG2_ref_pred_base, 
-		SKNSH_ref_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 activity` = K562_ref_pred_base,
-	  `HepG2 activity` = HepG2_ref_pred_base,
-	  `SKNSH activity` = SKNSH_ref_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 501-750bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_750bp, !in_promoter_500bp),
+  columns = c("phyloP_mam241_pos_base", "K562_abs_skew_base", "HepG2_abs_skew_base", "SKNSH_abs_skew_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 |allelic skew|` = "K562_abs_skew_base",
+    `HepG2 |allelic skew|` = "HepG2_abs_skew_base",
+    `SKNSH |allelic skew|` = "SKNSH_abs_skew_base"
+  ),
+  file_stem = "satmut_prom_corr_skew_750bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_ref_cor_250bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_250bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-# cor variant features 251bp to 500bp
-satmut_promoters_pred_final_base_level_cor_500bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_500bp, !in_promoter_250bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_abs_skew_pred_base, 
-		HepG2_abs_skew_pred_base, 
-		SKNSH_abs_skew_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 |allelic skew|` = K562_abs_skew_pred_base,
-	  `HepG2 |allelic skew|` = HepG2_abs_skew_pred_base,
-	  `SKNSH |allelic skew|` = SKNSH_abs_skew_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 751bp-1kb
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_1kb, !in_promoter_750bp),
+  columns = c("phyloP_mam241_pos_base", "K562_abs_skew_base", "HepG2_abs_skew_base", "SKNSH_abs_skew_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 |allelic skew|` = "K562_abs_skew_base",
+    `HepG2 |allelic skew|` = "HepG2_abs_skew_base",
+    `SKNSH |allelic skew|` = "SKNSH_abs_skew_base"
+  ),
+  file_stem = "satmut_prom_corr_skew_1kb"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_skew_cor_500bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_500bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
+# Activity correlations
 
-satmut_promoters_pred_final_base_level_cor_500bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_500bp, !in_promoter_250bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_ref_pred_base, 
-		HepG2_ref_pred_base, 
-		SKNSH_ref_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 activity` = K562_ref_pred_base,
-	  `HepG2 activity` = HepG2_ref_pred_base,
-	  `SKNSH activity` = SKNSH_ref_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# All positions
+save_corrplot(
+  satmut_promoters_pred_final_base_level,
+  columns = c("phyloP_mam241_pos_base", "K562_activity_base", "HepG2_activity_base", "SKNSH_activity_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 activity` = "K562_activity_base",
+    `HepG2 activity` = "HepG2_activity_base",
+    `SKNSH activity` = "SKNSH_activity_base"
+  ),
+  file_stem = "satmut_prom_corr_activity"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_ref_cor_500bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_500bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-# cor variant features 501bp to 750bp
-satmut_promoters_pred_final_base_level_cor_750bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_750bp, !in_promoter_500bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_abs_skew_pred_base, 
-		HepG2_abs_skew_pred_base, 
-		SKNSH_abs_skew_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 |allelic skew|` = K562_abs_skew_pred_base,
-	  `HepG2 |allelic skew|` = HepG2_abs_skew_pred_base,
-	  `SKNSH |allelic skew|` = SKNSH_abs_skew_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 250bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_250bp),
+  columns = c("phyloP_mam241_pos_base", "K562_activity_base", "HepG2_activity_base", "SKNSH_activity_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 activity` = "K562_activity_base",
+    `HepG2 activity` = "HepG2_activity_base",
+    `SKNSH activity` = "SKNSH_activity_base"
+  ),
+  file_stem = "satmut_prom_corr_activity_250bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_skew_cor_750bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_750bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-satmut_promoters_pred_final_base_level_cor_750bp <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_750bp, !in_promoter_500bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_ref_pred_base, 
-		HepG2_ref_pred_base, 
-		SKNSH_ref_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 activity` = K562_ref_pred_base,
-	  `HepG2 activity` = HepG2_ref_pred_base,
-	  `SKNSH activity` = SKNSH_ref_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 251-500bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_500bp, !in_promoter_250bp),
+  columns = c("phyloP_mam241_pos_base", "K562_activity_base", "HepG2_activity_base", "SKNSH_activity_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 activity` = "K562_activity_base",
+    `HepG2 activity` = "HepG2_activity_base",
+    `SKNSH activity` = "SKNSH_activity_base"
+  ),
+  file_stem = "satmut_prom_corr_activity_500bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_ref_cor_750bp.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_750bp, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
-
-# cor variant features 751bp to 1kb
-satmut_promoters_pred_final_base_level_cor_1kb <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_1kb, !in_promoter_750bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_abs_skew_pred_base, 
-		HepG2_abs_skew_pred_base, 
-		SKNSH_abs_skew_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 |allelic skew|` = K562_abs_skew_pred_base,
-	  `HepG2 |allelic skew|` = HepG2_abs_skew_pred_base,
-	  `SKNSH |allelic skew|` = SKNSH_abs_skew_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
+# 501-750bp
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_750bp, !in_promoter_500bp),
+  columns = c("phyloP_mam241_pos_base", "K562_activity_base", "HepG2_activity_base", "SKNSH_activity_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 activity` = "K562_activity_base",
+    `HepG2 activity` = "HepG2_activity_base",
+    `SKNSH activity` = "SKNSH_activity_base"
+  ),
+  file_stem = "satmut_prom_corr_activity_750bp"
 )
 
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_skew_cor_1kb.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_1kb, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
+# 751bp-1kb
+save_corrplot(
+  satmut_promoters_pred_final_base_level %>% filter(in_promoter_1kb, !in_promoter_750bp),
+  columns = c("phyloP_mam241_pos_base", "K562_activity_base", "HepG2_activity_base", "SKNSH_activity_base"),
+  rename_map = c(
+    `max(0, phyloP)` = "phyloP_mam241_pos_base",
+    `K562 activity` = "K562_activity_base",
+    `HepG2 activity` = "HepG2_activity_base",
+    `SKNSH activity` = "SKNSH_activity_base"
+  ),
+  file_stem = "satmut_prom_corr_activity_1kb"
 )
-dev.off()
-
-satmut_promoters_pred_final_base_level_cor_1kb <- cor(satmut_promoters_pred_final_base_level %>% 
-	filter(in_promoter_1kb, !in_promoter_750bp) %>% 
-	dplyr::select(
-		phyloP_mam241_pos_base,
-		K562_ref_pred_base, 
-		HepG2_ref_pred_base, 
-		SKNSH_ref_pred_base, 
-	) %>% 
-	dplyr::rename(
-	  `max(0, phyloP)` = phyloP_mam241_pos_base,
-	  `K562 activity` = K562_ref_pred_base,
-	  `HepG2 activity` = HepG2_ref_pred_base,
-	  `SKNSH activity` = SKNSH_ref_pred_base,
-	), 
-	use = "na.or.complete",
-	method = "spearman"
-)
-
-pdf("../../results/satmut_promoters_analysis/satmut_promoters_overall_corr/satmut_promoters_pred_final_base_level_ref_cor_1kb.pdf", width = 3, height = 3)
-corrplot(satmut_promoters_pred_final_base_level_cor_1kb, 
-	order="original", method="square", tl.pos="lt", type="upper", 
-	tl.col="black", tl.cex=0.6, tl.srt=90, 
-	addCoef.col="black", 
-	pch = ""
-)
-dev.off()
 ```
