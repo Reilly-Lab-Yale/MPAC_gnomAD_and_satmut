@@ -1,0 +1,9 @@
+step	description	n
+1	gnomAD SNVs loaded	621936226
+2	gnomAD after QC filter	544127953
+3	gnomAD after exon/splice mask	519120358
+4	MPAC predictions (good parsing)	621936226
+5	Merged gnomAD + MPAC	519120358
+6	Roulette loaded	8035297887
+7	Roulette coverage	518841486
+8	Annotated with cCREs	519120358

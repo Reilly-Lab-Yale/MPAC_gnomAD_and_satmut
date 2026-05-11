@@ -1,0 +1,5 @@
+step	description	n
+1	gnomAD SNVs loaded	621936226
+2	gnomAD after QC filter	544127953
+3	Roulette loaded	8035297887
+4	Roulette coverage	543840177

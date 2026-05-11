@@ -1,0 +1,2 @@
+Term	Rank	P.value	Adjusted.P.value	Old.P.value	Old.Adjusted.P.value	Odds.Ratio	Combined.Score	Genes	Database	Significance
+RHOF GTPase Cycle	1	6.81829673349185e-5	0.0225003792205231	0	0	44.4171122994652	426.107383886044	FARP1;BAIAP2L1;FAM169A	Reactome Pathways 2024	FDR < 0.05

@@ -1,0 +1,543 @@
+---
+title: "Analyses of purifying selection in gnomAD by Ensembl VEP consequence"
+author: "Stephen Rong"
+date: "2024-02-19"
+
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r preamble, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(data.table)
+library(tidyverse)
+library(cowplot)
+
+save_path <- "../../results/gnomAD_purifying_selection/gnomAD_purifying_selection_vep/"
+data_path <- "../../data/gnomAD_vep_summaries/"
+
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+```
+
+```{r constants}
+af_order <- c("SINGLETON", "ULTRARARE", "RARE", "LOW_FREQ", "COMMON")
+
+mut_order <- c("CpG", "non-CpG-ti", "non-CpG-tv")
+mut_labels <- c(CpG = "CpG transition", `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
+mut_colors <- c(`CpG transition` = "#E41A1C", `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
+
+# VEP consequence display order (least severe first, most severe on right)
+vep_order <- rev(c(
+  "splice acceptor variant", "splice donor variant", "stop gained",
+  "stop lost", "start lost", "missense variant", "splice region variant",
+  "incomplete terminal codon variant", "synonymous variant",
+  "stop retained variant", "coding sequence variant", "mature miRNA variant",
+  "5 prime UTR variant", "3 prime UTR variant",
+  "non coding transcript exon variant", "intron variant",
+  "non coding transcript variant", "upstream gene variant",
+  "downstream gene variant", "TF binding site variant",
+  "regulatory region variant", "intergenic variant",
+  "other consequence"
+))
+```
+
+```{r load-data}
+consq      <- fread(paste0(data_path, "gnomAD_vep_consequence.tsv"))
+consq_mc   <- fread(paste0(data_path, "gnomAD_vep_consequence_by_mutclass.tsv"))
+consq_af   <- fread(paste0(data_path, "gnomAD_vep_consequence_by_af.tsv"))
+
+# Drop variants with unknown mutation class (missing Roulette pentanucleotide context)
+consq_mc <- consq_mc %>% filter(mut_class != "unknown")
+
+# Factor VEP consequences (drop any not present in data)
+vep_present <- intersect(vep_order, unique(consq$vep_consequence))
+consq <- consq %>%
+  mutate(vep_consequence = factor(vep_consequence, levels = vep_present))
+
+consq_mc <- consq_mc %>%
+  filter(vep_consequence %in% vep_present) %>%
+  mutate(vep_consequence = factor(vep_consequence, levels = vep_present),
+         mut_class = factor(mut_labels[mut_class], levels = mut_labels))
+
+consq_af <- consq_af %>%
+  filter(vep_consequence %in% vep_present) %>%
+  mutate(vep_consequence = factor(vep_consequence, levels = vep_present),
+         af_class = factor(af_class, levels = af_order))
+```
+
+# Section 1: Mean phyloP by VEP consequence
+
+```{r mean-phylop-by-consequence}
+consq_phylop <- consq %>%
+  filter(n >= 50) %>%
+  mutate(
+    phyloP_mean = sum_phyloP / n_phyloP,
+    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
+    phyloP_se   = sqrt(phyloP_var / n_phyloP),
+    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
+    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se
+  )
+
+ggplot(consq_phylop %>% filter(!is.na(phyloP_mean))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = phyloP_mean, color = vep_consequence),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = phyloP_lci, ymax = phyloP_uci,
+                     color = vep_consequence),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 1 / 2) +
+  scale_color_viridis_d() +
+  labs(x = "Ensembl VEP consequence (worst)", y = "Mean conservation (phyloP)") +
+  guides(color = "none")
+ggsave(paste0(save_path, "gnomAD_vep_mean_phylop_by_consequence.pdf"))
+write_tsv(consq_phylop, paste0(save_path, "gnomAD_vep_mean_phylop_by_consequence.txt"))
+```
+
+# Section 2: Mean mutation rate by VEP consequence
+
+```{r mean-mutrate-by-consequence}
+consq_mutrate <- consq %>%
+  filter(n_MR >= 50) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+ggplot(consq_mutrate %>% filter(!is.na(mutrate_mean))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = mutrate_mean, color = vep_consequence),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = mutrate_lci, ymax = mutrate_uci,
+                     color = vep_consequence),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 1 / 2) +
+  scale_color_viridis_d() +
+  labs(x = "Ensembl VEP consequence (worst)", y = "Mean mutation rate (Roulette)") +
+  guides(color = "none")
+ggsave(paste0(save_path, "gnomAD_vep_mean_mutrate_by_consequence.pdf"))
+write_tsv(consq_mutrate, paste0(save_path, "gnomAD_vep_mean_mutrate_by_consequence.txt"))
+```
+
+# Section 3: Singleton vs. common OR by VEP consequence
+
+```{r fet-singleton-common-by-consequence}
+af_wide_vep <- consq_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  pivot_wider(names_from = af_class, values_from = c(n, n_MR, sum_MR, sum_MR_sq,
+              n_phyloP, sum_phyloP, sum_phyloP_sq, n_conserved),
+              values_fill = 0)
+
+gw_totals_vep <- af_wide_vep %>%
+  summarise(gw_SINGLETON = sum(n_SINGLETON), gw_COMMON = sum(n_COMMON))
+
+af_wide_vep <- af_wide_vep %>%
+  filter(n_SINGLETON + n_COMMON >= 50) %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(n_SINGLETON + 1L, n_COMMON + 1L,
+                                    gw_totals_vep$gw_SINGLETON - n_SINGLETON + 1L,
+                                    gw_totals_vep$gw_COMMON - n_COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  mutate(
+    log2odds = log2(odds),
+    log2lci  = log2(lci),
+    log2uci  = log2(uci)
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+# Linear OR
+ggplot(af_wide_vep %>% filter(!is.na(odds))) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_point(aes(x = vep_consequence, y = odds, color = vep_consequence),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = lci, ymax = uci,
+                     color = vep_consequence),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 1 / 2) +
+  scale_color_viridis_d() +
+  labs(x = "Ensembl VEP consequence (worst)", y = "OR singleton vs. common (gnomAD)") +
+  guides(color = "none")
+ggsave(paste0(save_path, "gnomAD_vep_fet_singleton_common_by_consequence.pdf"))
+
+# log2 OR
+ggplot(af_wide_vep %>% filter(!is.na(log2odds))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = log2odds, color = vep_consequence),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = log2lci, ymax = log2uci,
+                     color = vep_consequence),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 1 / 2) +
+  scale_color_viridis_d() +
+  labs(x = "Ensembl VEP consequence (worst)",
+       y = expression(log[2]*OR*" singleton vs. common (gnomAD)")) +
+  guides(color = "none")
+ggsave(paste0(save_path, "gnomAD_vep_fet_singleton_common_by_consequence_log2.pdf"))
+
+write_tsv(af_wide_vep, paste0(save_path, "gnomAD_vep_fet_singleton_common_by_consequence.txt"))
+```
+
+# Section 4: Fraction conserved by VEP consequence
+
+```{r frac-conserved-by-consequence}
+consq_frac_cons <- consq %>%
+  filter(n >= 50) %>%
+  mutate(
+    frac_conserved     = n_conserved / n,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
+    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
+  )
+
+ggplot(consq_frac_cons %>% filter(!is.na(frac_conserved))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = frac_conserved, color = vep_consequence),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                     color = vep_consequence),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 1 / 2) +
+  scale_color_viridis_d() +
+  labs(x = "Ensembl VEP consequence (worst)", y = "Proportion conserved (phyloP > 2.27)") +
+  guides(color = "none")
+ggsave(paste0(save_path, "gnomAD_vep_prop_conserved_by_consequence.pdf"))
+write_tsv(consq_frac_cons, paste0(save_path, "gnomAD_vep_prop_conserved_by_consequence.txt"))
+```
+
+# Section 5: PhyloP heatmap by VEP consequence x AF class
+
+```{r heatmap-phylop-by-consequence-af}
+consq_af_phylop <- consq_af %>%
+  filter(n >= 50) %>%
+  mutate(phyloP_mean = sum_phyloP / n_phyloP)
+
+ggplot(consq_af_phylop %>% filter(!is.na(phyloP_mean))) +
+  geom_tile(aes(x = vep_consequence, y = af_class, fill = phyloP_mean)) +
+  geom_text(aes(x = vep_consequence, y = af_class,
+                label = round(phyloP_mean, 2)),
+            color = "white", size = 2) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c() +
+  labs(x = "Ensembl VEP consequence (worst)", y = "AF class", fill = "Mean conservation (phyloP)") +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_vep_heatmap_phylop_by_consequence_af.pdf"), width = 14, height = 5)
+write_tsv(consq_af_phylop, paste0(save_path, "gnomAD_vep_heatmap_phylop_by_consequence_af.txt"))
+```
+
+# Section 6: Comparison with MPAC SNP analyses by cCRE
+
+```{r load-snp-data-for-comparison}
+snp_data_path <- "../../data/gnomAD_snp_summaries/"
+
+snp_skew    <- fread(paste0(snp_data_path, "gnomAD_snp_skew_by_ccre.tsv"))
+snp_skew_af <- fread(paste0(snp_data_path, "gnomAD_snp_skew_by_ccre_af.tsv"))
+
+# Relabel non-cCRE -> non-cCRE (revert by commenting out this block)
+relabel_ccre <- function(x) ifelse(x == "non-cCRE", "non-cCRE", x)
+snp_skew    <- snp_skew %>% mutate(ccre_class = relabel_ccre(ccre_class))
+snp_skew_af <- snp_skew_af %>% mutate(ccre_class = relabel_ccre(ccre_class))
+
+snp_ccre_order <- c("PLS", "pELS", "dELS",
+                     "non-cCRE",  # was: "non-cCRE"
+                     "Other cCREs")
+snp_ccre_colors <- c(PLS="#3E0751", pELS="#405187", dELS="#468E8B",
+                     `non-cCRE`="#79C66E", `Other cCREs`="grey50")
+
+skew_bin_order <- c("(-Inf,-1.5)", "[-1.5,-1.0)", "[-1.0,-0.5)", "[-0.5,-0.2)",
+                    "[-0.2,-0.05)", "[-0.05,0.05)", "[0.05,0.2)", "[0.2,0.5)",
+                    "[0.5,1.0)", "[1.0,1.5)", "[1.5,Inf)")
+
+min_n <- 50
+
+# Pre-compute all SNP statistics used across comparison panels
+# Singleton vs common OR
+snp_af_wide <- snp_skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  mutate(ccre_class = factor(ccre_class, levels = snp_ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order)) %>%
+  pivot_wider(names_from = af_class, values_from = c(n, n_MR, sum_MR, sum_MR_sq,
+              n_phyloP, sum_phyloP, sum_phyloP_sq, n_conserved,
+              n_tf_chip_peak, n_tf_footprint),
+              values_fill = 0)
+
+snp_gw_totals <- snp_af_wide %>%
+  group_by(skew_type) %>%
+  summarise(gw_SINGLETON = sum(n_SINGLETON), gw_COMMON = sum(n_COMMON), .groups = "drop")
+
+snp_af_wide <- snp_af_wide %>%
+  filter(n_SINGLETON + n_COMMON >= min_n) %>%
+  left_join(snp_gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(n_SINGLETON + 1L, n_COMMON + 1L,
+                                    gw_SINGLETON - n_SINGLETON + 1L,
+                                    gw_COMMON - n_COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+# Mean phyloP
+snp_phylop <- snp_skew %>%
+  filter(n >= min_n) %>%
+  mutate(
+    ccre_class = factor(ccre_class, levels = snp_ccre_order),
+    skew_bin = factor(skew_bin, levels = skew_bin_order),
+    phyloP_mean = sum_phyloP / n_phyloP,
+    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
+    phyloP_se   = sqrt(phyloP_var / n_phyloP),
+    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
+    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se
+  )
+
+# Proportion conserved
+snp_cons <- snp_skew %>%
+  filter(n >= min_n) %>%
+  mutate(
+    ccre_class = factor(ccre_class, levels = snp_ccre_order),
+    skew_bin = factor(skew_bin, levels = skew_bin_order),
+    frac_conserved     = n_conserved / n,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
+    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
+  )
+
+# Mean mutation rate
+snp_mutrate <- snp_skew %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    ccre_class = factor(ccre_class, levels = snp_ccre_order),
+    skew_bin = factor(skew_bin, levels = skew_bin_order),
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+n_vep <- length(vep_present)
+n_skew <- length(skew_bin_order)
+```
+
+```{r comparison-singleton-common-or, fig.width=14, fig.height=4}
+# VEP: singleton vs common OR by consequence (already computed above)
+# Compute common y-limits across VEP and SNP panels
+or_ylim <- range(c(af_wide_vep$lci, af_wide_vep$uci,
+                    snp_af_wide %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(lci),
+                    snp_af_wide %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(uci)),
+                  na.rm = TRUE)
+
+n_vep <- length(vep_present)
+n_skew <- length(skew_bin_order)
+
+p_vep_or <- ggplot(af_wide_vep %>% filter(!is.na(odds))) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_point(aes(x = vep_consequence, y = odds, color = vep_consequence)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = lci, ymax = uci, color = vep_consequence),
+                width = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+        axis.line.x = element_blank(),
+        plot.title = element_text(size = 10)) +
+  scale_color_viridis_d() +
+  coord_cartesian(ylim = or_ylim) +
+  labs(x = "VEP consequence", y = "OR singleton vs. common", title = "Ensembl VEP") +
+  guides(color = "none")
+
+snp_or_panels <- list()
+for (cc in c("PLS", "pELS", "dELS", "non-cCRE")) {
+  d <- snp_af_wide %>% filter(skew_type == "mean_skew", ccre_class == cc)
+  snp_or_panels[[cc]] <- ggplot(d) +
+    geom_hline(yintercept = 1, color = "black") +
+    geom_point(aes(x = skew_bin, y = odds), color = snp_ccre_colors[cc]) +
+    geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci),
+                  color = snp_ccre_colors[cc], width = 0.5) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+          axis.line.x = element_blank(),
+          axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(), axis.line.y = element_blank(),
+          plot.title = element_text(size = 10)) +
+    coord_cartesian(ylim = or_ylim) +
+    labs(x = "Mean allelic skew", title = cc)
+}
+
+plot_grid(p_vep_or, snp_or_panels[["PLS"]], snp_or_panels[["pELS"]],
+          snp_or_panels[["dELS"]], snp_or_panels[["non-cCRE"]],
+          nrow = 1, align = "h", axis = "tb",
+          rel_widths = c(n_vep, n_skew, n_skew, n_skew, n_skew))
+ggsave(paste0(save_path, "gnomAD_comparison_fet_singleton_common_vep_vs_mpac.pdf"),
+       width = 14, height = 5)
+```
+
+```{r comparison-phylop-mean, fig.width=14, fig.height=4}
+# VEP: mean phyloP by consequence
+phylop_ylim <- range(c(consq_phylop$phyloP_lci, consq_phylop$phyloP_uci,
+                        snp_phylop %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(phyloP_lci),
+                        snp_phylop %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(phyloP_uci)),
+                      na.rm = TRUE)
+
+p_vep_phylop <- ggplot(consq_phylop %>% filter(!is.na(phyloP_mean))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = phyloP_mean, color = vep_consequence)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = phyloP_lci, ymax = phyloP_uci,
+                     color = vep_consequence), width = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+        axis.line.x = element_blank(),
+        plot.title = element_text(size = 10)) +
+  scale_color_viridis_d() +
+  coord_cartesian(ylim = phylop_ylim) +
+  labs(x = "VEP consequence", y = "Mean conservation (phyloP)", title = "Ensembl VEP") +
+  guides(color = "none")
+
+snp_phylop_panels <- list()
+for (cc in c("PLS", "pELS", "dELS", "non-cCRE")) {
+  d <- snp_phylop %>% filter(skew_type == "mean_skew", ccre_class == cc)
+  snp_phylop_panels[[cc]] <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_point(aes(x = skew_bin, y = phyloP_mean), color = snp_ccre_colors[cc]) +
+    geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci),
+                  color = snp_ccre_colors[cc], width = 0.5) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+          axis.line.x = element_blank(),
+          axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(), axis.line.y = element_blank(),
+          plot.title = element_text(size = 10)) +
+    coord_cartesian(ylim = phylop_ylim) +
+    labs(x = "Mean allelic skew", title = cc)
+}
+
+plot_grid(p_vep_phylop, snp_phylop_panels[["PLS"]], snp_phylop_panels[["pELS"]],
+          snp_phylop_panels[["dELS"]], snp_phylop_panels[["non-cCRE"]],
+          nrow = 1, align = "h", axis = "tb",
+          rel_widths = c(n_vep, n_skew, n_skew, n_skew, n_skew))
+ggsave(paste0(save_path, "gnomAD_comparison_mean_phylop_vep_vs_mpac.pdf"),
+       width = 14, height = 5)
+```
+
+```{r comparison-prop-conserved, fig.width=14, fig.height=4}
+# VEP: proportion conserved by consequence
+cons_ylim <- range(c(consq_frac_cons$frac_conserved_lci, consq_frac_cons$frac_conserved_uci,
+                      snp_cons %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(frac_conserved_lci),
+                      snp_cons %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(frac_conserved_uci)),
+                    na.rm = TRUE)
+
+p_vep_cons <- ggplot(consq_frac_cons %>% filter(!is.na(frac_conserved))) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = frac_conserved, color = vep_consequence)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                     color = vep_consequence), width = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+        axis.line.x = element_blank(),
+        plot.title = element_text(size = 10)) +
+  scale_color_viridis_d() +
+  coord_cartesian(ylim = cons_ylim) +
+  labs(x = "VEP consequence", y = "Proportion conserved (phyloP > 2.27)", title = "Ensembl VEP") +
+  guides(color = "none")
+
+snp_cons_panels <- list()
+for (cc in c("PLS", "pELS", "dELS", "non-cCRE")) {
+  d <- snp_cons %>% filter(skew_type == "mean_skew", ccre_class == cc)
+  snp_cons_panels[[cc]] <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_point(aes(x = skew_bin, y = frac_conserved), color = snp_ccre_colors[cc]) +
+    geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci),
+                  color = snp_ccre_colors[cc], width = 0.5) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+          axis.line.x = element_blank(),
+          axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(), axis.line.y = element_blank(),
+          plot.title = element_text(size = 10)) +
+    coord_cartesian(ylim = cons_ylim) +
+    labs(x = "Mean allelic skew", title = cc)
+}
+
+plot_grid(p_vep_cons, snp_cons_panels[["PLS"]], snp_cons_panels[["pELS"]],
+          snp_cons_panels[["dELS"]], snp_cons_panels[["non-cCRE"]],
+          nrow = 1, align = "h", axis = "tb",
+          rel_widths = c(n_vep, n_skew, n_skew, n_skew, n_skew))
+ggsave(paste0(save_path, "gnomAD_comparison_prop_conserved_vep_vs_mpac.pdf"),
+       width = 14, height = 5)
+```
+
+```{r comparison-mutrate-mean, fig.width=14, fig.height=4}
+# VEP: mean mutation rate by consequence
+consq_mutrate_cmp <- consq_mutrate %>% filter(!is.na(mutrate_mean))
+
+mutrate_ylim <- range(c(consq_mutrate_cmp$mutrate_lci, consq_mutrate_cmp$mutrate_uci,
+                         snp_mutrate %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(mutrate_lci),
+                         snp_mutrate %>% filter(skew_type == "mean_skew", ccre_class %in% c("PLS", "pELS", "dELS", "non-cCRE")) %>% pull(mutrate_uci)),
+                       na.rm = TRUE)
+
+p_vep_mutrate <- ggplot(consq_mutrate_cmp) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_point(aes(x = vep_consequence, y = mutrate_mean, color = vep_consequence)) +
+  geom_errorbar(aes(x = vep_consequence, ymin = mutrate_lci, ymax = mutrate_uci,
+                     color = vep_consequence), width = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+        axis.line.x = element_blank(),
+        plot.title = element_text(size = 10)) +
+  scale_color_viridis_d() +
+  coord_cartesian(ylim = mutrate_ylim) +
+  labs(x = "VEP consequence", y = "Mean mutation rate (Roulette)", title = "Ensembl VEP") +
+  guides(color = "none")
+
+snp_mutrate_panels <- list()
+for (cc in c("PLS", "pELS", "dELS", "non-cCRE")) {
+  d <- snp_mutrate %>% filter(skew_type == "mean_skew", ccre_class == cc)
+  snp_mutrate_panels[[cc]] <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_point(aes(x = skew_bin, y = mutrate_mean), color = snp_ccre_colors[cc]) +
+    geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci),
+                  color = snp_ccre_colors[cc], width = 0.5) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 8),
+          axis.line.x = element_blank(),
+          axis.text.y = element_blank(), axis.ticks.y = element_blank(),
+          axis.title.y = element_blank(), axis.line.y = element_blank(),
+          plot.title = element_text(size = 10)) +
+    coord_cartesian(ylim = mutrate_ylim) +
+    labs(x = "Mean allelic skew", title = cc)
+}
+
+plot_grid(p_vep_mutrate, snp_mutrate_panels[["PLS"]], snp_mutrate_panels[["pELS"]],
+          snp_mutrate_panels[["dELS"]], snp_mutrate_panels[["non-cCRE"]],
+          nrow = 1, align = "h", axis = "tb",
+          rel_widths = c(n_vep, n_skew, n_skew, n_skew, n_skew))
+ggsave(paste0(save_path, "gnomAD_comparison_mean_mutrate_vep_vs_mpac.pdf"),
+       width = 14, height = 5)
+```

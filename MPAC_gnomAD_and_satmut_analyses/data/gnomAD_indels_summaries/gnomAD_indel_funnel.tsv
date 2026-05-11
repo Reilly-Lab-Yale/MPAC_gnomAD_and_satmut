@@ -1,0 +1,7 @@
+step	description	n
+1	gnomAD indels loaded	105907938
+2	gnomAD after QC filter	63489195
+3	gnomAD after exon/splice mask	61025903
+4	Predictions (good parsing)	88616941
+5	Merged gnomAD + predictions	56585353
+6	Annotated with cCREs	56585353

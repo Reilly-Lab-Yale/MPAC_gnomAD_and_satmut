@@ -1,0 +1,1215 @@
+---
+title: "Analyses of purifying selection in MPAC-gnomAD for indels"
+author: "Stephen Rong"
+date: "2026-03-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r preamble, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(data.table)
+library(tidyverse)
+library(tidyplots)
+library(ggthemes)
+library(cowplot)
+
+save_path <- "../../results/gnomAD_purifying_selection/gnomAD_purifying_selection_indels/"
+data_path <- "../../data/gnomAD_indels_summaries/"
+```
+
+```{r constants}
+ccre_colors <- c(PLS="#3E0751", pELS="#405187", dELS="#468E8B",
+                 `non-cCRE`="#79C66E",  # was: `non-cCRE`="#79C66E"
+                 `Other cCREs`="grey50")
+ccre_order <- c("PLS", "pELS", "dELS",
+                "non-cCRE",  # was: "non-cCRE"
+                "Other cCREs")
+
+skew_bin_order <- c("(-Inf,-1.5)", "[-1.5,-1.0)", "[-1.0,-0.5)", "[-0.5,-0.2)",
+                    "[-0.2,-0.05)", "[-0.05,0.05)", "[0.05,0.2)", "[0.2,0.5)",
+                    "[0.5,1.0)", "[1.0,1.5)", "[1.5,Inf)")
+activity_bin_order <- c("[-Inf,1)", "[1,2)", "[2,3)", "[3,4)", "[4,5)", "[5,Inf)")
+
+skew_labels_map <- c(mean_skew = "Mean allelic skew", K562_skew = "K562 allelic skew",
+                     HepG2_skew = "HepG2 allelic skew", SKNSH_skew = "SKNSH allelic skew")
+skew_save_map <- c(mean_skew = "mean", K562_skew = "K562", HepG2_skew = "HepG2", SKNSH_skew = "SKNSH")
+
+# Minimum observation count for statistics
+min_n <- 50
+```
+
+```{r load-data}
+totals    <- fread(paste0(data_path, "gnomAD_indel_totals_by_ccre.tsv"))
+skew      <- fread(paste0(data_path, "gnomAD_indel_skew_by_ccre.tsv"))
+activity  <- fread(paste0(data_path, "gnomAD_indel_activity_by_ccre.tsv"))
+emvar     <- fread(paste0(data_path, "gnomAD_indel_emvar_by_ccre.tsv"))
+skew_af   <- fread(paste0(data_path, "gnomAD_indel_skew_by_ccre_af.tsv"))
+skew_af_ic <- fread(paste0(data_path, "gnomAD_indel_skew_by_ccre_af_indelclass.tsv"))
+
+# Relabel non-cCRE -> non-cCRE (revert by commenting out this block)
+relabel_ccre <- function(x) ifelse(x == "non-cCRE", "non-cCRE", x)
+totals    <- totals %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew      <- skew %>% mutate(ccre_class = relabel_ccre(ccre_class))
+activity  <- activity %>% mutate(ccre_class = relabel_ccre(ccre_class))
+emvar     <- emvar %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew_af   <- skew_af %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew_af_ic <- skew_af_ic %>% mutate(ccre_class = relabel_ccre(ccre_class))
+
+totals <- totals %>% 
+  filter(ccre_class != "TOTAL") %>% 
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order))
+skew <- skew %>% mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+                        skew_bin = factor(skew_bin, levels = skew_bin_order))
+activity <- activity %>% mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+                                activity_bin = factor(activity_bin, levels = activity_bin_order))
+emvar <- emvar %>% mutate(ccre_class = factor(ccre_class, levels = ccre_order))
+skew_af <- skew_af %>% mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+                              skew_bin = factor(skew_bin, levels = skew_bin_order))
+```
+
+```{r pie-chart-totals}
+ggplot(totals, aes(x = "", y = n, fill = ccre_class)) +
+  geom_col() +
+  geom_text(aes(label = paste0(round(n / 1e6, 1), "M")),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  scale_fill_manual(values = ccre_colors) +
+  labs(fill = "ENCODE cCREs")
+ggsave(paste0(save_path, "gnomAD_indels_counts_totals_by_ccre.pdf"), scale = 0.6)
+write_tsv(totals, paste0(save_path, "gnomAD_indels_counts_totals_by_ccre.txt"))
+```
+
+```{r barplot-emvar-counts-per-ccre}
+emvar_any <- emvar %>%
+  filter(emvar_class != "none") %>%
+  group_by(ccre_class) %>%
+  summarise(n = sum(n)) %>%
+  ungroup() %>%
+  filter(ccre_class != "Other cCREs")
+
+emvar_any %>%
+  tidyplot(x = ccre_class, y = n, color = ccre_class) %>%
+  add_mean_bar() %>%
+  adjust_x_axis(rotate_labels = TRUE) +
+  geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3,
+            position = position_dodge(.9), show.legend = FALSE) +
+  scale_fill_manual(values = ccre_colors, name = "ENCODE cCREs") +
+  scale_color_manual(values = ccre_colors, name = "ENCODE cCREs") +
+  xlab("ENCODE cCREs") +
+  ylab("Count")
+ggsave(paste0(save_path, "gnomAD_indels_counts_emvar_by_ccre.pdf"))
+write_tsv(emvar_any, paste0(save_path, "gnomAD_indels_counts_emvar_by_ccre.txt"))
+```
+
+```{r barplot-skew-bins}
+skew_total <- skew %>%
+  group_by(skew_type, skew_bin) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+skew_config <- tibble(
+  skew_type = c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew"),
+  color     = c("grey50",    "#00A79D",   "#FBB040",    "#ED1C24"),
+  label     = c("Mean allelic skew", "K562 allelic skew", "HepG2 allelic skew", "SKNSH allelic skew"),
+  tag       = c("mean",      "K562",      "HepG2",      "SKNSH")
+)
+
+for (i in seq_len(nrow(skew_config))) {
+  cfg <- skew_config[i, ]
+  skew_total %>% filter(skew_type == cfg$skew_type) %>%
+    tidyplot(x = skew_bin, y = n) %>%
+    add_barstack_absolute(fill = cfg$color) %>%
+    remove_legend() %>%
+    adjust_x_axis(rotate_labels = TRUE) +
+    geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3, color = cfg$color) +
+    xlab(cfg$label) +
+    ylab("Count")
+  ggsave(paste0(save_path, "gnomAD_indels_counts_skew_", cfg$tag, ".pdf"))
+}
+
+write_tsv(skew_total, paste0(save_path, "gnomAD_indels_counts_skew_all.txt"))
+```
+
+```{r barplot-activity-bins}
+activity_total <- activity %>%
+  group_by(activity_type, activity_bin) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+activity_config <- tibble(
+  activity_type = c("mean_activity", "K562_activity", "HepG2_activity", "SKNSH_activity"),
+  color         = c("grey50",        "#00A79D",       "#FBB040",        "#ED1C24"),
+  label         = c("Mean activity", "K562 activity", "HepG2 activity", "SKNSH activity"),
+  tag           = c("mean",          "K562",          "HepG2",          "SKNSH")
+)
+
+for (i in seq_len(nrow(activity_config))) {
+  cfg <- activity_config[i, ]
+  activity_total %>% filter(activity_type == cfg$activity_type) %>%
+    tidyplot(x = activity_bin, y = n) %>%
+    add_barstack_absolute(fill = cfg$color) %>%
+    remove_legend() %>%
+    adjust_x_axis(rotate_labels = TRUE) +
+    geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3, color = cfg$color) +
+    xlab(cfg$label) +
+    ylab("Count")
+  ggsave(paste0(save_path, "gnomAD_indels_counts_activity_", cfg$tag, ".pdf"))
+}
+
+write_tsv(activity_total, paste0(save_path, "gnomAD_indels_counts_activity_all.txt"))
+```
+
+```{r faceted-barplot-mean-activity-by-ccre, fig.width=8, fig.height=8}
+activity_mean <- activity %>% filter(activity_type == "mean_activity", ccre_class != "Other cCREs")
+
+ggplot(activity_mean) +
+  geom_bar(aes(x = activity_bin, y = n, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean activity", y = "Count", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_counts_activity_mean_by_ccre.pdf"), scale = 0.5)
+write_tsv(activity_mean, paste0(save_path, "gnomAD_indels_counts_activity_mean_by_ccre.txt"))
+```
+
+```{r faceted-barplot-mean-skew-by-ccre}
+skew_mean <- skew %>% filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(skew_mean) +
+  geom_bar(aes(x = skew_bin, y = n, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Count", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_counts_skew_mean_by_ccre.pdf"), scale = 0.6)
+write_tsv(skew_mean, paste0(save_path, "gnomAD_indels_counts_skew_mean_by_ccre.txt"))
+```
+
+```{r faceted-barplot-emvar-specificity-by-ccre}
+emvar_cat_order <- c("K562", "HepG2", "SKNSH", "K562+HepG2", "K562+SKNSH", "HepG2+SKNSH", "K562+HepG2+SKNSH")
+
+emvar_prop <- emvar %>%
+  filter(emvar_class != "none", ccre_class != "Other cCREs") %>%
+  mutate(emvar_class = factor(emvar_class, levels = emvar_cat_order)) %>%
+  group_by(ccre_class) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup()
+
+ggplot(emvar_prop) +
+  geom_bar(aes(x = emvar_class, y = prop, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "emVars (MPAC)", y = "Proportion of emVars", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_prop_emvar_by_ccre.pdf"), scale = 0.75)
+write_tsv(emvar_prop, paste0(save_path, "gnomAD_indels_prop_emvar_by_ccre.txt"))
+```
+
+```{r barplot-emvar-pleiotropy-by-ccre}
+emvar_pleio <- emvar %>%
+  filter(emvar_class != "none", ccre_class != "Other cCREs") %>%
+  mutate(n_cell_lines = case_when(
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ "1 cell line",
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ "2 cell lines",
+    emvar_class == "K562+HepG2+SKNSH" ~ "3 cell lines"
+  )) %>%
+  mutate(n_cell_lines = factor(n_cell_lines, levels = c("1 cell line", "2 cell lines", "3 cell lines"))) %>%
+  group_by(ccre_class, n_cell_lines) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(ccre_class) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
+
+ggplot(emvar_pleio) +
+  geom_bar(aes(x = ccre_class, y = prop, fill = ccre_class),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "ENCODE cCREs", y = "Proportion of emVars", fill = "ENCODE cCREs") +
+  facet_wrap(~ n_cell_lines, ncol = 3) +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_prop_emvar_by_pleiotropy.pdf"), scale = 0.6)
+write_tsv(emvar_pleio, paste0(save_path, "gnomAD_indels_prop_emvar_by_pleiotropy.txt"))
+```
+
+```{r compute-gw-totals}
+# Genome-wide singleton and common totals, computed once and reused for all FETs.
+# group_by(skew_type) avoids 4x inflation from the four skew types sharing the same variants.
+gw_totals <- skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  group_by(skew_type, af_class) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  pivot_wider(names_from = af_class, values_from = n, names_prefix = "gw_")
+```
+
+```{r ribbon-plot-or-singleton-vs-common}
+af_wide <- skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  pivot_wider(names_from = af_class, values_from = n, values_fill = 0)
+
+af_wide <- af_wide %>%
+  filter(SINGLETON + COMMON >= min_n) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(SINGLETON + 1L, COMMON + 1L,
+                                    gw_SINGLETON - SINGLETON + 1L,
+                                    gw_COMMON - COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>% 
+  mutate(
+    log2odds = log2(odds), 
+    log2lci = log2(lci), 
+    log2uci = log2(uci)
+  ) %>% 
+  ungroup() %>%
+  select(-fet)
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide %>% filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 1, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = lci, ymax = uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = "OR singleton vs. common (gnomAD)", 
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st], ".pdf"))
+}
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide %>% filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"), 
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st], "_log2.pdf"))
+}
+
+write_tsv(af_wide, paste0(save_path, "gnomAD_indels_fet_singleton_common_skew.txt"))
+
+# Skinny versions for mean skew
+d <- af_wide %>% filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(d) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = lci, ymax = uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = odds, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = "OR singleton vs. common (gnomAD)", 
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_mean_skinny.pdf"))
+
+ggplot(d) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = log2lci, ymax = log2uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = log2odds, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = expression(log[2]*OR*" singleton vs. common (gnomAD)"), 
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_mean_log2_skinny.pdf"))
+```
+
+```{r ribbon-plot-or-singleton-vs-common-main}
+# Skinny OR (linear) — mean skew, collapsed tails, shared y-axis with SNPs
+SHARED_YLIM <- c(0.1, 7.3)  # keep identical in SNP and indel scripts
+
+skew_bin_coarse_order <- c("< -0.5", "[-0.5,-0.2)", "[-0.2,-0.05)",
+                           "[-0.05,0.05)", "[0.05,0.2)", "[0.2,0.5)", "> 0.5")
+
+af_wide_coarse <- skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON"),
+         skew_type == "mean_skew") %>%
+  mutate(skew_bin_coarse = case_when(
+    skew_bin %in% c("(-Inf,-1.5)", "[-1.5,-1.0)", "[-1.0,-0.5)") ~ "< -0.5",
+    skew_bin %in% c("[0.5,1.0)", "[1.0,1.5)", "[1.5,Inf)")       ~ "> 0.5",
+    TRUE ~ as.character(skew_bin)
+  )) %>%
+  mutate(skew_bin_coarse = factor(skew_bin_coarse, levels = skew_bin_coarse_order)) %>%
+  group_by(skew_type, ccre_class, skew_bin_coarse, af_class) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  pivot_wider(names_from = af_class, values_from = n, values_fill = 0) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  filter(SINGLETON + COMMON >= min_n) %>%
+  rowwise() %>%
+  mutate(
+    fet  = list(fisher.test(matrix(c(SINGLETON + 1L, COMMON + 1L,
+                                     gw_SINGLETON - SINGLETON + 1L,
+                                     gw_COMMON - COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+d <- af_wide_coarse %>% filter(ccre_class != "Other cCREs")
+
+ggplot(d) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_ribbon(aes(x = skew_bin_coarse, ymin = lci, ymax = uci,
+                  fill = ccre_class, group = ccre_class), alpha = 0.5) +
+  geom_point(aes(x = skew_bin_coarse, y = odds, color = ccre_class)) +
+  geom_errorbar(aes(x = skew_bin_coarse, ymin = lci, ymax = uci, color = ccre_class),
+                width = 0.5) +
+  coord_cartesian(ylim = SHARED_YLIM) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = "OR singleton vs. common (gnomAD)",
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_mean_skinny_coarse.pdf"))
+write_tsv(af_wide_coarse, paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_mean_coarse.txt"))
+```
+
+```{r load-indel-class-data}
+skew_bin_coarse_order <- c("< -0.5", "[-0.5,-0.2)", "[-0.2,-0.05)",
+                           "[-0.05,0.05)", "[0.05,0.2)", "[0.2,0.5)", "> 0.5")
+
+skew_af_ic <- skew_af_ic %>%
+  mutate(
+    ccre_class = factor(ccre_class, levels = ccre_order),
+    skew_bin   = factor(skew_bin, levels = skew_bin_order),
+    indel_type = ifelse(grepl("^del", indel_class), "Deletion", "Insertion"),
+    indel_len_raw = as.integer(sub("plus", "", sub("^(del|ins)_", "", indel_class))),
+    indel_len_coarse = case_when(
+      indel_len_raw == 1  ~ "1 bp",
+      indel_len_raw <= 4  ~ "2-4 bp",
+      indel_len_raw <= 9  ~ "5-9 bp",
+      TRUE                ~ "10+ bp"
+    ),
+    indel_len_coarse = factor(indel_len_coarse, levels = c("1 bp", "2-4 bp", "5-9 bp", "10+ bp")),
+    skew_bin_coarse = case_when(
+      skew_bin %in% c("(-Inf,-1.5)", "[-1.5,-1.0)", "[-1.0,-0.5)") ~ "< -0.5",
+      skew_bin %in% c("[0.5,1.0)", "[1.0,1.5)", "[1.5,Inf)")       ~ "> 0.5",
+      TRUE ~ as.character(skew_bin)
+    ),
+    skew_bin_coarse = factor(skew_bin_coarse, levels = skew_bin_coarse_order)
+  )
+```
+
+```{r fet-singleton-common-ins-vs-del}
+skew_af_type <- skew_af_ic %>%
+  group_by(skew_type, skew_bin_coarse, ccre_class, af_class, indel_type) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+af_wide_type <- skew_af_type %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  pivot_wider(names_from = af_class, values_from = n, values_fill = 0)
+
+af_wide_type <- af_wide_type %>%
+  filter(SINGLETON + COMMON >= min_n) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(SINGLETON + 1L, COMMON + 1L,
+                                    gw_SINGLETON - SINGLETON + 1L,
+                                    gw_COMMON - COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  mutate(
+    log2odds = log2(odds),
+    log2lci  = log2(lci),
+    log2uci  = log2(uci)
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide_type %>%
+    filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin_coarse, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    facet_wrap(~ indel_type, ncol = 2) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          strip.background = element_blank(),
+          aspect.ratio = 3 / 2) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st], "_log2_insVsDel.pdf"))
+}
+
+for (st in c("mean_skew")) {
+  d <- af_wide_type %>%
+    filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin_coarse, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    facet_wrap(~ indel_type, ncol = 2) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          strip.background = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st], "_log2_insVsDel_skinny.pdf"), scale = 1)
+}
+
+for (st in c("mean_skew")) {
+  d <- af_wide_type %>%
+    filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 1, color = "black") +
+    geom_ribbon(aes(x = skew_bin_coarse, ymin = lci, ymax = uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin_coarse, y = odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin_coarse, ymin = lci, ymax = uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    facet_wrap(~ indel_type, ncol = 2) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          strip.background = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = "OR singleton vs. common (gnomAD)",
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st], "_insVsDel_skinny.pdf"), scale = 1)
+}
+
+write_tsv(af_wide_type, paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_log2_insVsDel.txt"))
+```
+
+```{r fet-singleton-common-coarse-len, fig.width=12, fig.height=5}
+skew_af_coarse <- skew_af_ic %>%
+  group_by(skew_type, skew_bin_coarse, ccre_class, af_class, indel_type, indel_len_coarse) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+af_wide_coarse <- skew_af_coarse %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  pivot_wider(names_from = af_class, values_from = n, values_fill = 0)
+
+af_wide_coarse <- af_wide_coarse %>%
+  filter(SINGLETON + COMMON >= min_n) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(SINGLETON + 1L, COMMON + 1L,
+                                    gw_SINGLETON - SINGLETON + 1L,
+                                    gw_COMMON - COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  mutate(
+    log2odds = log2(odds),
+    log2lci  = log2(lci),
+    log2uci  = log2(uci)
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+# Deletion plots
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide_coarse %>%
+    filter(skew_type == st, ccre_class != "Other cCREs", indel_type == "Deletion")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin_coarse, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    facet_wrap(~ indel_len_coarse, ncol = 4) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+          axis.line.x = element_blank(),
+          strip.background = element_blank(),
+          aspect.ratio = 3 / 2) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+         color = "ENCODE cCREs",
+         title = "Deletions") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st],
+                "_log2_del_coarseLen.pdf"),
+         width = 12, height = 5)
+}
+
+# Insertion plots
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide_coarse %>%
+    filter(skew_type == st, ccre_class != "Other cCREs", indel_type == "Insertion")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin_coarse, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin_coarse, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    facet_wrap(~ indel_len_coarse, ncol = 4) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+          axis.line.x = element_blank(),
+          strip.background = element_blank(),
+          aspect.ratio = 3 / 2) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+         color = "ENCODE cCREs",
+         title = "Insertions") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_", skew_save_map[st],
+                "_log2_ins_coarseLen.pdf"),
+         width = 12, height = 5)
+}
+
+write_tsv(af_wide_coarse, paste0(save_path, "gnomAD_indels_fet_singleton_common_skew_log2_coarseLen.txt"))
+```
+
+# Indel vs. SNP comparison
+
+```{r load-snp-data-for-comparison}
+snp_data_path <- "../../data/gnomAD_snp_summaries/"
+
+snp_skew     <- fread(paste0(snp_data_path, "gnomAD_snp_skew_by_ccre.tsv")) %>%
+  mutate(ccre_class = relabel_ccre(ccre_class))
+snp_activity <- fread(paste0(snp_data_path, "gnomAD_snp_activity_by_ccre.tsv")) %>%
+  mutate(ccre_class = relabel_ccre(ccre_class))
+snp_emvar    <- fread(paste0(snp_data_path, "gnomAD_snp_emvar_by_ccre.tsv")) %>%
+  mutate(ccre_class = relabel_ccre(ccre_class))
+
+# Factor variant_type with SNP first so it appears on the left in dodged plots
+vtype_levels <- c("SNP", "Indel")
+```
+
+```{r comparison-ccre-distribution}
+# Compare cCRE distribution between SNPs and indels (including Other cCREs)
+snp_totals_all <- fread(paste0(snp_data_path, "gnomAD_snp_totals_by_ccre.tsv")) %>%
+  mutate(ccre_class = relabel_ccre(ccre_class)) %>%
+  filter(ccre_class != "TOTAL")
+
+indel_totals_all <- totals  # already loaded and relabeled
+
+totals_cmp <- bind_rows(
+  snp_totals_all %>%
+    mutate(prop = n / sum(n),
+           variant_type = factor("SNP", levels = vtype_levels),
+           ccre_class = factor(ccre_class, levels = ccre_order)),
+  indel_totals_all %>%
+    mutate(prop = n / sum(n),
+           variant_type = factor("Indel", levels = vtype_levels),
+           ccre_class = factor(ccre_class, levels = ccre_order))
+)
+
+# Total N per variant type for annotation
+totals_n <- totals_cmp %>%
+  group_by(variant_type) %>%
+  summarise(total_n = sum(n), .groups = "drop") %>%
+  mutate(label = paste0("N = ", round(total_n / 1e6, 1), "M"))
+
+ggplot(totals_cmp, aes(x = ccre_class, y = prop, fill = ccre_class, alpha = variant_type)) +
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  geom_text(data = totals_n,
+            aes(x = 2.5, y = Inf, label = label, alpha = variant_type),
+            inherit.aes = FALSE, vjust = 1.5, size = 3,
+            position = position_dodge2(width = 0.9)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        axis.line.x = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "ENCODE cCREs", y = "Proportion of variants",
+       fill = "ENCODE cCREs", alpha = "Variant type") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_totals_by_ccre.pdf"), scale = 0.8)
+write_tsv(totals_cmp, paste0(save_path, "gnomAD_comparison_prop_totals_by_ccre.txt"))
+```
+
+```{r comparison-activity-mean-by-ccre, fig.width=10, fig.height=8}
+# Compute proportions within each variant_type x ccre_class so indels and SNPs are comparable
+activity_cmp <- bind_rows(
+  snp_activity %>%
+    filter(activity_type == "mean_activity") %>%
+    mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+           activity_bin = factor(activity_bin, levels = activity_bin_order)) %>%
+    filter(ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(prop = n / sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("SNP", levels = vtype_levels)),
+  activity %>%
+    filter(activity_type == "mean_activity", ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(prop = n / sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("Indel", levels = vtype_levels))
+)
+
+ggplot(activity_cmp) +
+  geom_bar(aes(x = activity_bin, y = prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean activity", y = "Proportion of variants", fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre.pdf"), scale = 0.7)
+write_tsv(activity_cmp, paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre.txt"))
+
+ggplot(activity_cmp) +
+  geom_point(aes(x = activity_bin, y = prop, color = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_color_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean activity", y = "Proportion of variants (log10)", color = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(color = "none") + 
+  scale_y_log10()
+ggsave(paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre_log.pdf"), scale = 0.7)
+```
+
+```{r comparison-skew-mean-by-ccre, fig.width=10, fig.height=8}
+skew_cmp <- bind_rows(
+  snp_skew %>%
+    filter(skew_type == "mean_skew") %>%
+    mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+           skew_bin = factor(skew_bin, levels = skew_bin_order)) %>%
+    filter(ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(prop = n / sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("SNP", levels = vtype_levels)),
+  skew %>%
+    filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(prop = n / sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("Indel", levels = vtype_levels))
+)
+
+ggplot(skew_cmp) +
+  geom_bar(aes(x = skew_bin, y = prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean allelic skew", y = "Proportion of variants", fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre.pdf"), scale = 0.7)
+write_tsv(skew_cmp, paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre.txt"))
+
+ggplot(skew_cmp) +
+  geom_point(aes(x = skew_bin, y = prop, color = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_color_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean allelic skew", y = "Proportion of variants (log10)", color = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(color = "none") + 
+  scale_y_log10()
+ggsave(paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre_log.pdf"), scale = 0.7)
+```
+
+```{r comparison-activity-mean-by-ccre-stats, fig.width=10, fig.height=8}
+# Activity: paired proportion tests (SNP vs Indel) per ccre_class x activity_bin
+
+# Get counts and totals per variant_type x ccre_class
+activity_counts <- bind_rows(
+  snp_activity %>%
+    filter(activity_type == "mean_activity") %>%
+    mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+           activity_bin = factor(activity_bin, levels = activity_bin_order)) %>%
+    filter(ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = "SNP"),
+  activity %>%
+    filter(activity_type == "mean_activity", ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = "Indel")
+)
+
+# Pivot to get SNP and Indel side-by-side for each (ccre_class, activity_bin)
+activity_wide <- activity_counts %>%
+  select(ccre_class, activity_bin, variant_type, n, total) %>%
+  pivot_wider(names_from = variant_type,
+              values_from = c(n, total),
+              values_fill = 0)
+
+# Two-proportion z-test for each row
+activity_stats <- activity_wide %>%
+  rowwise() %>%
+  mutate(
+    pval = prop.test(x = c(n_SNP, n_Indel),
+                     n = c(total_SNP, total_Indel))$p.value,
+    prop_SNP   = n_SNP / total_SNP,
+    prop_Indel = n_Indel / total_Indel
+  ) %>%
+  ungroup() %>%
+  mutate(padj = p.adjust(pval, method = "BH"),
+         sig = case_when(
+           padj < 0.001 ~ "***",
+           padj < 0.01  ~ "**",
+           padj < 0.05  ~ "*",
+           TRUE         ~ "ns"
+         ))
+
+# Print results
+activity_stats %>%
+  select(ccre_class, activity_bin, prop_SNP, prop_Indel, pval, padj, sig) %>%
+  print(n = Inf)
+
+# Plot with significance stars
+# Use the higher of the two proportions as the y position for the star
+activity_cmp_log <- activity_cmp %>%
+  mutate(log10_prop = log10(prop))
+
+activity_stars <- activity_stats %>%
+  mutate(log10_min = log10(pmin(prop_SNP, prop_Indel)),
+         y_pos = log10_min - 0.25) %>%
+  filter(sig != "ns")
+
+ggplot(activity_cmp_log) +
+  geom_bar(aes(x = activity_bin, y = log10_prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  geom_text(data = activity_stars,
+            aes(x = activity_bin, y = y_pos, label = sig),
+            size = 3, color = "black") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  scale_y_continuous(expand = expansion(mult = c(0.15, 0.05))) +
+  labs(x = "Mean activity", y = expression(log[10]~"(proportion of variants)"),
+       fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre_log_stats.pdf"), scale = 0.7)
+write_tsv(activity_stats, paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre_stats.txt"))
+```
+
+```{r comparison-activity-mean-by-ccre-log-bars, fig.width=10, fig.height=8}
+# Plain bar version (no stats) to replace the points plot
+ggplot(activity_cmp_log) +
+  geom_bar(aes(x = activity_bin, y = log10_prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean activity", y = expression(log[10]~"(proportion of variants)"),
+       fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_activity_mean_by_ccre_log.pdf"), scale = 0.7)
+```
+
+```{r comparison-activity-mean-by-ccre-ratio, fig.width=10, fig.height=8}
+activity_ratio <- activity_stats %>%
+  mutate(ratio = prop_Indel / prop_SNP,
+         log2ratio = log2(ratio))
+
+activity_ratio_stars <- activity_ratio %>%
+  mutate(y_pos = log2ratio + sign(log2ratio) * 0.05) %>%
+  filter(sig != "ns")
+
+ggplot(activity_ratio) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_col(aes(x = activity_bin, y = log2ratio, fill = ccre_class), width = 0.7) +
+  geom_text(data = activity_ratio_stars,
+            aes(x = activity_bin, y = y_pos, label = sig),
+            size = 3, color = "black", vjust = ifelse(activity_ratio_stars$log2ratio >= 0, -0.3, 1.3)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        strip.background = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4)) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_y_continuous(expand = expansion(mult = c(0.3, 0.3))) +
+  labs(x = "Mean activity",
+       y = expression(log[2]~"(Indel prop. / SNP prop.)"),
+       fill = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class)) +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_ratio_activity_mean_by_ccre.pdf"), scale = 0.6)
+write_tsv(activity_ratio, paste0(save_path, "gnomAD_comparison_ratio_activity_mean_by_ccre.txt"))
+```
+
+```{r comparison-skew-mean-by-ccre-stats, fig.width=10, fig.height=8}
+# Skew: paired proportion tests (SNP vs Indel) per ccre_class x skew_bin
+
+skew_counts <- bind_rows(
+  snp_skew %>%
+    filter(skew_type == "mean_skew") %>%
+    mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+           skew_bin = factor(skew_bin, levels = skew_bin_order)) %>%
+    filter(ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = "SNP"),
+  skew %>%
+    filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n)) %>%
+    ungroup() %>%
+    mutate(variant_type = "Indel")
+)
+
+skew_wide <- skew_counts %>%
+  select(ccre_class, skew_bin, variant_type, n, total) %>%
+  pivot_wider(names_from = variant_type,
+              values_from = c(n, total),
+              values_fill = 0)
+
+skew_stats <- skew_wide %>%
+  rowwise() %>%
+  mutate(
+    pval = prop.test(x = c(n_SNP, n_Indel),
+                     n = c(total_SNP, total_Indel))$p.value,
+    prop_SNP   = n_SNP / total_SNP,
+    prop_Indel = n_Indel / total_Indel
+  ) %>%
+  ungroup() %>%
+  mutate(padj = p.adjust(pval, method = "BH"),
+         sig = case_when(
+           padj < 0.001 ~ "***",
+           padj < 0.01  ~ "**",
+           padj < 0.05  ~ "*",
+           TRUE         ~ "ns"
+         ))
+
+skew_stats %>%
+  select(ccre_class, skew_bin, prop_SNP, prop_Indel, pval, padj, sig) %>%
+  print(n = Inf)
+
+skew_cmp_log <- skew_cmp %>%
+  mutate(log10_prop = log10(prop))
+
+skew_stars <- skew_stats %>%
+  mutate(log10_min = log10(pmin(prop_SNP, prop_Indel)),
+         y_pos = log10_min - 0.25) %>%
+  filter(sig != "ns")
+
+ggplot(skew_cmp_log) +
+  geom_bar(aes(x = skew_bin, y = log10_prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  geom_text(data = skew_stars,
+            aes(x = skew_bin, y = y_pos, label = sig),
+            size = 3, color = "black") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  scale_y_continuous(expand = expansion(mult = c(0.15, 0.05))) +
+  labs(x = "Mean allelic skew", y = expression(log[10]~"(proportion of variants)"),
+       fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre_log_stats.pdf"), scale = 0.7)
+write_tsv(skew_stats, paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre_stats.txt"))
+```
+
+```{r comparison-skew-mean-by-ccre-log-bars, fig.width=10, fig.height=8}
+# Plain bar version (no stats) to replace the points plot
+ggplot(skew_cmp_log) +
+  geom_bar(aes(x = skew_bin, y = log10_prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "Mean allelic skew", y = expression(log[10]~"(proportion of variants)"),
+       fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre_log.pdf"), scale = 0.7)
+```
+
+```{r comparison-skew-mean-by-ccre-ratio, fig.width=10, fig.height=8}
+skew_ratio <- skew_stats %>%
+  mutate(ratio = prop_Indel / prop_SNP,
+         log2ratio = log2(ratio))
+
+skew_ratio_stars <- skew_ratio %>%
+  mutate(y_pos = log2ratio + sign(log2ratio) * 0.05) %>%
+  filter(sig != "ns")
+
+ggplot(skew_ratio) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_col(aes(x = skew_bin, y = log2ratio, fill = ccre_class), width = 0.7) +
+  geom_text(data = skew_ratio_stars,
+            aes(x = skew_bin, y = y_pos, label = sig),
+            size = 3, color = "black", vjust = ifelse(skew_ratio_stars$log2ratio >= 0, -0.3, 1.3)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        strip.background = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4)) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_y_continuous(expand = expansion(mult = c(0.3, 0.3))) +
+  labs(x = "Mean allelic skew",
+       y = expression(log[2]~"(Indel prop. / SNP prop.)"),
+       fill = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class)) +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_ratio_skew_mean_by_ccre.pdf"), scale = 0.6)
+write_tsv(skew_ratio, paste0(save_path, "gnomAD_comparison_ratio_skew_mean_by_ccre.txt"))
+```
+
+```{r comparison-emvar-prop-by-ccre}
+emvar_cat_order <- c("K562", "HepG2", "SKNSH", "K562+HepG2", "K562+SKNSH", "HepG2+SKNSH", "K562+HepG2+SKNSH")
+
+emvar_cmp <- bind_rows(
+  snp_emvar %>%
+    filter(emvar_class != "none") %>%
+    mutate(ccre_class = factor(ccre_class, levels = ccre_order)) %>%
+    filter(ccre_class != "Other cCREs") %>%
+    mutate(emvar_class = factor(emvar_class, levels = emvar_cat_order)) %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n), prop = n / total) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("SNP", levels = vtype_levels)),
+  emvar %>%
+    filter(emvar_class != "none", ccre_class != "Other cCREs") %>%
+    mutate(emvar_class = factor(emvar_class, levels = emvar_cat_order)) %>%
+    group_by(ccre_class) %>%
+    mutate(total = sum(n), prop = n / total) %>%
+    ungroup() %>%
+    mutate(variant_type = factor("Indel", levels = vtype_levels))
+)
+
+# Faceted by cCRE (original layout)
+ggplot(emvar_cmp) +
+  geom_bar(aes(x = emvar_class, y = prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "emVars (MPAC)", y = "Proportion of emVars", fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_emvar_by_ccre.pdf"), scale = 0.9)
+
+# Faceted by emVar pleiotropy (number of cell lines)
+emvar_cmp_pleio <- emvar_cmp %>%
+  mutate(n_cell_lines = case_when(
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ "1 cell line",
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ "2 cell lines",
+    emvar_class == "K562+HepG2+SKNSH" ~ "3 cell lines"
+  )) %>%
+  mutate(n_cell_lines = factor(n_cell_lines, levels = c("1 cell line", "2 cell lines", "3 cell lines"))) %>%
+  group_by(ccre_class, variant_type, n_cell_lines) %>%
+  summarise(prop = sum(prop), .groups = "drop")
+
+ggplot(emvar_cmp_pleio) +
+  geom_bar(aes(x = ccre_class, y = prop, fill = ccre_class, alpha = variant_type),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        strip.background = element_blank(), 
+        aspect.ratio = 1/1.5) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_alpha_manual(values = c(SNP = 1, Indel = 0.5)) +
+  labs(x = "ENCODE cCREs", y = "Proportion of emVars", fill = "ENCODE cCREs", alpha = "Variant type") +
+  facet_wrap(~ n_cell_lines, ncol = 3) +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_comparison_prop_emvar_by_pleiotropy.pdf"), scale = 0.9)
+write_tsv(emvar_cmp_pleio, paste0(save_path, "gnomAD_comparison_prop_emvar_by_pleiotropy.txt"))
+
+write_tsv(emvar_cmp, paste0(save_path, "gnomAD_comparison_prop_emvar.txt"))
+```
+
+```{r faceted-barplot-mean-skew-by-indel-length, fig.width=12, fig.height=8}
+# Distribution of mean allelic skew for deletions and insertions by length class (log scale)
+skew_by_indel <- skew_af_ic %>%
+  filter(skew_type == "mean_skew") %>%
+  group_by(skew_bin, indel_type, indel_len_coarse) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(indel_type, indel_len_coarse) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
+
+ggplot(skew_by_indel) +
+  geom_bar(aes(x = skew_bin, y = prop, fill = indel_type),
+           stat = "identity") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        strip.background = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4)) +
+  scale_fill_manual(values = c(Deletion = "#E64B35", Insertion = "#4DBBD5")) +
+  labs(x = "Mean allelic skew", y = "Proportion of variants",
+       fill = "Indel type") +
+  facet_grid(rows = vars(indel_len_coarse), cols = vars(indel_type), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_prop_skew_mean_by_indel_length.pdf"),
+       width = 10, height = 8, scale = 0.8)
+
+# Log-scale version
+ggplot(skew_by_indel) +
+  geom_bar(aes(x = skew_bin, y = prop, fill = indel_type),
+           stat = "identity") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        strip.background = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4)) +
+  scale_fill_manual(values = c(Deletion = "#E64B35", Insertion = "#4DBBD5")) +
+  scale_y_log10() +
+  labs(x = "Mean allelic skew", y = "Proportion of variants (log10)",
+       fill = "Indel type") +
+  facet_grid(rows = vars(indel_len_coarse), cols = vars(indel_type), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_indels_prop_skew_mean_by_indel_length_log.pdf"),
+       width = 10, height = 8, scale = 0.8)
+
+write_tsv(skew_by_indel, paste0(save_path, "gnomAD_indels_prop_skew_mean_by_indel_length.txt"))
+```

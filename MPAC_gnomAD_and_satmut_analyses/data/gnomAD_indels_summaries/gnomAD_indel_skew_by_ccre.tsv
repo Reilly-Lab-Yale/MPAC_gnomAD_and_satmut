@@ -1,0 +1,221 @@
+skew_type	skew_bin	ccre_class	n
+HepG2_skew	(-Inf,-1.5)	Other cCREs	816
+HepG2_skew	(-Inf,-1.5)	PLS	270
+HepG2_skew	(-Inf,-1.5)	dELS	2927
+HepG2_skew	(-Inf,-1.5)	non-cCRE	3247
+HepG2_skew	(-Inf,-1.5)	pELS	455
+HepG2_skew	[-0.05,0.05)	Other cCREs	1909292
+HepG2_skew	[-0.05,0.05)	PLS	81674
+HepG2_skew	[-0.05,0.05)	dELS	4031331
+HepG2_skew	[-0.05,0.05)	non-cCRE	32022736
+HepG2_skew	[-0.05,0.05)	pELS	631273
+HepG2_skew	[-0.2,-0.05)	Other cCREs	486981
+HepG2_skew	[-0.2,-0.05)	PLS	41950
+HepG2_skew	[-0.2,-0.05)	dELS	1235385
+HepG2_skew	[-0.2,-0.05)	non-cCRE	6254314
+HepG2_skew	[-0.2,-0.05)	pELS	204688
+HepG2_skew	[-0.5,-0.2)	Other cCREs	69265
+HepG2_skew	[-0.5,-0.2)	PLS	12436
+HepG2_skew	[-0.5,-0.2)	dELS	206798
+HepG2_skew	[-0.5,-0.2)	non-cCRE	564537
+HepG2_skew	[-0.5,-0.2)	pELS	38092
+HepG2_skew	[-1.0,-0.5)	Other cCREs	12499
+HepG2_skew	[-1.0,-0.5)	PLS	3191
+HepG2_skew	[-1.0,-0.5)	dELS	40307
+HepG2_skew	[-1.0,-0.5)	non-cCRE	55889
+HepG2_skew	[-1.0,-0.5)	pELS	7157
+HepG2_skew	[-1.5,-1.0)	Other cCREs	2384
+HepG2_skew	[-1.5,-1.0)	PLS	631
+HepG2_skew	[-1.5,-1.0)	dELS	8009
+HepG2_skew	[-1.5,-1.0)	non-cCRE	9670
+HepG2_skew	[-1.5,-1.0)	pELS	1417
+HepG2_skew	[0.05,0.2)	Other cCREs	471362
+HepG2_skew	[0.05,0.2)	PLS	39088
+HepG2_skew	[0.05,0.2)	dELS	1168237
+HepG2_skew	[0.05,0.2)	non-cCRE	5734460
+HepG2_skew	[0.05,0.2)	pELS	207808
+HepG2_skew	[0.2,0.5)	Other cCREs	67472
+HepG2_skew	[0.2,0.5)	PLS	10011
+HepG2_skew	[0.2,0.5)	dELS	195379
+HepG2_skew	[0.2,0.5)	non-cCRE	570409
+HepG2_skew	[0.2,0.5)	pELS	38840
+HepG2_skew	[0.5,1.0)	Other cCREs	10184
+HepG2_skew	[0.5,1.0)	PLS	1701
+HepG2_skew	[0.5,1.0)	dELS	32232
+HepG2_skew	[0.5,1.0)	non-cCRE	66937
+HepG2_skew	[0.5,1.0)	pELS	6723
+HepG2_skew	[1.0,1.5)	Other cCREs	1686
+HepG2_skew	[1.0,1.5)	PLS	227
+HepG2_skew	[1.0,1.5)	dELS	5648
+HepG2_skew	[1.0,1.5)	non-cCRE	10364
+HepG2_skew	[1.0,1.5)	pELS	1198
+HepG2_skew	[1.5,Inf)	Other cCREs	429
+HepG2_skew	[1.5,Inf)	PLS	58
+HepG2_skew	[1.5,Inf)	dELS	1627
+HepG2_skew	[1.5,Inf)	non-cCRE	3343
+HepG2_skew	[1.5,Inf)	pELS	309
+K562_skew	(-Inf,-1.5)	Other cCREs	1843
+K562_skew	(-Inf,-1.5)	PLS	740
+K562_skew	(-Inf,-1.5)	dELS	5756
+K562_skew	(-Inf,-1.5)	non-cCRE	5888
+K562_skew	(-Inf,-1.5)	pELS	1082
+K562_skew	[-0.05,0.05)	Other cCREs	1910164
+K562_skew	[-0.05,0.05)	PLS	75587
+K562_skew	[-0.05,0.05)	dELS	4106320
+K562_skew	[-0.05,0.05)	non-cCRE	31745087
+K562_skew	[-0.05,0.05)	pELS	635283
+K562_skew	[-0.2,-0.05)	Other cCREs	473010
+K562_skew	[-0.2,-0.05)	PLS	37737
+K562_skew	[-0.2,-0.05)	dELS	1155152
+K562_skew	[-0.2,-0.05)	non-cCRE	6222950
+K562_skew	[-0.2,-0.05)	pELS	193226
+K562_skew	[-0.5,-0.2)	Other cCREs	83119
+K562_skew	[-0.5,-0.2)	PLS	15087
+K562_skew	[-0.5,-0.2)	dELS	233178
+K562_skew	[-0.5,-0.2)	non-cCRE	747875
+K562_skew	[-0.5,-0.2)	pELS	44850
+K562_skew	[-1.0,-0.5)	Other cCREs	17678
+K562_skew	[-1.0,-0.5)	PLS	5214
+K562_skew	[-1.0,-0.5)	dELS	53477
+K562_skew	[-1.0,-0.5)	non-cCRE	96349
+K562_skew	[-1.0,-0.5)	pELS	10652
+K562_skew	[-1.5,-1.0)	Other cCREs	3974
+K562_skew	[-1.5,-1.0)	PLS	1424
+K562_skew	[-1.5,-1.0)	dELS	12715
+K562_skew	[-1.5,-1.0)	non-cCRE	13426
+K562_skew	[-1.5,-1.0)	pELS	2579
+K562_skew	[0.05,0.2)	Other cCREs	448071
+K562_skew	[0.05,0.2)	PLS	37513
+K562_skew	[0.05,0.2)	dELS	1084820
+K562_skew	[0.05,0.2)	non-cCRE	5669216
+K562_skew	[0.05,0.2)	pELS	192298
+K562_skew	[0.2,0.5)	Other cCREs	75906
+K562_skew	[0.2,0.5)	PLS	13459
+K562_skew	[0.2,0.5)	dELS	217314
+K562_skew	[0.2,0.5)	non-cCRE	674389
+K562_skew	[0.2,0.5)	pELS	44461
+K562_skew	[0.5,1.0)	Other cCREs	14870
+K562_skew	[0.5,1.0)	PLS	3622
+K562_skew	[0.5,1.0)	dELS	46370
+K562_skew	[0.5,1.0)	non-cCRE	99721
+K562_skew	[0.5,1.0)	pELS	10416
+K562_skew	[1.0,1.5)	Other cCREs	2805
+K562_skew	[1.0,1.5)	PLS	673
+K562_skew	[1.0,1.5)	dELS	9420
+K562_skew	[1.0,1.5)	non-cCRE	15742
+K562_skew	[1.0,1.5)	pELS	2233
+K562_skew	[1.5,Inf)	Other cCREs	930
+K562_skew	[1.5,Inf)	PLS	181
+K562_skew	[1.5,Inf)	dELS	3358
+K562_skew	[1.5,Inf)	non-cCRE	5263
+K562_skew	[1.5,Inf)	pELS	880
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	1168
+SKNSH_skew	(-Inf,-1.5)	PLS	585
+SKNSH_skew	(-Inf,-1.5)	dELS	3920
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	4203
+SKNSH_skew	(-Inf,-1.5)	pELS	656
+SKNSH_skew	[-0.05,0.05)	Other cCREs	1963153
+SKNSH_skew	[-0.05,0.05)	PLS	79023
+SKNSH_skew	[-0.05,0.05)	dELS	4210444
+SKNSH_skew	[-0.05,0.05)	non-cCRE	32545212
+SKNSH_skew	[-0.05,0.05)	pELS	657295
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	444407
+SKNSH_skew	[-0.2,-0.05)	PLS	40726
+SKNSH_skew	[-0.2,-0.05)	dELS	1108727
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	5777932
+SKNSH_skew	[-0.2,-0.05)	pELS	188809
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	64920
+SKNSH_skew	[-0.5,-0.2)	PLS	14023
+SKNSH_skew	[-0.5,-0.2)	dELS	190418
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	529107
+SKNSH_skew	[-0.5,-0.2)	pELS	36057
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	13494
+SKNSH_skew	[-1.0,-0.5)	PLS	3837
+SKNSH_skew	[-1.0,-0.5)	dELS	42215
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	67783
+SKNSH_skew	[-1.0,-0.5)	pELS	7663
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	2698
+SKNSH_skew	[-1.5,-1.0)	PLS	944
+SKNSH_skew	[-1.5,-1.0)	dELS	9112
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	11096
+SKNSH_skew	[-1.5,-1.0)	pELS	1570
+SKNSH_skew	[0.05,0.2)	Other cCREs	460917
+SKNSH_skew	[0.05,0.2)	PLS	38009
+SKNSH_skew	[0.05,0.2)	dELS	1126605
+SKNSH_skew	[0.05,0.2)	non-cCRE	5682913
+SKNSH_skew	[0.05,0.2)	pELS	198342
+SKNSH_skew	[0.2,0.5)	Other cCREs	66492
+SKNSH_skew	[0.2,0.5)	PLS	11073
+SKNSH_skew	[0.2,0.5)	dELS	189608
+SKNSH_skew	[0.2,0.5)	non-cCRE	575717
+SKNSH_skew	[0.2,0.5)	pELS	37944
+SKNSH_skew	[0.5,1.0)	Other cCREs	12175
+SKNSH_skew	[0.5,1.0)	PLS	2393
+SKNSH_skew	[0.5,1.0)	dELS	36803
+SKNSH_skew	[0.5,1.0)	non-cCRE	84315
+SKNSH_skew	[0.5,1.0)	pELS	7638
+SKNSH_skew	[1.0,1.5)	Other cCREs	2230
+SKNSH_skew	[1.0,1.5)	PLS	491
+SKNSH_skew	[1.0,1.5)	dELS	7436
+SKNSH_skew	[1.0,1.5)	non-cCRE	12994
+SKNSH_skew	[1.0,1.5)	pELS	1476
+SKNSH_skew	[1.5,Inf)	Other cCREs	716
+SKNSH_skew	[1.5,Inf)	PLS	133
+SKNSH_skew	[1.5,Inf)	dELS	2592
+SKNSH_skew	[1.5,Inf)	non-cCRE	4634
+SKNSH_skew	[1.5,Inf)	pELS	510
+mean_skew	(-Inf,-1.5)	Other cCREs	866
+mean_skew	(-Inf,-1.5)	PLS	427
+mean_skew	(-Inf,-1.5)	dELS	2866
+mean_skew	(-Inf,-1.5)	non-cCRE	3362
+mean_skew	(-Inf,-1.5)	pELS	513
+mean_skew	[-0.05,0.05)	Other cCREs	1985563
+mean_skew	[-0.05,0.05)	PLS	81036
+mean_skew	[-0.05,0.05)	dELS	4242650
+mean_skew	[-0.05,0.05)	non-cCRE	32997026
+mean_skew	[-0.05,0.05)	pELS	660704
+mean_skew	[-0.2,-0.05)	Other cCREs	451025
+mean_skew	[-0.2,-0.05)	PLS	39818
+mean_skew	[-0.2,-0.05)	dELS	1137608
+mean_skew	[-0.2,-0.05)	non-cCRE	5740538
+mean_skew	[-0.2,-0.05)	pELS	190899
+mean_skew	[-0.5,-0.2)	Other cCREs	64874
+mean_skew	[-0.5,-0.2)	PLS	13376
+mean_skew	[-0.5,-0.2)	dELS	190066
+mean_skew	[-0.5,-0.2)	non-cCRE	528657
+mean_skew	[-0.5,-0.2)	pELS	36263
+mean_skew	[-1.0,-0.5)	Other cCREs	12408
+mean_skew	[-1.0,-0.5)	PLS	3995
+mean_skew	[-1.0,-0.5)	dELS	39115
+mean_skew	[-1.0,-0.5)	non-cCRE	54911
+mean_skew	[-1.0,-0.5)	pELS	7617
+mean_skew	[-1.5,-1.0)	Other cCREs	2609
+mean_skew	[-1.5,-1.0)	PLS	925
+mean_skew	[-1.5,-1.0)	dELS	8254
+mean_skew	[-1.5,-1.0)	non-cCRE	9427
+mean_skew	[-1.5,-1.0)	pELS	1592
+mean_skew	[0.05,0.2)	Other cCREs	440717
+mean_skew	[0.05,0.2)	PLS	37849
+mean_skew	[0.05,0.2)	dELS	1087839
+mean_skew	[0.05,0.2)	non-cCRE	5357920
+mean_skew	[0.05,0.2)	pELS	194111
+mean_skew	[0.2,0.5)	Other cCREs	61747
+mean_skew	[0.2,0.5)	PLS	11061
+mean_skew	[0.2,0.5)	dELS	179671
+mean_skew	[0.2,0.5)	non-cCRE	524651
+mean_skew	[0.2,0.5)	pELS	37291
+mean_skew	[0.5,1.0)	Other cCREs	10357
+mean_skew	[0.5,1.0)	PLS	2307
+mean_skew	[0.5,1.0)	dELS	32085
+mean_skew	[0.5,1.0)	non-cCRE	66340
+mean_skew	[0.5,1.0)	pELS	7208
+mean_skew	[1.0,1.5)	Other cCREs	1740
+mean_skew	[1.0,1.5)	PLS	359
+mean_skew	[1.0,1.5)	dELS	5996
+mean_skew	[1.0,1.5)	non-cCRE	10087
+mean_skew	[1.0,1.5)	pELS	1365
+mean_skew	[1.5,Inf)	Other cCREs	464
+mean_skew	[1.5,Inf)	PLS	84
+mean_skew	[1.5,Inf)	dELS	1730
+mean_skew	[1.5,Inf)	non-cCRE	2987
+mean_skew	[1.5,Inf)	pELS	397

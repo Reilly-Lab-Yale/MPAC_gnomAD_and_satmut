@@ -1,0 +1,4375 @@
+skew_type	skew_bin	ccre_class	indel_class	n
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_1	280
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_10plus	171
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_2	60
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_3	34
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_4	52
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_5	15
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_6	27
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_7	22
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_8	19
+HepG2_skew	(-Inf,-1.5)	Other cCREs	del_9	14
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_1	61
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_10plus	12
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_2	21
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_3	7
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_4	9
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_5	4
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_6	2
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_7	2
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_8	1
+HepG2_skew	(-Inf,-1.5)	Other cCREs	ins_9	3
+HepG2_skew	(-Inf,-1.5)	PLS	del_1	93
+HepG2_skew	(-Inf,-1.5)	PLS	del_10plus	55
+HepG2_skew	(-Inf,-1.5)	PLS	del_2	16
+HepG2_skew	(-Inf,-1.5)	PLS	del_3	10
+HepG2_skew	(-Inf,-1.5)	PLS	del_4	13
+HepG2_skew	(-Inf,-1.5)	PLS	del_5	10
+HepG2_skew	(-Inf,-1.5)	PLS	del_6	4
+HepG2_skew	(-Inf,-1.5)	PLS	del_7	10
+HepG2_skew	(-Inf,-1.5)	PLS	del_8	7
+HepG2_skew	(-Inf,-1.5)	PLS	del_9	7
+HepG2_skew	(-Inf,-1.5)	PLS	ins_1	16
+HepG2_skew	(-Inf,-1.5)	PLS	ins_10plus	2
+HepG2_skew	(-Inf,-1.5)	PLS	ins_2	12
+HepG2_skew	(-Inf,-1.5)	PLS	ins_3	3
+HepG2_skew	(-Inf,-1.5)	PLS	ins_4	4
+HepG2_skew	(-Inf,-1.5)	PLS	ins_5	3
+HepG2_skew	(-Inf,-1.5)	PLS	ins_6	1
+HepG2_skew	(-Inf,-1.5)	PLS	ins_7	4
+HepG2_skew	(-Inf,-1.5)	dELS	del_1	1053
+HepG2_skew	(-Inf,-1.5)	dELS	del_10plus	490
+HepG2_skew	(-Inf,-1.5)	dELS	del_2	238
+HepG2_skew	(-Inf,-1.5)	dELS	del_3	155
+HepG2_skew	(-Inf,-1.5)	dELS	del_4	211
+HepG2_skew	(-Inf,-1.5)	dELS	del_5	65
+HepG2_skew	(-Inf,-1.5)	dELS	del_6	102
+HepG2_skew	(-Inf,-1.5)	dELS	del_7	87
+HepG2_skew	(-Inf,-1.5)	dELS	del_8	71
+HepG2_skew	(-Inf,-1.5)	dELS	del_9	30
+HepG2_skew	(-Inf,-1.5)	dELS	ins_1	214
+HepG2_skew	(-Inf,-1.5)	dELS	ins_10plus	15
+HepG2_skew	(-Inf,-1.5)	dELS	ins_2	80
+HepG2_skew	(-Inf,-1.5)	dELS	ins_3	37
+HepG2_skew	(-Inf,-1.5)	dELS	ins_4	35
+HepG2_skew	(-Inf,-1.5)	dELS	ins_5	16
+HepG2_skew	(-Inf,-1.5)	dELS	ins_6	11
+HepG2_skew	(-Inf,-1.5)	dELS	ins_7	4
+HepG2_skew	(-Inf,-1.5)	dELS	ins_8	8
+HepG2_skew	(-Inf,-1.5)	dELS	ins_9	5
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_1	1186
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_10plus	456
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_2	269
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_3	146
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_4	206
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_5	65
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_6	94
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_7	112
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_8	80
+HepG2_skew	(-Inf,-1.5)	non-cCRE	del_9	53
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_1	223
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_10plus	43
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_2	141
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_3	48
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_4	60
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_5	20
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_6	21
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_7	10
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_8	5
+HepG2_skew	(-Inf,-1.5)	non-cCRE	ins_9	9
+HepG2_skew	(-Inf,-1.5)	pELS	del_1	162
+HepG2_skew	(-Inf,-1.5)	pELS	del_10plus	80
+HepG2_skew	(-Inf,-1.5)	pELS	del_2	41
+HepG2_skew	(-Inf,-1.5)	pELS	del_3	22
+HepG2_skew	(-Inf,-1.5)	pELS	del_4	25
+HepG2_skew	(-Inf,-1.5)	pELS	del_5	9
+HepG2_skew	(-Inf,-1.5)	pELS	del_6	14
+HepG2_skew	(-Inf,-1.5)	pELS	del_7	15
+HepG2_skew	(-Inf,-1.5)	pELS	del_8	13
+HepG2_skew	(-Inf,-1.5)	pELS	del_9	9
+HepG2_skew	(-Inf,-1.5)	pELS	ins_1	28
+HepG2_skew	(-Inf,-1.5)	pELS	ins_10plus	6
+HepG2_skew	(-Inf,-1.5)	pELS	ins_2	16
+HepG2_skew	(-Inf,-1.5)	pELS	ins_3	6
+HepG2_skew	(-Inf,-1.5)	pELS	ins_4	2
+HepG2_skew	(-Inf,-1.5)	pELS	ins_5	3
+HepG2_skew	(-Inf,-1.5)	pELS	ins_6	1
+HepG2_skew	(-Inf,-1.5)	pELS	ins_7	1
+HepG2_skew	(-Inf,-1.5)	pELS	ins_9	2
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_1	512081
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_10plus	50110
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_2	247693
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_3	132940
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_4	145785
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_5	45172
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_6	31576
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_7	15879
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_8	24885
+HepG2_skew	[-0.05,0.05)	Other cCREs	del_9	8146
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_1	311884
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_10plus	48277
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_2	114158
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_3	49046
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_4	74855
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_5	22391
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_6	25547
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_7	12817
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_8	29313
+HepG2_skew	[-0.05,0.05)	Other cCREs	ins_9	6737
+HepG2_skew	[-0.05,0.05)	PLS	del_1	22247
+HepG2_skew	[-0.05,0.05)	PLS	del_10plus	2622
+HepG2_skew	[-0.05,0.05)	PLS	del_2	8712
+HepG2_skew	[-0.05,0.05)	PLS	del_3	4045
+HepG2_skew	[-0.05,0.05)	PLS	del_4	3447
+HepG2_skew	[-0.05,0.05)	PLS	del_5	1271
+HepG2_skew	[-0.05,0.05)	PLS	del_6	1227
+HepG2_skew	[-0.05,0.05)	PLS	del_7	676
+HepG2_skew	[-0.05,0.05)	PLS	del_8	748
+HepG2_skew	[-0.05,0.05)	PLS	del_9	464
+HepG2_skew	[-0.05,0.05)	PLS	ins_1	17015
+HepG2_skew	[-0.05,0.05)	PLS	ins_10plus	3517
+HepG2_skew	[-0.05,0.05)	PLS	ins_2	4954
+HepG2_skew	[-0.05,0.05)	PLS	ins_3	2571
+HepG2_skew	[-0.05,0.05)	PLS	ins_4	2372
+HepG2_skew	[-0.05,0.05)	PLS	ins_5	1558
+HepG2_skew	[-0.05,0.05)	PLS	ins_6	1866
+HepG2_skew	[-0.05,0.05)	PLS	ins_7	867
+HepG2_skew	[-0.05,0.05)	PLS	ins_8	969
+HepG2_skew	[-0.05,0.05)	PLS	ins_9	526
+HepG2_skew	[-0.05,0.05)	dELS	del_1	1144543
+HepG2_skew	[-0.05,0.05)	dELS	del_10plus	87206
+HepG2_skew	[-0.05,0.05)	dELS	del_2	563262
+HepG2_skew	[-0.05,0.05)	dELS	del_3	275448
+HepG2_skew	[-0.05,0.05)	dELS	del_4	265227
+HepG2_skew	[-0.05,0.05)	dELS	del_5	87071
+HepG2_skew	[-0.05,0.05)	dELS	del_6	63050
+HepG2_skew	[-0.05,0.05)	dELS	del_7	32300
+HepG2_skew	[-0.05,0.05)	dELS	del_8	38526
+HepG2_skew	[-0.05,0.05)	dELS	del_9	15746
+HepG2_skew	[-0.05,0.05)	dELS	ins_1	734380
+HepG2_skew	[-0.05,0.05)	dELS	ins_10plus	76015
+HepG2_skew	[-0.05,0.05)	dELS	ins_2	248449
+HepG2_skew	[-0.05,0.05)	dELS	ins_3	100160
+HepG2_skew	[-0.05,0.05)	dELS	ins_4	125181
+HepG2_skew	[-0.05,0.05)	dELS	ins_5	44585
+HepG2_skew	[-0.05,0.05)	dELS	ins_6	53076
+HepG2_skew	[-0.05,0.05)	dELS	ins_7	24708
+HepG2_skew	[-0.05,0.05)	dELS	ins_8	40554
+HepG2_skew	[-0.05,0.05)	dELS	ins_9	11844
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_1	8922120
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_10plus	630107
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_2	3876630
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_3	2257328
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_4	2379482
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_5	904891
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_6	549340
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_7	249000
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_8	304204
+HepG2_skew	[-0.05,0.05)	non-cCRE	del_9	128704
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_1	5634341
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_10plus	737905
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_2	2001464
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_3	831140
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_4	1055976
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_5	390746
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_6	459941
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_7	210653
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_8	371314
+HepG2_skew	[-0.05,0.05)	non-cCRE	ins_9	127450
+HepG2_skew	[-0.05,0.05)	pELS	del_1	165009
+HepG2_skew	[-0.05,0.05)	pELS	del_10plus	14752
+HepG2_skew	[-0.05,0.05)	pELS	del_2	90458
+HepG2_skew	[-0.05,0.05)	pELS	del_3	42676
+HepG2_skew	[-0.05,0.05)	pELS	del_4	41478
+HepG2_skew	[-0.05,0.05)	pELS	del_5	13584
+HepG2_skew	[-0.05,0.05)	pELS	del_6	10066
+HepG2_skew	[-0.05,0.05)	pELS	del_7	5378
+HepG2_skew	[-0.05,0.05)	pELS	del_8	6217
+HepG2_skew	[-0.05,0.05)	pELS	del_9	2645
+HepG2_skew	[-0.05,0.05)	pELS	ins_1	121318
+HepG2_skew	[-0.05,0.05)	pELS	ins_10plus	13142
+HepG2_skew	[-0.05,0.05)	pELS	ins_2	39623
+HepG2_skew	[-0.05,0.05)	pELS	ins_3	16557
+HepG2_skew	[-0.05,0.05)	pELS	ins_4	19599
+HepG2_skew	[-0.05,0.05)	pELS	ins_5	7253
+HepG2_skew	[-0.05,0.05)	pELS	ins_6	8873
+HepG2_skew	[-0.05,0.05)	pELS	ins_7	4320
+HepG2_skew	[-0.05,0.05)	pELS	ins_8	6239
+HepG2_skew	[-0.05,0.05)	pELS	ins_9	2086
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_1	165518
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_10plus	26974
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_2	37297
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_3	29187
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_4	28274
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_5	10524
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_6	6923
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_7	5198
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_8	7581
+HepG2_skew	[-0.2,-0.05)	Other cCREs	del_9	2035
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_1	35400
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_10plus	43755
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_2	16065
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_3	12122
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_4	19471
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_5	8818
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_6	9669
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_7	5345
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_8	8597
+HepG2_skew	[-0.2,-0.05)	Other cCREs	ins_9	8228
+HepG2_skew	[-0.2,-0.05)	PLS	del_1	12251
+HepG2_skew	[-0.2,-0.05)	PLS	del_10plus	2208
+HepG2_skew	[-0.2,-0.05)	PLS	del_2	2105
+HepG2_skew	[-0.2,-0.05)	PLS	del_3	1350
+HepG2_skew	[-0.2,-0.05)	PLS	del_4	1002
+HepG2_skew	[-0.2,-0.05)	PLS	del_5	511
+HepG2_skew	[-0.2,-0.05)	PLS	del_6	474
+HepG2_skew	[-0.2,-0.05)	PLS	del_7	374
+HepG2_skew	[-0.2,-0.05)	PLS	del_8	442
+HepG2_skew	[-0.2,-0.05)	PLS	del_9	214
+HepG2_skew	[-0.2,-0.05)	PLS	ins_1	5523
+HepG2_skew	[-0.2,-0.05)	PLS	ins_10plus	4451
+HepG2_skew	[-0.2,-0.05)	PLS	ins_2	2027
+HepG2_skew	[-0.2,-0.05)	PLS	ins_3	1817
+HepG2_skew	[-0.2,-0.05)	PLS	ins_4	1921
+HepG2_skew	[-0.2,-0.05)	PLS	ins_5	1348
+HepG2_skew	[-0.2,-0.05)	PLS	ins_6	1496
+HepG2_skew	[-0.2,-0.05)	PLS	ins_7	747
+HepG2_skew	[-0.2,-0.05)	PLS	ins_8	697
+HepG2_skew	[-0.2,-0.05)	PLS	ins_9	992
+HepG2_skew	[-0.2,-0.05)	dELS	del_1	448504
+HepG2_skew	[-0.2,-0.05)	dELS	del_10plus	60798
+HepG2_skew	[-0.2,-0.05)	dELS	del_2	101640
+HepG2_skew	[-0.2,-0.05)	dELS	del_3	71499
+HepG2_skew	[-0.2,-0.05)	dELS	del_4	65875
+HepG2_skew	[-0.2,-0.05)	dELS	del_5	24168
+HepG2_skew	[-0.2,-0.05)	dELS	del_6	16808
+HepG2_skew	[-0.2,-0.05)	dELS	del_7	13221
+HepG2_skew	[-0.2,-0.05)	dELS	del_8	17335
+HepG2_skew	[-0.2,-0.05)	dELS	del_9	5470
+HepG2_skew	[-0.2,-0.05)	dELS	ins_1	107601
+HepG2_skew	[-0.2,-0.05)	dELS	ins_10plus	84141
+HepG2_skew	[-0.2,-0.05)	dELS	ins_2	44786
+HepG2_skew	[-0.2,-0.05)	dELS	ins_3	32354
+HepG2_skew	[-0.2,-0.05)	dELS	ins_4	47559
+HepG2_skew	[-0.2,-0.05)	dELS	ins_5	22833
+HepG2_skew	[-0.2,-0.05)	dELS	ins_6	23989
+HepG2_skew	[-0.2,-0.05)	dELS	ins_7	12879
+HepG2_skew	[-0.2,-0.05)	dELS	ins_8	16570
+HepG2_skew	[-0.2,-0.05)	dELS	ins_9	17355
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_1	1961970
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_10plus	341358
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_2	493326
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_3	428716
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_4	467067
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_5	200927
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_6	105008
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_7	77299
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_8	94954
+HepG2_skew	[-0.2,-0.05)	non-cCRE	del_9	29889
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_1	363183
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_10plus	632312
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_2	167862
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_3	139429
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_4	215795
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_5	122376
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_6	126223
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_7	73659
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_8	98600
+HepG2_skew	[-0.2,-0.05)	non-cCRE	ins_9	114361
+HepG2_skew	[-0.2,-0.05)	pELS	del_1	67611
+HepG2_skew	[-0.2,-0.05)	pELS	del_10plus	10358
+HepG2_skew	[-0.2,-0.05)	pELS	del_2	15679
+HepG2_skew	[-0.2,-0.05)	pELS	del_3	11072
+HepG2_skew	[-0.2,-0.05)	pELS	del_4	9945
+HepG2_skew	[-0.2,-0.05)	pELS	del_5	3874
+HepG2_skew	[-0.2,-0.05)	pELS	del_6	2843
+HepG2_skew	[-0.2,-0.05)	pELS	del_7	2237
+HepG2_skew	[-0.2,-0.05)	pELS	del_8	2940
+HepG2_skew	[-0.2,-0.05)	pELS	del_9	1017
+HepG2_skew	[-0.2,-0.05)	pELS	ins_1	21346
+HepG2_skew	[-0.2,-0.05)	pELS	ins_10plus	15055
+HepG2_skew	[-0.2,-0.05)	pELS	ins_2	8227
+HepG2_skew	[-0.2,-0.05)	pELS	ins_3	6325
+HepG2_skew	[-0.2,-0.05)	pELS	ins_4	8823
+HepG2_skew	[-0.2,-0.05)	pELS	ins_5	4221
+HepG2_skew	[-0.2,-0.05)	pELS	ins_6	4796
+HepG2_skew	[-0.2,-0.05)	pELS	ins_7	2429
+HepG2_skew	[-0.2,-0.05)	pELS	ins_8	2879
+HepG2_skew	[-0.2,-0.05)	pELS	ins_9	3011
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_1	18585
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_10plus	5563
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_2	5074
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_3	3567
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_4	4354
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_5	1606
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_6	1379
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_7	1176
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_8	1269
+HepG2_skew	[-0.5,-0.2)	Other cCREs	del_9	609
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_1	5604
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_10plus	11351
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_2	2132
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_3	1328
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_4	1699
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_5	764
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_6	817
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_7	511
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_8	694
+HepG2_skew	[-0.5,-0.2)	Other cCREs	ins_9	1183
+HepG2_skew	[-0.5,-0.2)	PLS	del_1	3186
+HepG2_skew	[-0.5,-0.2)	PLS	del_10plus	1417
+HepG2_skew	[-0.5,-0.2)	PLS	del_2	558
+HepG2_skew	[-0.5,-0.2)	PLS	del_3	419
+HepG2_skew	[-0.5,-0.2)	PLS	del_4	349
+HepG2_skew	[-0.5,-0.2)	PLS	del_5	214
+HepG2_skew	[-0.5,-0.2)	PLS	del_6	203
+HepG2_skew	[-0.5,-0.2)	PLS	del_7	161
+HepG2_skew	[-0.5,-0.2)	PLS	del_8	196
+HepG2_skew	[-0.5,-0.2)	PLS	del_9	117
+HepG2_skew	[-0.5,-0.2)	PLS	ins_1	1454
+HepG2_skew	[-0.5,-0.2)	PLS	ins_10plus	2032
+HepG2_skew	[-0.5,-0.2)	PLS	ins_2	466
+HepG2_skew	[-0.5,-0.2)	PLS	ins_3	275
+HepG2_skew	[-0.5,-0.2)	PLS	ins_4	319
+HepG2_skew	[-0.5,-0.2)	PLS	ins_5	208
+HepG2_skew	[-0.5,-0.2)	PLS	ins_6	245
+HepG2_skew	[-0.5,-0.2)	PLS	ins_7	168
+HepG2_skew	[-0.5,-0.2)	PLS	ins_8	165
+HepG2_skew	[-0.5,-0.2)	PLS	ins_9	284
+HepG2_skew	[-0.5,-0.2)	dELS	del_1	58907
+HepG2_skew	[-0.5,-0.2)	dELS	del_10plus	15911
+HepG2_skew	[-0.5,-0.2)	dELS	del_2	15847
+HepG2_skew	[-0.5,-0.2)	dELS	del_3	10694
+HepG2_skew	[-0.5,-0.2)	dELS	del_4	12971
+HepG2_skew	[-0.5,-0.2)	dELS	del_5	4637
+HepG2_skew	[-0.5,-0.2)	dELS	del_6	3850
+HepG2_skew	[-0.5,-0.2)	dELS	del_7	3246
+HepG2_skew	[-0.5,-0.2)	dELS	del_8	3429
+HepG2_skew	[-0.5,-0.2)	dELS	del_9	1750
+HepG2_skew	[-0.5,-0.2)	dELS	ins_1	18540
+HepG2_skew	[-0.5,-0.2)	dELS	ins_10plus	29469
+HepG2_skew	[-0.5,-0.2)	dELS	ins_2	6631
+HepG2_skew	[-0.5,-0.2)	dELS	ins_3	4131
+HepG2_skew	[-0.5,-0.2)	dELS	ins_4	5073
+HepG2_skew	[-0.5,-0.2)	dELS	ins_5	2370
+HepG2_skew	[-0.5,-0.2)	dELS	ins_6	2378
+HepG2_skew	[-0.5,-0.2)	dELS	ins_7	1663
+HepG2_skew	[-0.5,-0.2)	dELS	ins_8	1967
+HepG2_skew	[-0.5,-0.2)	dELS	ins_9	3334
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_1	114387
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_10plus	51852
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_2	34355
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_3	28430
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_4	40544
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_5	20007
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_6	14477
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_7	13420
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_8	12868
+HepG2_skew	[-0.5,-0.2)	non-cCRE	del_9	7007
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_1	32557
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_10plus	129092
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_2	14031
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_3	8276
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_4	10776
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_5	5809
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_6	5953
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_7	4337
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_8	6084
+HepG2_skew	[-0.5,-0.2)	non-cCRE	ins_9	10275
+HepG2_skew	[-0.5,-0.2)	pELS	del_1	9962
+HepG2_skew	[-0.5,-0.2)	pELS	del_10plus	3308
+HepG2_skew	[-0.5,-0.2)	pELS	del_2	2614
+HepG2_skew	[-0.5,-0.2)	pELS	del_3	1819
+HepG2_skew	[-0.5,-0.2)	pELS	del_4	2014
+HepG2_skew	[-0.5,-0.2)	pELS	del_5	781
+HepG2_skew	[-0.5,-0.2)	pELS	del_6	767
+HepG2_skew	[-0.5,-0.2)	pELS	del_7	573
+HepG2_skew	[-0.5,-0.2)	pELS	del_8	663
+HepG2_skew	[-0.5,-0.2)	pELS	del_9	329
+HepG2_skew	[-0.5,-0.2)	pELS	ins_1	3810
+HepG2_skew	[-0.5,-0.2)	pELS	ins_10plus	5864
+HepG2_skew	[-0.5,-0.2)	pELS	ins_2	1244
+HepG2_skew	[-0.5,-0.2)	pELS	ins_3	909
+HepG2_skew	[-0.5,-0.2)	pELS	ins_4	965
+HepG2_skew	[-0.5,-0.2)	pELS	ins_5	508
+HepG2_skew	[-0.5,-0.2)	pELS	ins_6	505
+HepG2_skew	[-0.5,-0.2)	pELS	ins_7	370
+HepG2_skew	[-0.5,-0.2)	pELS	ins_8	413
+HepG2_skew	[-0.5,-0.2)	pELS	ins_9	674
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_1	4270
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_10plus	1533
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_2	1056
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_3	711
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_4	787
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_5	278
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_6	308
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_7	253
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_8	267
+HepG2_skew	[-1.0,-0.5)	Other cCREs	del_9	149
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_1	1211
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_10plus	452
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_2	430
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_3	178
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_4	247
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_5	92
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_6	84
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_7	53
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_8	80
+HepG2_skew	[-1.0,-0.5)	Other cCREs	ins_9	60
+HepG2_skew	[-1.0,-0.5)	PLS	del_1	918
+HepG2_skew	[-1.0,-0.5)	PLS	del_10plus	655
+HepG2_skew	[-1.0,-0.5)	PLS	del_2	170
+HepG2_skew	[-1.0,-0.5)	PLS	del_3	135
+HepG2_skew	[-1.0,-0.5)	PLS	del_4	115
+HepG2_skew	[-1.0,-0.5)	PLS	del_5	67
+HepG2_skew	[-1.0,-0.5)	PLS	del_6	90
+HepG2_skew	[-1.0,-0.5)	PLS	del_7	58
+HepG2_skew	[-1.0,-0.5)	PLS	del_8	46
+HepG2_skew	[-1.0,-0.5)	PLS	del_9	55
+HepG2_skew	[-1.0,-0.5)	PLS	ins_1	372
+HepG2_skew	[-1.0,-0.5)	PLS	ins_10plus	182
+HepG2_skew	[-1.0,-0.5)	PLS	ins_2	104
+HepG2_skew	[-1.0,-0.5)	PLS	ins_3	55
+HepG2_skew	[-1.0,-0.5)	PLS	ins_4	55
+HepG2_skew	[-1.0,-0.5)	PLS	ins_5	36
+HepG2_skew	[-1.0,-0.5)	PLS	ins_6	23
+HepG2_skew	[-1.0,-0.5)	PLS	ins_7	16
+HepG2_skew	[-1.0,-0.5)	PLS	ins_8	19
+HepG2_skew	[-1.0,-0.5)	PLS	ins_9	20
+HepG2_skew	[-1.0,-0.5)	dELS	del_1	13806
+HepG2_skew	[-1.0,-0.5)	dELS	del_10plus	4607
+HepG2_skew	[-1.0,-0.5)	dELS	del_2	3725
+HepG2_skew	[-1.0,-0.5)	dELS	del_3	2327
+HepG2_skew	[-1.0,-0.5)	dELS	del_4	2592
+HepG2_skew	[-1.0,-0.5)	dELS	del_5	923
+HepG2_skew	[-1.0,-0.5)	dELS	del_6	913
+HepG2_skew	[-1.0,-0.5)	dELS	del_7	783
+HepG2_skew	[-1.0,-0.5)	dELS	del_8	733
+HepG2_skew	[-1.0,-0.5)	dELS	del_9	439
+HepG2_skew	[-1.0,-0.5)	dELS	ins_1	4149
+HepG2_skew	[-1.0,-0.5)	dELS	ins_10plus	1446
+HepG2_skew	[-1.0,-0.5)	dELS	ins_2	1264
+HepG2_skew	[-1.0,-0.5)	dELS	ins_3	694
+HepG2_skew	[-1.0,-0.5)	dELS	ins_4	735
+HepG2_skew	[-1.0,-0.5)	dELS	ins_5	305
+HepG2_skew	[-1.0,-0.5)	dELS	ins_6	253
+HepG2_skew	[-1.0,-0.5)	dELS	ins_7	190
+HepG2_skew	[-1.0,-0.5)	dELS	ins_8	195
+HepG2_skew	[-1.0,-0.5)	dELS	ins_9	228
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_1	18182
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_10plus	7597
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_2	4116
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_3	3048
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_4	3525
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_5	1423
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_6	1563
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_7	1472
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_8	1511
+HepG2_skew	[-1.0,-0.5)	non-cCRE	del_9	819
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_1	4355
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_10plus	2665
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_2	1986
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_3	952
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_4	978
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_5	435
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_6	395
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_7	271
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_8	276
+HepG2_skew	[-1.0,-0.5)	non-cCRE	ins_9	320
+HepG2_skew	[-1.0,-0.5)	pELS	del_1	2191
+HepG2_skew	[-1.0,-0.5)	pELS	del_10plus	1051
+HepG2_skew	[-1.0,-0.5)	pELS	del_2	596
+HepG2_skew	[-1.0,-0.5)	pELS	del_3	412
+HepG2_skew	[-1.0,-0.5)	pELS	del_4	398
+HepG2_skew	[-1.0,-0.5)	pELS	del_5	164
+HepG2_skew	[-1.0,-0.5)	pELS	del_6	159
+HepG2_skew	[-1.0,-0.5)	pELS	del_7	122
+HepG2_skew	[-1.0,-0.5)	pELS	del_8	152
+HepG2_skew	[-1.0,-0.5)	pELS	del_9	76
+HepG2_skew	[-1.0,-0.5)	pELS	ins_1	801
+HepG2_skew	[-1.0,-0.5)	pELS	ins_10plus	325
+HepG2_skew	[-1.0,-0.5)	pELS	ins_2	226
+HepG2_skew	[-1.0,-0.5)	pELS	ins_3	127
+HepG2_skew	[-1.0,-0.5)	pELS	ins_4	133
+HepG2_skew	[-1.0,-0.5)	pELS	ins_5	57
+HepG2_skew	[-1.0,-0.5)	pELS	ins_6	55
+HepG2_skew	[-1.0,-0.5)	pELS	ins_7	32
+HepG2_skew	[-1.0,-0.5)	pELS	ins_8	31
+HepG2_skew	[-1.0,-0.5)	pELS	ins_9	49
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_1	809
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_10plus	401
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_2	206
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_3	136
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_4	151
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_5	55
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_6	64
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_7	54
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_8	65
+HepG2_skew	[-1.5,-1.0)	Other cCREs	del_9	40
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_1	180
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_10plus	31
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_2	70
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_3	44
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_4	37
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_5	13
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_6	10
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_7	5
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_8	9
+HepG2_skew	[-1.5,-1.0)	Other cCREs	ins_9	4
+HepG2_skew	[-1.5,-1.0)	PLS	del_1	209
+HepG2_skew	[-1.5,-1.0)	PLS	del_10plus	140
+HepG2_skew	[-1.5,-1.0)	PLS	del_2	41
+HepG2_skew	[-1.5,-1.0)	PLS	del_3	26
+HepG2_skew	[-1.5,-1.0)	PLS	del_4	32
+HepG2_skew	[-1.5,-1.0)	PLS	del_5	16
+HepG2_skew	[-1.5,-1.0)	PLS	del_6	25
+HepG2_skew	[-1.5,-1.0)	PLS	del_7	15
+HepG2_skew	[-1.5,-1.0)	PLS	del_8	13
+HepG2_skew	[-1.5,-1.0)	PLS	del_9	5
+HepG2_skew	[-1.5,-1.0)	PLS	ins_1	58
+HepG2_skew	[-1.5,-1.0)	PLS	ins_10plus	7
+HepG2_skew	[-1.5,-1.0)	PLS	ins_2	18
+HepG2_skew	[-1.5,-1.0)	PLS	ins_3	6
+HepG2_skew	[-1.5,-1.0)	PLS	ins_4	7
+HepG2_skew	[-1.5,-1.0)	PLS	ins_5	3
+HepG2_skew	[-1.5,-1.0)	PLS	ins_6	3
+HepG2_skew	[-1.5,-1.0)	PLS	ins_7	4
+HepG2_skew	[-1.5,-1.0)	PLS	ins_8	3
+HepG2_skew	[-1.5,-1.0)	dELS	del_1	2784
+HepG2_skew	[-1.5,-1.0)	dELS	del_10plus	1109
+HepG2_skew	[-1.5,-1.0)	dELS	del_2	746
+HepG2_skew	[-1.5,-1.0)	dELS	del_3	461
+HepG2_skew	[-1.5,-1.0)	dELS	del_4	542
+HepG2_skew	[-1.5,-1.0)	dELS	del_5	189
+HepG2_skew	[-1.5,-1.0)	dELS	del_6	245
+HepG2_skew	[-1.5,-1.0)	dELS	del_7	164
+HepG2_skew	[-1.5,-1.0)	dELS	del_8	189
+HepG2_skew	[-1.5,-1.0)	dELS	del_9	104
+HepG2_skew	[-1.5,-1.0)	dELS	ins_1	741
+HepG2_skew	[-1.5,-1.0)	dELS	ins_10plus	122
+HepG2_skew	[-1.5,-1.0)	dELS	ins_2	233
+HepG2_skew	[-1.5,-1.0)	dELS	ins_3	106
+HepG2_skew	[-1.5,-1.0)	dELS	ins_4	124
+HepG2_skew	[-1.5,-1.0)	dELS	ins_5	51
+HepG2_skew	[-1.5,-1.0)	dELS	ins_6	39
+HepG2_skew	[-1.5,-1.0)	dELS	ins_7	20
+HepG2_skew	[-1.5,-1.0)	dELS	ins_8	24
+HepG2_skew	[-1.5,-1.0)	dELS	ins_9	16
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_1	3577
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_10plus	1434
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_2	657
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_3	539
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_4	596
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_5	209
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_6	311
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_7	224
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_8	202
+HepG2_skew	[-1.5,-1.0)	non-cCRE	del_9	157
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_1	777
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_10plus	113
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_2	345
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_3	183
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_4	167
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_5	51
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_6	55
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_7	23
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_8	23
+HepG2_skew	[-1.5,-1.0)	non-cCRE	ins_9	27
+HepG2_skew	[-1.5,-1.0)	pELS	del_1	452
+HepG2_skew	[-1.5,-1.0)	pELS	del_10plus	234
+HepG2_skew	[-1.5,-1.0)	pELS	del_2	139
+HepG2_skew	[-1.5,-1.0)	pELS	del_3	79
+HepG2_skew	[-1.5,-1.0)	pELS	del_4	70
+HepG2_skew	[-1.5,-1.0)	pELS	del_5	29
+HepG2_skew	[-1.5,-1.0)	pELS	del_6	49
+HepG2_skew	[-1.5,-1.0)	pELS	del_7	27
+HepG2_skew	[-1.5,-1.0)	pELS	del_8	33
+HepG2_skew	[-1.5,-1.0)	pELS	del_9	18
+HepG2_skew	[-1.5,-1.0)	pELS	ins_1	143
+HepG2_skew	[-1.5,-1.0)	pELS	ins_10plus	24
+HepG2_skew	[-1.5,-1.0)	pELS	ins_2	46
+HepG2_skew	[-1.5,-1.0)	pELS	ins_3	26
+HepG2_skew	[-1.5,-1.0)	pELS	ins_4	22
+HepG2_skew	[-1.5,-1.0)	pELS	ins_5	5
+HepG2_skew	[-1.5,-1.0)	pELS	ins_6	8
+HepG2_skew	[-1.5,-1.0)	pELS	ins_7	6
+HepG2_skew	[-1.5,-1.0)	pELS	ins_8	4
+HepG2_skew	[-1.5,-1.0)	pELS	ins_9	3
+HepG2_skew	[0.05,0.2)	Other cCREs	del_1	63512
+HepG2_skew	[0.05,0.2)	Other cCREs	del_10plus	57862
+HepG2_skew	[0.05,0.2)	Other cCREs	del_2	35330
+HepG2_skew	[0.05,0.2)	Other cCREs	del_3	34524
+HepG2_skew	[0.05,0.2)	Other cCREs	del_4	36438
+HepG2_skew	[0.05,0.2)	Other cCREs	del_5	15160
+HepG2_skew	[0.05,0.2)	Other cCREs	del_6	13044
+HepG2_skew	[0.05,0.2)	Other cCREs	del_7	7291
+HepG2_skew	[0.05,0.2)	Other cCREs	del_8	9556
+HepG2_skew	[0.05,0.2)	Other cCREs	del_9	10877
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_1	98053
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_10plus	28155
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_2	17916
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_3	11837
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_4	11441
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_5	4188
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_6	4444
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_7	2951
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_8	7709
+HepG2_skew	[0.05,0.2)	Other cCREs	ins_9	1074
+HepG2_skew	[0.05,0.2)	PLS	del_1	6989
+HepG2_skew	[0.05,0.2)	PLS	del_10plus	3586
+HepG2_skew	[0.05,0.2)	PLS	del_2	3273
+HepG2_skew	[0.05,0.2)	PLS	del_3	3033
+HepG2_skew	[0.05,0.2)	PLS	del_4	2353
+HepG2_skew	[0.05,0.2)	PLS	del_5	1156
+HepG2_skew	[0.05,0.2)	PLS	del_6	1025
+HepG2_skew	[0.05,0.2)	PLS	del_7	565
+HepG2_skew	[0.05,0.2)	PLS	del_8	568
+HepG2_skew	[0.05,0.2)	PLS	del_9	801
+HepG2_skew	[0.05,0.2)	PLS	ins_1	7880
+HepG2_skew	[0.05,0.2)	PLS	ins_10plus	2857
+HepG2_skew	[0.05,0.2)	PLS	ins_2	1361
+HepG2_skew	[0.05,0.2)	PLS	ins_3	713
+HepG2_skew	[0.05,0.2)	PLS	ins_4	622
+HepG2_skew	[0.05,0.2)	PLS	ins_5	601
+HepG2_skew	[0.05,0.2)	PLS	ins_6	781
+HepG2_skew	[0.05,0.2)	PLS	ins_7	318
+HepG2_skew	[0.05,0.2)	PLS	ins_8	464
+HepG2_skew	[0.05,0.2)	PLS	ins_9	142
+HepG2_skew	[0.05,0.2)	dELS	del_1	174197
+HepG2_skew	[0.05,0.2)	dELS	del_10plus	115017
+HepG2_skew	[0.05,0.2)	dELS	del_2	101652
+HepG2_skew	[0.05,0.2)	dELS	del_3	95461
+HepG2_skew	[0.05,0.2)	dELS	del_4	88918
+HepG2_skew	[0.05,0.2)	dELS	del_5	39025
+HepG2_skew	[0.05,0.2)	dELS	del_6	29829
+HepG2_skew	[0.05,0.2)	dELS	del_7	18278
+HepG2_skew	[0.05,0.2)	dELS	del_8	17925
+HepG2_skew	[0.05,0.2)	dELS	del_9	23903
+HepG2_skew	[0.05,0.2)	dELS	ins_1	262755
+HepG2_skew	[0.05,0.2)	dELS	ins_10plus	60342
+HepG2_skew	[0.05,0.2)	dELS	ins_2	43731
+HepG2_skew	[0.05,0.2)	dELS	ins_3	27368
+HepG2_skew	[0.05,0.2)	dELS	ins_4	24707
+HepG2_skew	[0.05,0.2)	dELS	ins_5	9549
+HepG2_skew	[0.05,0.2)	dELS	ins_6	11075
+HepG2_skew	[0.05,0.2)	dELS	ins_7	6957
+HepG2_skew	[0.05,0.2)	dELS	ins_8	15265
+HepG2_skew	[0.05,0.2)	dELS	ins_9	2283
+HepG2_skew	[0.05,0.2)	non-cCRE	del_1	694948
+HepG2_skew	[0.05,0.2)	non-cCRE	del_10plus	673157
+HepG2_skew	[0.05,0.2)	non-cCRE	del_2	356211
+HepG2_skew	[0.05,0.2)	non-cCRE	del_3	358048
+HepG2_skew	[0.05,0.2)	non-cCRE	del_4	399319
+HepG2_skew	[0.05,0.2)	non-cCRE	del_5	193841
+HepG2_skew	[0.05,0.2)	non-cCRE	del_6	157247
+HepG2_skew	[0.05,0.2)	non-cCRE	del_7	89907
+HepG2_skew	[0.05,0.2)	non-cCRE	del_8	102011
+HepG2_skew	[0.05,0.2)	non-cCRE	del_9	129592
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_1	1325554
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_10plus	412625
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_2	255273
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_3	175837
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_4	140863
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_5	62329
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_6	59005
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_7	43444
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_8	89521
+HepG2_skew	[0.05,0.2)	non-cCRE	ins_9	15728
+HepG2_skew	[0.05,0.2)	pELS	del_1	30291
+HepG2_skew	[0.05,0.2)	pELS	del_10plus	19669
+HepG2_skew	[0.05,0.2)	pELS	del_2	18234
+HepG2_skew	[0.05,0.2)	pELS	del_3	18149
+HepG2_skew	[0.05,0.2)	pELS	del_4	16804
+HepG2_skew	[0.05,0.2)	pELS	del_5	7191
+HepG2_skew	[0.05,0.2)	pELS	del_6	5760
+HepG2_skew	[0.05,0.2)	pELS	del_7	3326
+HepG2_skew	[0.05,0.2)	pELS	del_8	3209
+HepG2_skew	[0.05,0.2)	pELS	del_9	4151
+HepG2_skew	[0.05,0.2)	pELS	ins_1	46043
+HepG2_skew	[0.05,0.2)	pELS	ins_10plus	10448
+HepG2_skew	[0.05,0.2)	pELS	ins_2	7603
+HepG2_skew	[0.05,0.2)	pELS	ins_3	4596
+HepG2_skew	[0.05,0.2)	pELS	ins_4	3953
+HepG2_skew	[0.05,0.2)	pELS	ins_5	1822
+HepG2_skew	[0.05,0.2)	pELS	ins_6	2161
+HepG2_skew	[0.05,0.2)	pELS	ins_7	1343
+HepG2_skew	[0.05,0.2)	pELS	ins_8	2575
+HepG2_skew	[0.05,0.2)	pELS	ins_9	480
+HepG2_skew	[0.2,0.5)	Other cCREs	del_1	10815
+HepG2_skew	[0.2,0.5)	Other cCREs	del_10plus	18201
+HepG2_skew	[0.2,0.5)	Other cCREs	del_2	4979
+HepG2_skew	[0.2,0.5)	Other cCREs	del_3	3446
+HepG2_skew	[0.2,0.5)	Other cCREs	del_4	3552
+HepG2_skew	[0.2,0.5)	Other cCREs	del_5	1721
+HepG2_skew	[0.2,0.5)	Other cCREs	del_6	1387
+HepG2_skew	[0.2,0.5)	Other cCREs	del_7	1008
+HepG2_skew	[0.2,0.5)	Other cCREs	del_8	1248
+HepG2_skew	[0.2,0.5)	Other cCREs	del_9	1915
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_1	6377
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_10plus	3855
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_2	2242
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_3	1529
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_4	1739
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_5	660
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_6	1042
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_7	526
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_8	1023
+HepG2_skew	[0.2,0.5)	Other cCREs	ins_9	207
+HepG2_skew	[0.2,0.5)	PLS	del_1	1718
+HepG2_skew	[0.2,0.5)	PLS	del_10plus	1805
+HepG2_skew	[0.2,0.5)	PLS	del_2	601
+HepG2_skew	[0.2,0.5)	PLS	del_3	525
+HepG2_skew	[0.2,0.5)	PLS	del_4	416
+HepG2_skew	[0.2,0.5)	PLS	del_5	218
+HepG2_skew	[0.2,0.5)	PLS	del_6	218
+HepG2_skew	[0.2,0.5)	PLS	del_7	150
+HepG2_skew	[0.2,0.5)	PLS	del_8	153
+HepG2_skew	[0.2,0.5)	PLS	del_9	255
+HepG2_skew	[0.2,0.5)	PLS	ins_1	1113
+HepG2_skew	[0.2,0.5)	PLS	ins_10plus	1437
+HepG2_skew	[0.2,0.5)	PLS	ins_2	296
+HepG2_skew	[0.2,0.5)	PLS	ins_3	185
+HepG2_skew	[0.2,0.5)	PLS	ins_4	224
+HepG2_skew	[0.2,0.5)	PLS	ins_5	176
+HepG2_skew	[0.2,0.5)	PLS	ins_6	254
+HepG2_skew	[0.2,0.5)	PLS	ins_7	77
+HepG2_skew	[0.2,0.5)	PLS	ins_8	144
+HepG2_skew	[0.2,0.5)	PLS	ins_9	46
+HepG2_skew	[0.2,0.5)	dELS	del_1	33383
+HepG2_skew	[0.2,0.5)	dELS	del_10plus	47630
+HepG2_skew	[0.2,0.5)	dELS	del_2	16100
+HepG2_skew	[0.2,0.5)	dELS	del_3	11302
+HepG2_skew	[0.2,0.5)	dELS	del_4	10254
+HepG2_skew	[0.2,0.5)	dELS	del_5	5032
+HepG2_skew	[0.2,0.5)	dELS	del_6	4266
+HepG2_skew	[0.2,0.5)	dELS	del_7	3094
+HepG2_skew	[0.2,0.5)	dELS	del_8	3109
+HepG2_skew	[0.2,0.5)	dELS	del_9	5540
+HepG2_skew	[0.2,0.5)	dELS	ins_1	21181
+HepG2_skew	[0.2,0.5)	dELS	ins_10plus	10474
+HepG2_skew	[0.2,0.5)	dELS	ins_2	6181
+HepG2_skew	[0.2,0.5)	dELS	ins_3	4003
+HepG2_skew	[0.2,0.5)	dELS	ins_4	4878
+HepG2_skew	[0.2,0.5)	dELS	ins_5	1902
+HepG2_skew	[0.2,0.5)	dELS	ins_6	2581
+HepG2_skew	[0.2,0.5)	dELS	ins_7	1407
+HepG2_skew	[0.2,0.5)	dELS	ins_8	2452
+HepG2_skew	[0.2,0.5)	dELS	ins_9	610
+HepG2_skew	[0.2,0.5)	non-cCRE	del_1	86514
+HepG2_skew	[0.2,0.5)	non-cCRE	del_10plus	167241
+HepG2_skew	[0.2,0.5)	non-cCRE	del_2	39067
+HepG2_skew	[0.2,0.5)	non-cCRE	del_3	24741
+HepG2_skew	[0.2,0.5)	non-cCRE	del_4	26332
+HepG2_skew	[0.2,0.5)	non-cCRE	del_5	13681
+HepG2_skew	[0.2,0.5)	non-cCRE	del_6	11721
+HepG2_skew	[0.2,0.5)	non-cCRE	del_7	8129
+HepG2_skew	[0.2,0.5)	non-cCRE	del_8	10650
+HepG2_skew	[0.2,0.5)	non-cCRE	del_9	15791
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_1	51742
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_10plus	32448
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_2	19586
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_3	14486
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_4	15691
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_5	7595
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_6	8415
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_7	5851
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_8	7925
+HepG2_skew	[0.2,0.5)	non-cCRE	ins_9	2803
+HepG2_skew	[0.2,0.5)	pELS	del_1	6299
+HepG2_skew	[0.2,0.5)	pELS	del_10plus	8974
+HepG2_skew	[0.2,0.5)	pELS	del_2	3015
+HepG2_skew	[0.2,0.5)	pELS	del_3	2225
+HepG2_skew	[0.2,0.5)	pELS	del_4	1959
+HepG2_skew	[0.2,0.5)	pELS	del_5	1018
+HepG2_skew	[0.2,0.5)	pELS	del_6	862
+HepG2_skew	[0.2,0.5)	pELS	del_7	584
+HepG2_skew	[0.2,0.5)	pELS	del_8	691
+HepG2_skew	[0.2,0.5)	pELS	del_9	1078
+HepG2_skew	[0.2,0.5)	pELS	ins_1	4584
+HepG2_skew	[0.2,0.5)	pELS	ins_10plus	2488
+HepG2_skew	[0.2,0.5)	pELS	ins_2	1345
+HepG2_skew	[0.2,0.5)	pELS	ins_3	790
+HepG2_skew	[0.2,0.5)	pELS	ins_4	938
+HepG2_skew	[0.2,0.5)	pELS	ins_5	463
+HepG2_skew	[0.2,0.5)	pELS	ins_6	589
+HepG2_skew	[0.2,0.5)	pELS	ins_7	323
+HepG2_skew	[0.2,0.5)	pELS	ins_8	468
+HepG2_skew	[0.2,0.5)	pELS	ins_9	147
+HepG2_skew	[0.5,1.0)	Other cCREs	del_1	2123
+HepG2_skew	[0.5,1.0)	Other cCREs	del_10plus	1206
+HepG2_skew	[0.5,1.0)	Other cCREs	del_2	905
+HepG2_skew	[0.5,1.0)	Other cCREs	del_3	411
+HepG2_skew	[0.5,1.0)	Other cCREs	del_4	391
+HepG2_skew	[0.5,1.0)	Other cCREs	del_5	207
+HepG2_skew	[0.5,1.0)	Other cCREs	del_6	148
+HepG2_skew	[0.5,1.0)	Other cCREs	del_7	95
+HepG2_skew	[0.5,1.0)	Other cCREs	del_8	121
+HepG2_skew	[0.5,1.0)	Other cCREs	del_9	152
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_1	973
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_10plus	1338
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_2	642
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_3	275
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_4	383
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_5	127
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_6	245
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_7	139
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_8	249
+HepG2_skew	[0.5,1.0)	Other cCREs	ins_9	54
+HepG2_skew	[0.5,1.0)	PLS	del_1	366
+HepG2_skew	[0.5,1.0)	PLS	del_10plus	247
+HepG2_skew	[0.5,1.0)	PLS	del_2	121
+HepG2_skew	[0.5,1.0)	PLS	del_3	63
+HepG2_skew	[0.5,1.0)	PLS	del_4	59
+HepG2_skew	[0.5,1.0)	PLS	del_5	26
+HepG2_skew	[0.5,1.0)	PLS	del_6	16
+HepG2_skew	[0.5,1.0)	PLS	del_7	19
+HepG2_skew	[0.5,1.0)	PLS	del_8	26
+HepG2_skew	[0.5,1.0)	PLS	del_9	23
+HepG2_skew	[0.5,1.0)	PLS	ins_1	166
+HepG2_skew	[0.5,1.0)	PLS	ins_10plus	318
+HepG2_skew	[0.5,1.0)	PLS	ins_2	67
+HepG2_skew	[0.5,1.0)	PLS	ins_3	27
+HepG2_skew	[0.5,1.0)	PLS	ins_4	37
+HepG2_skew	[0.5,1.0)	PLS	ins_5	29
+HepG2_skew	[0.5,1.0)	PLS	ins_6	38
+HepG2_skew	[0.5,1.0)	PLS	ins_7	17
+HepG2_skew	[0.5,1.0)	PLS	ins_8	30
+HepG2_skew	[0.5,1.0)	PLS	ins_9	6
+HepG2_skew	[0.5,1.0)	dELS	del_1	7384
+HepG2_skew	[0.5,1.0)	dELS	del_10plus	3810
+HepG2_skew	[0.5,1.0)	dELS	del_2	3251
+HepG2_skew	[0.5,1.0)	dELS	del_3	1470
+HepG2_skew	[0.5,1.0)	dELS	del_4	1254
+HepG2_skew	[0.5,1.0)	dELS	del_5	576
+HepG2_skew	[0.5,1.0)	dELS	del_6	476
+HepG2_skew	[0.5,1.0)	dELS	del_7	371
+HepG2_skew	[0.5,1.0)	dELS	del_8	371
+HepG2_skew	[0.5,1.0)	dELS	del_9	512
+HepG2_skew	[0.5,1.0)	dELS	ins_1	3441
+HepG2_skew	[0.5,1.0)	dELS	ins_10plus	3302
+HepG2_skew	[0.5,1.0)	dELS	ins_2	1731
+HepG2_skew	[0.5,1.0)	dELS	ins_3	777
+HepG2_skew	[0.5,1.0)	dELS	ins_4	1194
+HepG2_skew	[0.5,1.0)	dELS	ins_5	450
+HepG2_skew	[0.5,1.0)	dELS	ins_6	724
+HepG2_skew	[0.5,1.0)	dELS	ins_7	383
+HepG2_skew	[0.5,1.0)	dELS	ins_8	623
+HepG2_skew	[0.5,1.0)	dELS	ins_9	132
+HepG2_skew	[0.5,1.0)	non-cCRE	del_1	15084
+HepG2_skew	[0.5,1.0)	non-cCRE	del_10plus	7438
+HepG2_skew	[0.5,1.0)	non-cCRE	del_2	6458
+HepG2_skew	[0.5,1.0)	non-cCRE	del_3	3013
+HepG2_skew	[0.5,1.0)	non-cCRE	del_4	2513
+HepG2_skew	[0.5,1.0)	non-cCRE	del_5	1208
+HepG2_skew	[0.5,1.0)	non-cCRE	del_6	1019
+HepG2_skew	[0.5,1.0)	non-cCRE	del_7	752
+HepG2_skew	[0.5,1.0)	non-cCRE	del_8	861
+HepG2_skew	[0.5,1.0)	non-cCRE	del_9	978
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_1	6984
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_10plus	6942
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_2	3754
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_3	1908
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_4	2587
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_5	989
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_6	1622
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_7	1028
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_8	1464
+HepG2_skew	[0.5,1.0)	non-cCRE	ins_9	335
+HepG2_skew	[0.5,1.0)	pELS	del_1	1465
+HepG2_skew	[0.5,1.0)	pELS	del_10plus	855
+HepG2_skew	[0.5,1.0)	pELS	del_2	622
+HepG2_skew	[0.5,1.0)	pELS	del_3	277
+HepG2_skew	[0.5,1.0)	pELS	del_4	250
+HepG2_skew	[0.5,1.0)	pELS	del_5	126
+HepG2_skew	[0.5,1.0)	pELS	del_6	110
+HepG2_skew	[0.5,1.0)	pELS	del_7	74
+HepG2_skew	[0.5,1.0)	pELS	del_8	84
+HepG2_skew	[0.5,1.0)	pELS	del_9	122
+HepG2_skew	[0.5,1.0)	pELS	ins_1	726
+HepG2_skew	[0.5,1.0)	pELS	ins_10plus	758
+HepG2_skew	[0.5,1.0)	pELS	ins_2	345
+HepG2_skew	[0.5,1.0)	pELS	ins_3	163
+HepG2_skew	[0.5,1.0)	pELS	ins_4	260
+HepG2_skew	[0.5,1.0)	pELS	ins_5	125
+HepG2_skew	[0.5,1.0)	pELS	ins_6	158
+HepG2_skew	[0.5,1.0)	pELS	ins_7	71
+HepG2_skew	[0.5,1.0)	pELS	ins_8	104
+HepG2_skew	[0.5,1.0)	pELS	ins_9	28
+HepG2_skew	[1.0,1.5)	Other cCREs	del_1	387
+HepG2_skew	[1.0,1.5)	Other cCREs	del_10plus	87
+HepG2_skew	[1.0,1.5)	Other cCREs	del_2	129
+HepG2_skew	[1.0,1.5)	Other cCREs	del_3	60
+HepG2_skew	[1.0,1.5)	Other cCREs	del_4	65
+HepG2_skew	[1.0,1.5)	Other cCREs	del_5	25
+HepG2_skew	[1.0,1.5)	Other cCREs	del_6	29
+HepG2_skew	[1.0,1.5)	Other cCREs	del_7	16
+HepG2_skew	[1.0,1.5)	Other cCREs	del_8	13
+HepG2_skew	[1.0,1.5)	Other cCREs	del_9	16
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_1	109
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_10plus	298
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_2	127
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_3	34
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_4	84
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_5	19
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_6	91
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_7	36
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_8	57
+HepG2_skew	[1.0,1.5)	Other cCREs	ins_9	4
+HepG2_skew	[1.0,1.5)	PLS	del_1	59
+HepG2_skew	[1.0,1.5)	PLS	del_10plus	9
+HepG2_skew	[1.0,1.5)	PLS	del_2	15
+HepG2_skew	[1.0,1.5)	PLS	del_3	6
+HepG2_skew	[1.0,1.5)	PLS	del_4	5
+HepG2_skew	[1.0,1.5)	PLS	del_5	4
+HepG2_skew	[1.0,1.5)	PLS	del_6	2
+HepG2_skew	[1.0,1.5)	PLS	del_7	4
+HepG2_skew	[1.0,1.5)	PLS	del_8	3
+HepG2_skew	[1.0,1.5)	PLS	del_9	2
+HepG2_skew	[1.0,1.5)	PLS	ins_1	21
+HepG2_skew	[1.0,1.5)	PLS	ins_10plus	30
+HepG2_skew	[1.0,1.5)	PLS	ins_2	13
+HepG2_skew	[1.0,1.5)	PLS	ins_3	3
+HepG2_skew	[1.0,1.5)	PLS	ins_4	9
+HepG2_skew	[1.0,1.5)	PLS	ins_5	6
+HepG2_skew	[1.0,1.5)	PLS	ins_6	27
+HepG2_skew	[1.0,1.5)	PLS	ins_7	2
+HepG2_skew	[1.0,1.5)	PLS	ins_8	5
+HepG2_skew	[1.0,1.5)	PLS	ins_9	2
+HepG2_skew	[1.0,1.5)	dELS	del_1	1237
+HepG2_skew	[1.0,1.5)	dELS	del_10plus	303
+HepG2_skew	[1.0,1.5)	dELS	del_2	531
+HepG2_skew	[1.0,1.5)	dELS	del_3	208
+HepG2_skew	[1.0,1.5)	dELS	del_4	180
+HepG2_skew	[1.0,1.5)	dELS	del_5	87
+HepG2_skew	[1.0,1.5)	dELS	del_6	55
+HepG2_skew	[1.0,1.5)	dELS	del_7	52
+HepG2_skew	[1.0,1.5)	dELS	del_8	51
+HepG2_skew	[1.0,1.5)	dELS	del_9	62
+HepG2_skew	[1.0,1.5)	dELS	ins_1	520
+HepG2_skew	[1.0,1.5)	dELS	ins_10plus	898
+HepG2_skew	[1.0,1.5)	dELS	ins_2	392
+HepG2_skew	[1.0,1.5)	dELS	ins_3	127
+HepG2_skew	[1.0,1.5)	dELS	ins_4	311
+HepG2_skew	[1.0,1.5)	dELS	ins_5	82
+HepG2_skew	[1.0,1.5)	dELS	ins_6	255
+HepG2_skew	[1.0,1.5)	dELS	ins_7	108
+HepG2_skew	[1.0,1.5)	dELS	ins_8	170
+HepG2_skew	[1.0,1.5)	dELS	ins_9	19
+HepG2_skew	[1.0,1.5)	non-cCRE	del_1	2365
+HepG2_skew	[1.0,1.5)	non-cCRE	del_10plus	469
+HepG2_skew	[1.0,1.5)	non-cCRE	del_2	851
+HepG2_skew	[1.0,1.5)	non-cCRE	del_3	377
+HepG2_skew	[1.0,1.5)	non-cCRE	del_4	312
+HepG2_skew	[1.0,1.5)	non-cCRE	del_5	140
+HepG2_skew	[1.0,1.5)	non-cCRE	del_6	118
+HepG2_skew	[1.0,1.5)	non-cCRE	del_7	73
+HepG2_skew	[1.0,1.5)	non-cCRE	del_8	73
+HepG2_skew	[1.0,1.5)	non-cCRE	del_9	67
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_1	984
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_10plus	1761
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_2	786
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_3	241
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_4	525
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_5	142
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_6	470
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_7	214
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_8	342
+HepG2_skew	[1.0,1.5)	non-cCRE	ins_9	54
+HepG2_skew	[1.0,1.5)	pELS	del_1	268
+HepG2_skew	[1.0,1.5)	pELS	del_10plus	62
+HepG2_skew	[1.0,1.5)	pELS	del_2	96
+HepG2_skew	[1.0,1.5)	pELS	del_3	48
+HepG2_skew	[1.0,1.5)	pELS	del_4	39
+HepG2_skew	[1.0,1.5)	pELS	del_5	22
+HepG2_skew	[1.0,1.5)	pELS	del_6	17
+HepG2_skew	[1.0,1.5)	pELS	del_7	11
+HepG2_skew	[1.0,1.5)	pELS	del_8	8
+HepG2_skew	[1.0,1.5)	pELS	del_9	8
+HepG2_skew	[1.0,1.5)	pELS	ins_1	125
+HepG2_skew	[1.0,1.5)	pELS	ins_10plus	200
+HepG2_skew	[1.0,1.5)	pELS	ins_2	64
+HepG2_skew	[1.0,1.5)	pELS	ins_3	32
+HepG2_skew	[1.0,1.5)	pELS	ins_4	51
+HepG2_skew	[1.0,1.5)	pELS	ins_5	28
+HepG2_skew	[1.0,1.5)	pELS	ins_6	57
+HepG2_skew	[1.0,1.5)	pELS	ins_7	18
+HepG2_skew	[1.0,1.5)	pELS	ins_8	30
+HepG2_skew	[1.0,1.5)	pELS	ins_9	14
+HepG2_skew	[1.5,Inf)	Other cCREs	del_1	87
+HepG2_skew	[1.5,Inf)	Other cCREs	del_10plus	22
+HepG2_skew	[1.5,Inf)	Other cCREs	del_2	28
+HepG2_skew	[1.5,Inf)	Other cCREs	del_3	19
+HepG2_skew	[1.5,Inf)	Other cCREs	del_4	18
+HepG2_skew	[1.5,Inf)	Other cCREs	del_5	6
+HepG2_skew	[1.5,Inf)	Other cCREs	del_6	2
+HepG2_skew	[1.5,Inf)	Other cCREs	del_7	6
+HepG2_skew	[1.5,Inf)	Other cCREs	del_8	7
+HepG2_skew	[1.5,Inf)	Other cCREs	del_9	4
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_1	25
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_10plus	77
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_2	47
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_3	18
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_4	17
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_5	5
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_6	22
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_7	11
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_8	6
+HepG2_skew	[1.5,Inf)	Other cCREs	ins_9	2
+HepG2_skew	[1.5,Inf)	PLS	del_1	14
+HepG2_skew	[1.5,Inf)	PLS	del_10plus	3
+HepG2_skew	[1.5,Inf)	PLS	del_2	3
+HepG2_skew	[1.5,Inf)	PLS	del_3	6
+HepG2_skew	[1.5,Inf)	PLS	del_5	1
+HepG2_skew	[1.5,Inf)	PLS	del_6	1
+HepG2_skew	[1.5,Inf)	PLS	del_7	1
+HepG2_skew	[1.5,Inf)	PLS	ins_1	5
+HepG2_skew	[1.5,Inf)	PLS	ins_10plus	12
+HepG2_skew	[1.5,Inf)	PLS	ins_2	2
+HepG2_skew	[1.5,Inf)	PLS	ins_3	2
+HepG2_skew	[1.5,Inf)	PLS	ins_4	1
+HepG2_skew	[1.5,Inf)	PLS	ins_6	5
+HepG2_skew	[1.5,Inf)	PLS	ins_8	2
+HepG2_skew	[1.5,Inf)	dELS	del_1	360
+HepG2_skew	[1.5,Inf)	dELS	del_10plus	89
+HepG2_skew	[1.5,Inf)	dELS	del_2	143
+HepG2_skew	[1.5,Inf)	dELS	del_3	52
+HepG2_skew	[1.5,Inf)	dELS	del_4	43
+HepG2_skew	[1.5,Inf)	dELS	del_5	26
+HepG2_skew	[1.5,Inf)	dELS	del_6	25
+HepG2_skew	[1.5,Inf)	dELS	del_7	10
+HepG2_skew	[1.5,Inf)	dELS	del_8	10
+HepG2_skew	[1.5,Inf)	dELS	del_9	20
+HepG2_skew	[1.5,Inf)	dELS	ins_1	155
+HepG2_skew	[1.5,Inf)	dELS	ins_10plus	296
+HepG2_skew	[1.5,Inf)	dELS	ins_2	114
+HepG2_skew	[1.5,Inf)	dELS	ins_3	30
+HepG2_skew	[1.5,Inf)	dELS	ins_4	73
+HepG2_skew	[1.5,Inf)	dELS	ins_5	21
+HepG2_skew	[1.5,Inf)	dELS	ins_6	73
+HepG2_skew	[1.5,Inf)	dELS	ins_7	38
+HepG2_skew	[1.5,Inf)	dELS	ins_8	40
+HepG2_skew	[1.5,Inf)	dELS	ins_9	9
+HepG2_skew	[1.5,Inf)	non-cCRE	del_1	767
+HepG2_skew	[1.5,Inf)	non-cCRE	del_10plus	124
+HepG2_skew	[1.5,Inf)	non-cCRE	del_2	206
+HepG2_skew	[1.5,Inf)	non-cCRE	del_3	96
+HepG2_skew	[1.5,Inf)	non-cCRE	del_4	101
+HepG2_skew	[1.5,Inf)	non-cCRE	del_5	38
+HepG2_skew	[1.5,Inf)	non-cCRE	del_6	36
+HepG2_skew	[1.5,Inf)	non-cCRE	del_7	21
+HepG2_skew	[1.5,Inf)	non-cCRE	del_8	31
+HepG2_skew	[1.5,Inf)	non-cCRE	del_9	20
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_1	282
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_10plus	724
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_2	274
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_3	81
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_4	153
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_5	42
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_6	138
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_7	93
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_8	100
+HepG2_skew	[1.5,Inf)	non-cCRE	ins_9	16
+HepG2_skew	[1.5,Inf)	pELS	del_1	68
+HepG2_skew	[1.5,Inf)	pELS	del_10plus	12
+HepG2_skew	[1.5,Inf)	pELS	del_2	28
+HepG2_skew	[1.5,Inf)	pELS	del_3	13
+HepG2_skew	[1.5,Inf)	pELS	del_4	6
+HepG2_skew	[1.5,Inf)	pELS	del_5	3
+HepG2_skew	[1.5,Inf)	pELS	del_6	7
+HepG2_skew	[1.5,Inf)	pELS	del_7	2
+HepG2_skew	[1.5,Inf)	pELS	del_8	3
+HepG2_skew	[1.5,Inf)	pELS	del_9	3
+HepG2_skew	[1.5,Inf)	pELS	ins_1	36
+HepG2_skew	[1.5,Inf)	pELS	ins_10plus	53
+HepG2_skew	[1.5,Inf)	pELS	ins_2	26
+HepG2_skew	[1.5,Inf)	pELS	ins_3	6
+HepG2_skew	[1.5,Inf)	pELS	ins_4	10
+HepG2_skew	[1.5,Inf)	pELS	ins_5	6
+HepG2_skew	[1.5,Inf)	pELS	ins_6	14
+HepG2_skew	[1.5,Inf)	pELS	ins_7	5
+HepG2_skew	[1.5,Inf)	pELS	ins_8	7
+HepG2_skew	[1.5,Inf)	pELS	ins_9	1
+K562_skew	(-Inf,-1.5)	Other cCREs	del_1	606
+K562_skew	(-Inf,-1.5)	Other cCREs	del_10plus	366
+K562_skew	(-Inf,-1.5)	Other cCREs	del_2	159
+K562_skew	(-Inf,-1.5)	Other cCREs	del_3	98
+K562_skew	(-Inf,-1.5)	Other cCREs	del_4	92
+K562_skew	(-Inf,-1.5)	Other cCREs	del_5	55
+K562_skew	(-Inf,-1.5)	Other cCREs	del_6	47
+K562_skew	(-Inf,-1.5)	Other cCREs	del_7	42
+K562_skew	(-Inf,-1.5)	Other cCREs	del_8	44
+K562_skew	(-Inf,-1.5)	Other cCREs	del_9	25
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_1	150
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_10plus	20
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_2	57
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_3	23
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_4	26
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_5	15
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_6	5
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_7	2
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_8	4
+K562_skew	(-Inf,-1.5)	Other cCREs	ins_9	7
+K562_skew	(-Inf,-1.5)	PLS	del_1	210
+K562_skew	(-Inf,-1.5)	PLS	del_10plus	205
+K562_skew	(-Inf,-1.5)	PLS	del_2	45
+K562_skew	(-Inf,-1.5)	PLS	del_3	33
+K562_skew	(-Inf,-1.5)	PLS	del_4	31
+K562_skew	(-Inf,-1.5)	PLS	del_5	21
+K562_skew	(-Inf,-1.5)	PLS	del_6	18
+K562_skew	(-Inf,-1.5)	PLS	del_7	13
+K562_skew	(-Inf,-1.5)	PLS	del_8	15
+K562_skew	(-Inf,-1.5)	PLS	del_9	17
+K562_skew	(-Inf,-1.5)	PLS	ins_1	58
+K562_skew	(-Inf,-1.5)	PLS	ins_10plus	6
+K562_skew	(-Inf,-1.5)	PLS	ins_2	28
+K562_skew	(-Inf,-1.5)	PLS	ins_3	11
+K562_skew	(-Inf,-1.5)	PLS	ins_4	12
+K562_skew	(-Inf,-1.5)	PLS	ins_5	4
+K562_skew	(-Inf,-1.5)	PLS	ins_6	4
+K562_skew	(-Inf,-1.5)	PLS	ins_7	7
+K562_skew	(-Inf,-1.5)	PLS	ins_8	2
+K562_skew	(-Inf,-1.5)	dELS	del_1	1717
+K562_skew	(-Inf,-1.5)	dELS	del_10plus	1034
+K562_skew	(-Inf,-1.5)	dELS	del_2	544
+K562_skew	(-Inf,-1.5)	dELS	del_3	384
+K562_skew	(-Inf,-1.5)	dELS	del_4	288
+K562_skew	(-Inf,-1.5)	dELS	del_5	191
+K562_skew	(-Inf,-1.5)	dELS	del_6	178
+K562_skew	(-Inf,-1.5)	dELS	del_7	116
+K562_skew	(-Inf,-1.5)	dELS	del_8	120
+K562_skew	(-Inf,-1.5)	dELS	del_9	100
+K562_skew	(-Inf,-1.5)	dELS	ins_1	543
+K562_skew	(-Inf,-1.5)	dELS	ins_10plus	70
+K562_skew	(-Inf,-1.5)	dELS	ins_2	178
+K562_skew	(-Inf,-1.5)	dELS	ins_3	89
+K562_skew	(-Inf,-1.5)	dELS	ins_4	87
+K562_skew	(-Inf,-1.5)	dELS	ins_5	41
+K562_skew	(-Inf,-1.5)	dELS	ins_6	32
+K562_skew	(-Inf,-1.5)	dELS	ins_7	10
+K562_skew	(-Inf,-1.5)	dELS	ins_8	21
+K562_skew	(-Inf,-1.5)	dELS	ins_9	13
+K562_skew	(-Inf,-1.5)	non-cCRE	del_1	1900
+K562_skew	(-Inf,-1.5)	non-cCRE	del_10plus	1010
+K562_skew	(-Inf,-1.5)	non-cCRE	del_2	417
+K562_skew	(-Inf,-1.5)	non-cCRE	del_3	377
+K562_skew	(-Inf,-1.5)	non-cCRE	del_4	258
+K562_skew	(-Inf,-1.5)	non-cCRE	del_5	173
+K562_skew	(-Inf,-1.5)	non-cCRE	del_6	200
+K562_skew	(-Inf,-1.5)	non-cCRE	del_7	117
+K562_skew	(-Inf,-1.5)	non-cCRE	del_8	112
+K562_skew	(-Inf,-1.5)	non-cCRE	del_9	103
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_1	494
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_10plus	71
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_2	305
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_3	119
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_4	114
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_5	41
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_6	32
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_7	15
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_8	12
+K562_skew	(-Inf,-1.5)	non-cCRE	ins_9	18
+K562_skew	(-Inf,-1.5)	pELS	del_1	267
+K562_skew	(-Inf,-1.5)	pELS	del_10plus	228
+K562_skew	(-Inf,-1.5)	pELS	del_2	99
+K562_skew	(-Inf,-1.5)	pELS	del_3	74
+K562_skew	(-Inf,-1.5)	pELS	del_4	47
+K562_skew	(-Inf,-1.5)	pELS	del_5	37
+K562_skew	(-Inf,-1.5)	pELS	del_6	28
+K562_skew	(-Inf,-1.5)	pELS	del_7	21
+K562_skew	(-Inf,-1.5)	pELS	del_8	23
+K562_skew	(-Inf,-1.5)	pELS	del_9	26
+K562_skew	(-Inf,-1.5)	pELS	ins_1	124
+K562_skew	(-Inf,-1.5)	pELS	ins_10plus	15
+K562_skew	(-Inf,-1.5)	pELS	ins_2	29
+K562_skew	(-Inf,-1.5)	pELS	ins_3	21
+K562_skew	(-Inf,-1.5)	pELS	ins_4	24
+K562_skew	(-Inf,-1.5)	pELS	ins_5	7
+K562_skew	(-Inf,-1.5)	pELS	ins_6	4
+K562_skew	(-Inf,-1.5)	pELS	ins_7	1
+K562_skew	(-Inf,-1.5)	pELS	ins_8	2
+K562_skew	(-Inf,-1.5)	pELS	ins_9	5
+K562_skew	[-0.05,0.05)	Other cCREs	del_1	519402
+K562_skew	[-0.05,0.05)	Other cCREs	del_10plus	53612
+K562_skew	[-0.05,0.05)	Other cCREs	del_2	247326
+K562_skew	[-0.05,0.05)	Other cCREs	del_3	126948
+K562_skew	[-0.05,0.05)	Other cCREs	del_4	147825
+K562_skew	[-0.05,0.05)	Other cCREs	del_5	45315
+K562_skew	[-0.05,0.05)	Other cCREs	del_6	31069
+K562_skew	[-0.05,0.05)	Other cCREs	del_7	16531
+K562_skew	[-0.05,0.05)	Other cCREs	del_8	23396
+K562_skew	[-0.05,0.05)	Other cCREs	del_9	11611
+K562_skew	[-0.05,0.05)	Other cCREs	ins_1	315299
+K562_skew	[-0.05,0.05)	Other cCREs	ins_10plus	44325
+K562_skew	[-0.05,0.05)	Other cCREs	ins_2	111536
+K562_skew	[-0.05,0.05)	Other cCREs	ins_3	45808
+K562_skew	[-0.05,0.05)	Other cCREs	ins_4	74693
+K562_skew	[-0.05,0.05)	Other cCREs	ins_5	22816
+K562_skew	[-0.05,0.05)	Other cCREs	ins_6	24273
+K562_skew	[-0.05,0.05)	Other cCREs	ins_7	12910
+K562_skew	[-0.05,0.05)	Other cCREs	ins_8	26169
+K562_skew	[-0.05,0.05)	Other cCREs	ins_9	9300
+K562_skew	[-0.05,0.05)	PLS	del_1	20377
+K562_skew	[-0.05,0.05)	PLS	del_10plus	2349
+K562_skew	[-0.05,0.05)	PLS	del_2	8530
+K562_skew	[-0.05,0.05)	PLS	del_3	4130
+K562_skew	[-0.05,0.05)	PLS	del_4	3561
+K562_skew	[-0.05,0.05)	PLS	del_5	1245
+K562_skew	[-0.05,0.05)	PLS	del_6	1095
+K562_skew	[-0.05,0.05)	PLS	del_7	610
+K562_skew	[-0.05,0.05)	PLS	del_8	703
+K562_skew	[-0.05,0.05)	PLS	del_9	539
+K562_skew	[-0.05,0.05)	PLS	ins_1	15309
+K562_skew	[-0.05,0.05)	PLS	ins_10plus	2734
+K562_skew	[-0.05,0.05)	PLS	ins_2	4692
+K562_skew	[-0.05,0.05)	PLS	ins_3	2431
+K562_skew	[-0.05,0.05)	PLS	ins_4	2308
+K562_skew	[-0.05,0.05)	PLS	ins_5	1312
+K562_skew	[-0.05,0.05)	PLS	ins_6	1566
+K562_skew	[-0.05,0.05)	PLS	ins_7	748
+K562_skew	[-0.05,0.05)	PLS	ins_8	764
+K562_skew	[-0.05,0.05)	PLS	ins_9	584
+K562_skew	[-0.05,0.05)	dELS	del_1	1186134
+K562_skew	[-0.05,0.05)	dELS	del_10plus	97975
+K562_skew	[-0.05,0.05)	dELS	del_2	570946
+K562_skew	[-0.05,0.05)	dELS	del_3	270636
+K562_skew	[-0.05,0.05)	dELS	del_4	275048
+K562_skew	[-0.05,0.05)	dELS	del_5	89389
+K562_skew	[-0.05,0.05)	dELS	del_6	61250
+K562_skew	[-0.05,0.05)	dELS	del_7	34216
+K562_skew	[-0.05,0.05)	dELS	del_8	35907
+K562_skew	[-0.05,0.05)	dELS	del_9	23035
+K562_skew	[-0.05,0.05)	dELS	ins_1	753019
+K562_skew	[-0.05,0.05)	dELS	ins_10plus	70675
+K562_skew	[-0.05,0.05)	dELS	ins_2	244503
+K562_skew	[-0.05,0.05)	dELS	ins_3	95287
+K562_skew	[-0.05,0.05)	dELS	ins_4	125639
+K562_skew	[-0.05,0.05)	dELS	ins_5	46161
+K562_skew	[-0.05,0.05)	dELS	ins_6	49492
+K562_skew	[-0.05,0.05)	dELS	ins_7	25147
+K562_skew	[-0.05,0.05)	dELS	ins_8	34987
+K562_skew	[-0.05,0.05)	dELS	ins_9	16874
+K562_skew	[-0.05,0.05)	non-cCRE	del_1	8932653
+K562_skew	[-0.05,0.05)	non-cCRE	del_10plus	674867
+K562_skew	[-0.05,0.05)	non-cCRE	del_2	3839186
+K562_skew	[-0.05,0.05)	non-cCRE	del_3	2111545
+K562_skew	[-0.05,0.05)	non-cCRE	del_4	2396835
+K562_skew	[-0.05,0.05)	non-cCRE	del_5	904654
+K562_skew	[-0.05,0.05)	non-cCRE	del_6	540085
+K562_skew	[-0.05,0.05)	non-cCRE	del_7	256029
+K562_skew	[-0.05,0.05)	non-cCRE	del_8	286587
+K562_skew	[-0.05,0.05)	non-cCRE	del_9	168533
+K562_skew	[-0.05,0.05)	non-cCRE	ins_1	5646631
+K562_skew	[-0.05,0.05)	non-cCRE	ins_10plus	677338
+K562_skew	[-0.05,0.05)	non-cCRE	ins_2	1952877
+K562_skew	[-0.05,0.05)	non-cCRE	ins_3	767364
+K562_skew	[-0.05,0.05)	non-cCRE	ins_4	1050150
+K562_skew	[-0.05,0.05)	non-cCRE	ins_5	396559
+K562_skew	[-0.05,0.05)	non-cCRE	ins_6	440383
+K562_skew	[-0.05,0.05)	non-cCRE	ins_7	210745
+K562_skew	[-0.05,0.05)	non-cCRE	ins_8	333826
+K562_skew	[-0.05,0.05)	non-cCRE	ins_9	158240
+K562_skew	[-0.05,0.05)	pELS	del_1	167215
+K562_skew	[-0.05,0.05)	pELS	del_10plus	15989
+K562_skew	[-0.05,0.05)	pELS	del_2	91210
+K562_skew	[-0.05,0.05)	pELS	del_3	43139
+K562_skew	[-0.05,0.05)	pELS	del_4	43387
+K562_skew	[-0.05,0.05)	pELS	del_5	14180
+K562_skew	[-0.05,0.05)	pELS	del_6	9778
+K562_skew	[-0.05,0.05)	pELS	del_7	5543
+K562_skew	[-0.05,0.05)	pELS	del_8	5783
+K562_skew	[-0.05,0.05)	pELS	del_9	3685
+K562_skew	[-0.05,0.05)	pELS	ins_1	121724
+K562_skew	[-0.05,0.05)	pELS	ins_10plus	11978
+K562_skew	[-0.05,0.05)	pELS	ins_2	38538
+K562_skew	[-0.05,0.05)	pELS	ins_3	15855
+K562_skew	[-0.05,0.05)	pELS	ins_4	19659
+K562_skew	[-0.05,0.05)	pELS	ins_5	7244
+K562_skew	[-0.05,0.05)	pELS	ins_6	8069
+K562_skew	[-0.05,0.05)	pELS	ins_7	4232
+K562_skew	[-0.05,0.05)	pELS	ins_8	5320
+K562_skew	[-0.05,0.05)	pELS	ins_9	2755
+K562_skew	[-0.2,-0.05)	Other cCREs	del_1	131698
+K562_skew	[-0.2,-0.05)	Other cCREs	del_10plus	37522
+K562_skew	[-0.2,-0.05)	Other cCREs	del_2	40883
+K562_skew	[-0.2,-0.05)	Other cCREs	del_3	47087
+K562_skew	[-0.2,-0.05)	Other cCREs	del_4	32701
+K562_skew	[-0.2,-0.05)	Other cCREs	del_5	12314
+K562_skew	[-0.2,-0.05)	Other cCREs	del_6	9096
+K562_skew	[-0.2,-0.05)	Other cCREs	del_7	5591
+K562_skew	[-0.2,-0.05)	Other cCREs	del_8	11823
+K562_skew	[-0.2,-0.05)	Other cCREs	del_9	4019
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_1	44137
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_10plus	30589
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_2	13811
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_3	8245
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_4	15037
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_5	6804
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_6	7906
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_7	4404
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_8	5231
+K562_skew	[-0.2,-0.05)	Other cCREs	ins_9	4112
+K562_skew	[-0.2,-0.05)	PLS	del_1	10314
+K562_skew	[-0.2,-0.05)	PLS	del_10plus	2243
+K562_skew	[-0.2,-0.05)	PLS	del_2	2317
+K562_skew	[-0.2,-0.05)	PLS	del_3	1878
+K562_skew	[-0.2,-0.05)	PLS	del_4	1180
+K562_skew	[-0.2,-0.05)	PLS	del_5	575
+K562_skew	[-0.2,-0.05)	PLS	del_6	603
+K562_skew	[-0.2,-0.05)	PLS	del_7	391
+K562_skew	[-0.2,-0.05)	PLS	del_8	502
+K562_skew	[-0.2,-0.05)	PLS	del_9	357
+K562_skew	[-0.2,-0.05)	PLS	ins_1	6079
+K562_skew	[-0.2,-0.05)	PLS	ins_10plus	2999
+K562_skew	[-0.2,-0.05)	PLS	ins_2	1647
+K562_skew	[-0.2,-0.05)	PLS	ins_3	1290
+K562_skew	[-0.2,-0.05)	PLS	ins_4	1458
+K562_skew	[-0.2,-0.05)	PLS	ins_5	1048
+K562_skew	[-0.2,-0.05)	PLS	ins_6	1130
+K562_skew	[-0.2,-0.05)	PLS	ins_7	617
+K562_skew	[-0.2,-0.05)	PLS	ins_8	528
+K562_skew	[-0.2,-0.05)	PLS	ins_9	581
+K562_skew	[-0.2,-0.05)	dELS	del_1	342774
+K562_skew	[-0.2,-0.05)	dELS	del_10plus	73162
+K562_skew	[-0.2,-0.05)	dELS	del_2	105604
+K562_skew	[-0.2,-0.05)	dELS	del_3	112215
+K562_skew	[-0.2,-0.05)	dELS	del_4	73773
+K562_skew	[-0.2,-0.05)	dELS	del_5	28251
+K562_skew	[-0.2,-0.05)	dELS	del_6	21424
+K562_skew	[-0.2,-0.05)	dELS	del_7	13508
+K562_skew	[-0.2,-0.05)	dELS	del_8	23845
+K562_skew	[-0.2,-0.05)	dELS	del_9	9467
+K562_skew	[-0.2,-0.05)	dELS	ins_1	125929
+K562_skew	[-0.2,-0.05)	dELS	ins_10plus	60789
+K562_skew	[-0.2,-0.05)	dELS	ins_2	37259
+K562_skew	[-0.2,-0.05)	dELS	ins_3	21085
+K562_skew	[-0.2,-0.05)	dELS	ins_4	37693
+K562_skew	[-0.2,-0.05)	dELS	ins_5	17268
+K562_skew	[-0.2,-0.05)	dELS	ins_6	20056
+K562_skew	[-0.2,-0.05)	dELS	ins_7	10777
+K562_skew	[-0.2,-0.05)	dELS	ins_8	11191
+K562_skew	[-0.2,-0.05)	dELS	ins_9	9082
+K562_skew	[-0.2,-0.05)	non-cCRE	del_1	1630504
+K562_skew	[-0.2,-0.05)	non-cCRE	del_10plus	450000
+K562_skew	[-0.2,-0.05)	non-cCRE	del_2	556534
+K562_skew	[-0.2,-0.05)	non-cCRE	del_3	696491
+K562_skew	[-0.2,-0.05)	non-cCRE	del_4	510400
+K562_skew	[-0.2,-0.05)	non-cCRE	del_5	227294
+K562_skew	[-0.2,-0.05)	non-cCRE	del_6	131599
+K562_skew	[-0.2,-0.05)	non-cCRE	del_7	80649
+K562_skew	[-0.2,-0.05)	non-cCRE	del_8	138754
+K562_skew	[-0.2,-0.05)	non-cCRE	del_9	58303
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_1	498422
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_10plus	454159
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_2	146460
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_3	95315
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_4	167262
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_5	92832
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_6	105622
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_7	62282
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_8	67341
+K562_skew	[-0.2,-0.05)	non-cCRE	ins_9	52727
+K562_skew	[-0.2,-0.05)	pELS	del_1	53029
+K562_skew	[-0.2,-0.05)	pELS	del_10plus	12335
+K562_skew	[-0.2,-0.05)	pELS	del_2	16809
+K562_skew	[-0.2,-0.05)	pELS	del_3	17086
+K562_skew	[-0.2,-0.05)	pELS	del_4	11472
+K562_skew	[-0.2,-0.05)	pELS	del_5	4598
+K562_skew	[-0.2,-0.05)	pELS	del_6	3610
+K562_skew	[-0.2,-0.05)	pELS	del_7	2330
+K562_skew	[-0.2,-0.05)	pELS	del_8	3996
+K562_skew	[-0.2,-0.05)	pELS	del_9	1776
+K562_skew	[-0.2,-0.05)	pELS	ins_1	24734
+K562_skew	[-0.2,-0.05)	pELS	ins_10plus	10905
+K562_skew	[-0.2,-0.05)	pELS	ins_2	6864
+K562_skew	[-0.2,-0.05)	pELS	ins_3	4145
+K562_skew	[-0.2,-0.05)	pELS	ins_4	6721
+K562_skew	[-0.2,-0.05)	pELS	ins_5	3238
+K562_skew	[-0.2,-0.05)	pELS	ins_6	4011
+K562_skew	[-0.2,-0.05)	pELS	ins_7	2056
+K562_skew	[-0.2,-0.05)	pELS	ins_8	1939
+K562_skew	[-0.2,-0.05)	pELS	ins_9	1572
+K562_skew	[-0.5,-0.2)	Other cCREs	del_1	19425
+K562_skew	[-0.5,-0.2)	Other cCREs	del_10plus	10740
+K562_skew	[-0.5,-0.2)	Other cCREs	del_2	6539
+K562_skew	[-0.5,-0.2)	Other cCREs	del_3	6374
+K562_skew	[-0.5,-0.2)	Other cCREs	del_4	5044
+K562_skew	[-0.5,-0.2)	Other cCREs	del_5	2520
+K562_skew	[-0.5,-0.2)	Other cCREs	del_6	1829
+K562_skew	[-0.5,-0.2)	Other cCREs	del_7	1456
+K562_skew	[-0.5,-0.2)	Other cCREs	del_8	1963
+K562_skew	[-0.5,-0.2)	Other cCREs	del_9	1072
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_1	8103
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_10plus	7973
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_2	2709
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_3	1445
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_4	2042
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_5	962
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_6	980
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_7	632
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_8	692
+K562_skew	[-0.5,-0.2)	Other cCREs	ins_9	619
+K562_skew	[-0.5,-0.2)	PLS	del_1	3694
+K562_skew	[-0.5,-0.2)	PLS	del_10plus	1898
+K562_skew	[-0.5,-0.2)	PLS	del_2	683
+K562_skew	[-0.5,-0.2)	PLS	del_3	601
+K562_skew	[-0.5,-0.2)	PLS	del_4	391
+K562_skew	[-0.5,-0.2)	PLS	del_5	281
+K562_skew	[-0.5,-0.2)	PLS	del_6	259
+K562_skew	[-0.5,-0.2)	PLS	del_7	211
+K562_skew	[-0.5,-0.2)	PLS	del_8	265
+K562_skew	[-0.5,-0.2)	PLS	del_9	203
+K562_skew	[-0.5,-0.2)	PLS	ins_1	2181
+K562_skew	[-0.5,-0.2)	PLS	ins_10plus	1858
+K562_skew	[-0.5,-0.2)	PLS	ins_2	568
+K562_skew	[-0.5,-0.2)	PLS	ins_3	365
+K562_skew	[-0.5,-0.2)	PLS	ins_4	388
+K562_skew	[-0.5,-0.2)	PLS	ins_5	265
+K562_skew	[-0.5,-0.2)	PLS	ins_6	316
+K562_skew	[-0.5,-0.2)	PLS	ins_7	224
+K562_skew	[-0.5,-0.2)	PLS	ins_8	198
+K562_skew	[-0.5,-0.2)	PLS	ins_9	238
+K562_skew	[-0.5,-0.2)	dELS	del_1	57055
+K562_skew	[-0.5,-0.2)	dELS	del_10plus	28303
+K562_skew	[-0.5,-0.2)	dELS	del_2	18625
+K562_skew	[-0.5,-0.2)	dELS	del_3	17882
+K562_skew	[-0.5,-0.2)	dELS	del_4	13289
+K562_skew	[-0.5,-0.2)	dELS	del_5	6849
+K562_skew	[-0.5,-0.2)	dELS	del_6	4784
+K562_skew	[-0.5,-0.2)	dELS	del_7	3919
+K562_skew	[-0.5,-0.2)	dELS	del_8	4735
+K562_skew	[-0.5,-0.2)	dELS	del_9	3065
+K562_skew	[-0.5,-0.2)	dELS	ins_1	24939
+K562_skew	[-0.5,-0.2)	dELS	ins_10plus	20788
+K562_skew	[-0.5,-0.2)	dELS	ins_2	7807
+K562_skew	[-0.5,-0.2)	dELS	ins_3	4202
+K562_skew	[-0.5,-0.2)	dELS	ins_4	5751
+K562_skew	[-0.5,-0.2)	dELS	ins_5	2579
+K562_skew	[-0.5,-0.2)	dELS	ins_6	2809
+K562_skew	[-0.5,-0.2)	dELS	ins_7	1831
+K562_skew	[-0.5,-0.2)	dELS	ins_8	1988
+K562_skew	[-0.5,-0.2)	dELS	ins_9	1978
+K562_skew	[-0.5,-0.2)	non-cCRE	del_1	140611
+K562_skew	[-0.5,-0.2)	non-cCRE	del_10plus	101336
+K562_skew	[-0.5,-0.2)	non-cCRE	del_2	54744
+K562_skew	[-0.5,-0.2)	non-cCRE	del_3	59671
+K562_skew	[-0.5,-0.2)	non-cCRE	del_4	51962
+K562_skew	[-0.5,-0.2)	non-cCRE	del_5	31080
+K562_skew	[-0.5,-0.2)	non-cCRE	del_6	19604
+K562_skew	[-0.5,-0.2)	non-cCRE	del_7	17437
+K562_skew	[-0.5,-0.2)	non-cCRE	del_8	20187
+K562_skew	[-0.5,-0.2)	non-cCRE	del_9	12716
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_1	58393
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_10plus	98899
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_2	20944
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_3	10394
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_4	14638
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_5	7667
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_6	8206
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_7	6038
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_8	6643
+K562_skew	[-0.5,-0.2)	non-cCRE	ins_9	6705
+K562_skew	[-0.5,-0.2)	pELS	del_1	10476
+K562_skew	[-0.5,-0.2)	pELS	del_10plus	5528
+K562_skew	[-0.5,-0.2)	pELS	del_2	3266
+K562_skew	[-0.5,-0.2)	pELS	del_3	3029
+K562_skew	[-0.5,-0.2)	pELS	del_4	2238
+K562_skew	[-0.5,-0.2)	pELS	del_5	1122
+K562_skew	[-0.5,-0.2)	pELS	del_6	1002
+K562_skew	[-0.5,-0.2)	pELS	del_7	770
+K562_skew	[-0.5,-0.2)	pELS	del_8	941
+K562_skew	[-0.5,-0.2)	pELS	del_9	619
+K562_skew	[-0.5,-0.2)	pELS	ins_1	5435
+K562_skew	[-0.5,-0.2)	pELS	ins_10plus	4268
+K562_skew	[-0.5,-0.2)	pELS	ins_2	1546
+K562_skew	[-0.5,-0.2)	pELS	ins_3	967
+K562_skew	[-0.5,-0.2)	pELS	ins_4	1103
+K562_skew	[-0.5,-0.2)	pELS	ins_5	553
+K562_skew	[-0.5,-0.2)	pELS	ins_6	653
+K562_skew	[-0.5,-0.2)	pELS	ins_7	444
+K562_skew	[-0.5,-0.2)	pELS	ins_8	412
+K562_skew	[-0.5,-0.2)	pELS	ins_9	478
+K562_skew	[-1.0,-0.5)	Other cCREs	del_1	5185
+K562_skew	[-1.0,-0.5)	Other cCREs	del_10plus	2356
+K562_skew	[-1.0,-0.5)	Other cCREs	del_2	1631
+K562_skew	[-1.0,-0.5)	Other cCREs	del_3	1310
+K562_skew	[-1.0,-0.5)	Other cCREs	del_4	923
+K562_skew	[-1.0,-0.5)	Other cCREs	del_5	562
+K562_skew	[-1.0,-0.5)	Other cCREs	del_6	410
+K562_skew	[-1.0,-0.5)	Other cCREs	del_7	305
+K562_skew	[-1.0,-0.5)	Other cCREs	del_8	391
+K562_skew	[-1.0,-0.5)	Other cCREs	del_9	279
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_1	1900
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_10plus	611
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_2	569
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_3	309
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_4	379
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_5	149
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_6	140
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_7	78
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_8	93
+K562_skew	[-1.0,-0.5)	Other cCREs	ins_9	98
+K562_skew	[-1.0,-0.5)	PLS	del_1	1306
+K562_skew	[-1.0,-0.5)	PLS	del_10plus	1158
+K562_skew	[-1.0,-0.5)	PLS	del_2	247
+K562_skew	[-1.0,-0.5)	PLS	del_3	233
+K562_skew	[-1.0,-0.5)	PLS	del_4	136
+K562_skew	[-1.0,-0.5)	PLS	del_5	138
+K562_skew	[-1.0,-0.5)	PLS	del_6	146
+K562_skew	[-1.0,-0.5)	PLS	del_7	81
+K562_skew	[-1.0,-0.5)	PLS	del_8	95
+K562_skew	[-1.0,-0.5)	PLS	del_9	82
+K562_skew	[-1.0,-0.5)	PLS	ins_1	713
+K562_skew	[-1.0,-0.5)	PLS	ins_10plus	339
+K562_skew	[-1.0,-0.5)	PLS	ins_2	167
+K562_skew	[-1.0,-0.5)	PLS	ins_3	76
+K562_skew	[-1.0,-0.5)	PLS	ins_4	76
+K562_skew	[-1.0,-0.5)	PLS	ins_5	44
+K562_skew	[-1.0,-0.5)	PLS	ins_6	62
+K562_skew	[-1.0,-0.5)	PLS	ins_7	35
+K562_skew	[-1.0,-0.5)	PLS	ins_8	38
+K562_skew	[-1.0,-0.5)	PLS	ins_9	42
+K562_skew	[-1.0,-0.5)	dELS	del_1	15741
+K562_skew	[-1.0,-0.5)	dELS	del_10plus	6821
+K562_skew	[-1.0,-0.5)	dELS	del_2	5111
+K562_skew	[-1.0,-0.5)	dELS	del_3	4061
+K562_skew	[-1.0,-0.5)	dELS	del_4	2805
+K562_skew	[-1.0,-0.5)	dELS	del_5	1695
+K562_skew	[-1.0,-0.5)	dELS	del_6	1207
+K562_skew	[-1.0,-0.5)	dELS	del_7	983
+K562_skew	[-1.0,-0.5)	dELS	del_8	1080
+K562_skew	[-1.0,-0.5)	dELS	del_9	753
+K562_skew	[-1.0,-0.5)	dELS	ins_1	6030
+K562_skew	[-1.0,-0.5)	dELS	ins_10plus	1826
+K562_skew	[-1.0,-0.5)	dELS	ins_2	1735
+K562_skew	[-1.0,-0.5)	dELS	ins_3	907
+K562_skew	[-1.0,-0.5)	dELS	ins_4	1063
+K562_skew	[-1.0,-0.5)	dELS	ins_5	470
+K562_skew	[-1.0,-0.5)	dELS	ins_6	366
+K562_skew	[-1.0,-0.5)	dELS	ins_7	290
+K562_skew	[-1.0,-0.5)	dELS	ins_8	260
+K562_skew	[-1.0,-0.5)	dELS	ins_9	273
+K562_skew	[-1.0,-0.5)	non-cCRE	del_1	25498
+K562_skew	[-1.0,-0.5)	non-cCRE	del_10plus	15908
+K562_skew	[-1.0,-0.5)	non-cCRE	del_2	7543
+K562_skew	[-1.0,-0.5)	non-cCRE	del_3	7496
+K562_skew	[-1.0,-0.5)	non-cCRE	del_4	4878
+K562_skew	[-1.0,-0.5)	non-cCRE	del_5	3463
+K562_skew	[-1.0,-0.5)	non-cCRE	del_6	2805
+K562_skew	[-1.0,-0.5)	non-cCRE	del_7	2282
+K562_skew	[-1.0,-0.5)	non-cCRE	del_8	2873
+K562_skew	[-1.0,-0.5)	non-cCRE	del_9	1841
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_1	8303
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_10plus	4194
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_2	3153
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_3	1556
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_4	1658
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_5	764
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_6	689
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_7	490
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_8	491
+K562_skew	[-1.0,-0.5)	non-cCRE	ins_9	464
+K562_skew	[-1.0,-0.5)	pELS	del_1	2811
+K562_skew	[-1.0,-0.5)	pELS	del_10plus	1659
+K562_skew	[-1.0,-0.5)	pELS	del_2	834
+K562_skew	[-1.0,-0.5)	pELS	del_3	722
+K562_skew	[-1.0,-0.5)	pELS	del_4	499
+K562_skew	[-1.0,-0.5)	pELS	del_5	312
+K562_skew	[-1.0,-0.5)	pELS	del_6	277
+K562_skew	[-1.0,-0.5)	pELS	del_7	174
+K562_skew	[-1.0,-0.5)	pELS	del_8	241
+K562_skew	[-1.0,-0.5)	pELS	del_9	157
+K562_skew	[-1.0,-0.5)	pELS	ins_1	1369
+K562_skew	[-1.0,-0.5)	pELS	ins_10plus	479
+K562_skew	[-1.0,-0.5)	pELS	ins_2	352
+K562_skew	[-1.0,-0.5)	pELS	ins_3	218
+K562_skew	[-1.0,-0.5)	pELS	ins_4	185
+K562_skew	[-1.0,-0.5)	pELS	ins_5	98
+K562_skew	[-1.0,-0.5)	pELS	ins_6	95
+K562_skew	[-1.0,-0.5)	pELS	ins_7	51
+K562_skew	[-1.0,-0.5)	pELS	ins_8	56
+K562_skew	[-1.0,-0.5)	pELS	ins_9	63
+K562_skew	[-1.5,-1.0)	Other cCREs	del_1	1320
+K562_skew	[-1.5,-1.0)	Other cCREs	del_10plus	561
+K562_skew	[-1.5,-1.0)	Other cCREs	del_2	386
+K562_skew	[-1.5,-1.0)	Other cCREs	del_3	281
+K562_skew	[-1.5,-1.0)	Other cCREs	del_4	154
+K562_skew	[-1.5,-1.0)	Other cCREs	del_5	122
+K562_skew	[-1.5,-1.0)	Other cCREs	del_6	108
+K562_skew	[-1.5,-1.0)	Other cCREs	del_7	66
+K562_skew	[-1.5,-1.0)	Other cCREs	del_8	82
+K562_skew	[-1.5,-1.0)	Other cCREs	del_9	64
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_1	409
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_10plus	70
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_2	136
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_3	56
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_4	72
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_5	26
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_6	14
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_7	17
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_8	21
+K562_skew	[-1.5,-1.0)	Other cCREs	ins_9	9
+K562_skew	[-1.5,-1.0)	PLS	del_1	381
+K562_skew	[-1.5,-1.0)	PLS	del_10plus	356
+K562_skew	[-1.5,-1.0)	PLS	del_2	68
+K562_skew	[-1.5,-1.0)	PLS	del_3	63
+K562_skew	[-1.5,-1.0)	PLS	del_4	56
+K562_skew	[-1.5,-1.0)	PLS	del_5	43
+K562_skew	[-1.5,-1.0)	PLS	del_6	46
+K562_skew	[-1.5,-1.0)	PLS	del_7	26
+K562_skew	[-1.5,-1.0)	PLS	del_8	25
+K562_skew	[-1.5,-1.0)	PLS	del_9	29
+K562_skew	[-1.5,-1.0)	PLS	ins_1	154
+K562_skew	[-1.5,-1.0)	PLS	ins_10plus	48
+K562_skew	[-1.5,-1.0)	PLS	ins_2	47
+K562_skew	[-1.5,-1.0)	PLS	ins_3	16
+K562_skew	[-1.5,-1.0)	PLS	ins_4	19
+K562_skew	[-1.5,-1.0)	PLS	ins_5	19
+K562_skew	[-1.5,-1.0)	PLS	ins_6	6
+K562_skew	[-1.5,-1.0)	PLS	ins_7	8
+K562_skew	[-1.5,-1.0)	PLS	ins_8	10
+K562_skew	[-1.5,-1.0)	PLS	ins_9	4
+K562_skew	[-1.5,-1.0)	dELS	del_1	4026
+K562_skew	[-1.5,-1.0)	dELS	del_10plus	1758
+K562_skew	[-1.5,-1.0)	dELS	del_2	1260
+K562_skew	[-1.5,-1.0)	dELS	del_3	883
+K562_skew	[-1.5,-1.0)	dELS	del_4	637
+K562_skew	[-1.5,-1.0)	dELS	del_5	466
+K562_skew	[-1.5,-1.0)	dELS	del_6	303
+K562_skew	[-1.5,-1.0)	dELS	del_7	221
+K562_skew	[-1.5,-1.0)	dELS	del_8	219
+K562_skew	[-1.5,-1.0)	dELS	del_9	176
+K562_skew	[-1.5,-1.0)	dELS	ins_1	1403
+K562_skew	[-1.5,-1.0)	dELS	ins_10plus	212
+K562_skew	[-1.5,-1.0)	dELS	ins_2	403
+K562_skew	[-1.5,-1.0)	dELS	ins_3	203
+K562_skew	[-1.5,-1.0)	dELS	ins_4	241
+K562_skew	[-1.5,-1.0)	dELS	ins_5	93
+K562_skew	[-1.5,-1.0)	dELS	ins_6	69
+K562_skew	[-1.5,-1.0)	dELS	ins_7	59
+K562_skew	[-1.5,-1.0)	dELS	ins_8	42
+K562_skew	[-1.5,-1.0)	dELS	ins_9	41
+K562_skew	[-1.5,-1.0)	non-cCRE	del_1	4047
+K562_skew	[-1.5,-1.0)	non-cCRE	del_10plus	2174
+K562_skew	[-1.5,-1.0)	non-cCRE	del_2	1167
+K562_skew	[-1.5,-1.0)	non-cCRE	del_3	987
+K562_skew	[-1.5,-1.0)	non-cCRE	del_4	688
+K562_skew	[-1.5,-1.0)	non-cCRE	del_5	466
+K562_skew	[-1.5,-1.0)	non-cCRE	del_6	366
+K562_skew	[-1.5,-1.0)	non-cCRE	del_7	247
+K562_skew	[-1.5,-1.0)	non-cCRE	del_8	272
+K562_skew	[-1.5,-1.0)	non-cCRE	del_9	217
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_1	1188
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_10plus	265
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_2	518
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_3	235
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_4	258
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_5	91
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_6	100
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_7	53
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_8	45
+K562_skew	[-1.5,-1.0)	non-cCRE	ins_9	42
+K562_skew	[-1.5,-1.0)	pELS	del_1	690
+K562_skew	[-1.5,-1.0)	pELS	del_10plus	477
+K562_skew	[-1.5,-1.0)	pELS	del_2	229
+K562_skew	[-1.5,-1.0)	pELS	del_3	205
+K562_skew	[-1.5,-1.0)	pELS	del_4	109
+K562_skew	[-1.5,-1.0)	pELS	del_5	83
+K562_skew	[-1.5,-1.0)	pELS	del_6	66
+K562_skew	[-1.5,-1.0)	pELS	del_7	40
+K562_skew	[-1.5,-1.0)	pELS	del_8	53
+K562_skew	[-1.5,-1.0)	pELS	del_9	36
+K562_skew	[-1.5,-1.0)	pELS	ins_1	316
+K562_skew	[-1.5,-1.0)	pELS	ins_10plus	55
+K562_skew	[-1.5,-1.0)	pELS	ins_2	81
+K562_skew	[-1.5,-1.0)	pELS	ins_3	43
+K562_skew	[-1.5,-1.0)	pELS	ins_4	37
+K562_skew	[-1.5,-1.0)	pELS	ins_5	16
+K562_skew	[-1.5,-1.0)	pELS	ins_6	16
+K562_skew	[-1.5,-1.0)	pELS	ins_7	13
+K562_skew	[-1.5,-1.0)	pELS	ins_8	6
+K562_skew	[-1.5,-1.0)	pELS	ins_9	8
+K562_skew	[0.05,0.2)	Other cCREs	del_1	81717
+K562_skew	[0.05,0.2)	Other cCREs	del_10plus	42560
+K562_skew	[0.05,0.2)	Other cCREs	del_2	28845
+K562_skew	[0.05,0.2)	Other cCREs	del_3	19125
+K562_skew	[0.05,0.2)	Other cCREs	del_4	28660
+K562_skew	[0.05,0.2)	Other cCREs	del_5	11791
+K562_skew	[0.05,0.2)	Other cCREs	del_6	10515
+K562_skew	[0.05,0.2)	Other cCREs	del_7	5786
+K562_skew	[0.05,0.2)	Other cCREs	del_8	6027
+K562_skew	[0.05,0.2)	Other cCREs	del_9	5630
+K562_skew	[0.05,0.2)	Other cCREs	ins_1	80026
+K562_skew	[0.05,0.2)	Other cCREs	ins_10plus	41772
+K562_skew	[0.05,0.2)	Other cCREs	ins_2	21089
+K562_skew	[0.05,0.2)	Other cCREs	ins_3	17697
+K562_skew	[0.05,0.2)	Other cCREs	ins_4	14952
+K562_skew	[0.05,0.2)	Other cCREs	ins_5	5071
+K562_skew	[0.05,0.2)	Other cCREs	ins_6	6883
+K562_skew	[0.05,0.2)	Other cCREs	ins_7	3512
+K562_skew	[0.05,0.2)	Other cCREs	ins_8	13539
+K562_skew	[0.05,0.2)	Other cCREs	ins_9	2874
+K562_skew	[0.05,0.2)	PLS	del_1	8271
+K562_skew	[0.05,0.2)	PLS	del_10plus	2572
+K562_skew	[0.05,0.2)	PLS	del_2	2767
+K562_skew	[0.05,0.2)	PLS	del_3	2008
+K562_skew	[0.05,0.2)	PLS	del_4	1885
+K562_skew	[0.05,0.2)	PLS	del_5	872
+K562_skew	[0.05,0.2)	PLS	del_6	821
+K562_skew	[0.05,0.2)	PLS	del_7	475
+K562_skew	[0.05,0.2)	PLS	del_8	396
+K562_skew	[0.05,0.2)	PLS	del_9	486
+K562_skew	[0.05,0.2)	PLS	ins_1	7022
+K562_skew	[0.05,0.2)	PLS	ins_10plus	3184
+K562_skew	[0.05,0.2)	PLS	ins_2	1558
+K562_skew	[0.05,0.2)	PLS	ins_3	1084
+K562_skew	[0.05,0.2)	PLS	ins_4	894
+K562_skew	[0.05,0.2)	PLS	ins_5	771
+K562_skew	[0.05,0.2)	PLS	ins_6	1032
+K562_skew	[0.05,0.2)	PLS	ins_7	397
+K562_skew	[0.05,0.2)	PLS	ins_8	634
+K562_skew	[0.05,0.2)	PLS	ins_9	384
+K562_skew	[0.05,0.2)	dELS	del_1	220075
+K562_skew	[0.05,0.2)	dELS	del_10plus	89089
+K562_skew	[0.05,0.2)	dELS	del_2	82804
+K562_skew	[0.05,0.2)	dELS	del_3	51538
+K562_skew	[0.05,0.2)	dELS	del_4	69279
+K562_skew	[0.05,0.2)	dELS	del_5	28783
+K562_skew	[0.05,0.2)	dELS	del_6	25226
+K562_skew	[0.05,0.2)	dELS	del_7	14850
+K562_skew	[0.05,0.2)	dELS	del_8	12476
+K562_skew	[0.05,0.2)	dELS	del_9	13151
+K562_skew	[0.05,0.2)	dELS	ins_1	209483
+K562_skew	[0.05,0.2)	dELS	ins_10plus	78644
+K562_skew	[0.05,0.2)	dELS	ins_2	50624
+K562_skew	[0.05,0.2)	dELS	ins_3	40583
+K562_skew	[0.05,0.2)	dELS	ins_4	31407
+K562_skew	[0.05,0.2)	dELS	ins_5	11852
+K562_skew	[0.05,0.2)	dELS	ins_6	16779
+K562_skew	[0.05,0.2)	dELS	ins_7	7959
+K562_skew	[0.05,0.2)	dELS	ins_8	24288
+K562_skew	[0.05,0.2)	dELS	ins_9	5930
+K562_skew	[0.05,0.2)	non-cCRE	del_1	939761
+K562_skew	[0.05,0.2)	non-cCRE	del_10plus	504626
+K562_skew	[0.05,0.2)	non-cCRE	del_2	297909
+K562_skew	[0.05,0.2)	non-cCRE	del_3	200210
+K562_skew	[0.05,0.2)	non-cCRE	del_4	320823
+K562_skew	[0.05,0.2)	non-cCRE	del_5	151378
+K562_skew	[0.05,0.2)	non-cCRE	del_6	131584
+K562_skew	[0.05,0.2)	non-cCRE	del_7	73250
+K562_skew	[0.05,0.2)	non-cCRE	del_8	68633
+K562_skew	[0.05,0.2)	non-cCRE	del_9	61052
+K562_skew	[0.05,0.2)	non-cCRE	ins_1	1124744
+K562_skew	[0.05,0.2)	non-cCRE	ins_10plus	613196
+K562_skew	[0.05,0.2)	non-cCRE	ins_2	306470
+K562_skew	[0.05,0.2)	non-cCRE	ins_3	270460
+K562_skew	[0.05,0.2)	non-cCRE	ins_4	183716
+K562_skew	[0.05,0.2)	non-cCRE	ins_5	79184
+K562_skew	[0.05,0.2)	non-cCRE	ins_6	93321
+K562_skew	[0.05,0.2)	non-cCRE	ins_7	51226
+K562_skew	[0.05,0.2)	non-cCRE	ins_8	151047
+K562_skew	[0.05,0.2)	non-cCRE	ins_9	46626
+K562_skew	[0.05,0.2)	pELS	del_1	37656
+K562_skew	[0.05,0.2)	pELS	del_10plus	15410
+K562_skew	[0.05,0.2)	pELS	del_2	14902
+K562_skew	[0.05,0.2)	pELS	del_3	10185
+K562_skew	[0.05,0.2)	pELS	del_4	12754
+K562_skew	[0.05,0.2)	pELS	del_5	5175
+K562_skew	[0.05,0.2)	pELS	del_6	4759
+K562_skew	[0.05,0.2)	pELS	del_7	2672
+K562_skew	[0.05,0.2)	pELS	del_8	2231
+K562_skew	[0.05,0.2)	pELS	del_9	2330
+K562_skew	[0.05,0.2)	pELS	ins_1	37650
+K562_skew	[0.05,0.2)	pELS	ins_10plus	13279
+K562_skew	[0.05,0.2)	pELS	ins_2	8892
+K562_skew	[0.05,0.2)	pELS	ins_3	6744
+K562_skew	[0.05,0.2)	pELS	ins_4	5436
+K562_skew	[0.05,0.2)	pELS	ins_5	2272
+K562_skew	[0.05,0.2)	pELS	ins_6	3134
+K562_skew	[0.05,0.2)	pELS	ins_7	1581
+K562_skew	[0.05,0.2)	pELS	ins_8	4016
+K562_skew	[0.05,0.2)	pELS	ins_9	1220
+K562_skew	[0.2,0.5)	Other cCREs	del_1	14931
+K562_skew	[0.2,0.5)	Other cCREs	del_10plus	12764
+K562_skew	[0.2,0.5)	Other cCREs	del_2	5448
+K562_skew	[0.2,0.5)	Other cCREs	del_3	3111
+K562_skew	[0.2,0.5)	Other cCREs	del_4	3804
+K562_skew	[0.2,0.5)	Other cCREs	del_5	1735
+K562_skew	[0.2,0.5)	Other cCREs	del_6	1526
+K562_skew	[0.2,0.5)	Other cCREs	del_7	1036
+K562_skew	[0.2,0.5)	Other cCREs	del_8	1086
+K562_skew	[0.2,0.5)	Other cCREs	del_9	1059
+K562_skew	[0.2,0.5)	Other cCREs	ins_1	7678
+K562_skew	[0.2,0.5)	Other cCREs	ins_10plus	9495
+K562_skew	[0.2,0.5)	Other cCREs	ins_2	2937
+K562_skew	[0.2,0.5)	Other cCREs	ins_3	2294
+K562_skew	[0.2,0.5)	Other cCREs	ins_4	2150
+K562_skew	[0.2,0.5)	Other cCREs	ins_5	938
+K562_skew	[0.2,0.5)	Other cCREs	ins_6	1307
+K562_skew	[0.2,0.5)	Other cCREs	ins_7	628
+K562_skew	[0.2,0.5)	Other cCREs	ins_8	1555
+K562_skew	[0.2,0.5)	Other cCREs	ins_9	424
+K562_skew	[0.2,0.5)	PLS	del_1	2578
+K562_skew	[0.2,0.5)	PLS	del_10plus	1564
+K562_skew	[0.2,0.5)	PLS	del_2	725
+K562_skew	[0.2,0.5)	PLS	del_3	549
+K562_skew	[0.2,0.5)	PLS	del_4	445
+K562_skew	[0.2,0.5)	PLS	del_5	272
+K562_skew	[0.2,0.5)	PLS	del_6	241
+K562_skew	[0.2,0.5)	PLS	del_7	183
+K562_skew	[0.2,0.5)	PLS	del_8	154
+K562_skew	[0.2,0.5)	PLS	del_9	191
+K562_skew	[0.2,0.5)	PLS	ins_1	1664
+K562_skew	[0.2,0.5)	PLS	ins_10plus	2399
+K562_skew	[0.2,0.5)	PLS	ins_2	462
+K562_skew	[0.2,0.5)	PLS	ins_3	300
+K562_skew	[0.2,0.5)	PLS	ins_4	319
+K562_skew	[0.2,0.5)	PLS	ins_5	374
+K562_skew	[0.2,0.5)	PLS	ins_6	476
+K562_skew	[0.2,0.5)	PLS	ins_7	151
+K562_skew	[0.2,0.5)	PLS	ins_8	264
+K562_skew	[0.2,0.5)	PLS	ins_9	148
+K562_skew	[0.2,0.5)	dELS	del_1	44598
+K562_skew	[0.2,0.5)	dELS	del_10plus	33412
+K562_skew	[0.2,0.5)	dELS	del_2	17170
+K562_skew	[0.2,0.5)	dELS	del_3	9118
+K562_skew	[0.2,0.5)	dELS	del_4	10739
+K562_skew	[0.2,0.5)	dELS	del_5	5082
+K562_skew	[0.2,0.5)	dELS	del_6	4351
+K562_skew	[0.2,0.5)	dELS	del_7	3110
+K562_skew	[0.2,0.5)	dELS	del_8	2760
+K562_skew	[0.2,0.5)	dELS	del_9	3122
+K562_skew	[0.2,0.5)	dELS	ins_1	24718
+K562_skew	[0.2,0.5)	dELS	ins_10plus	25809
+K562_skew	[0.2,0.5)	dELS	ins_2	8184
+K562_skew	[0.2,0.5)	dELS	ins_3	5854
+K562_skew	[0.2,0.5)	dELS	ins_4	5992
+K562_skew	[0.2,0.5)	dELS	ins_5	2716
+K562_skew	[0.2,0.5)	dELS	ins_6	3554
+K562_skew	[0.2,0.5)	dELS	ins_7	1753
+K562_skew	[0.2,0.5)	dELS	ins_8	3965
+K562_skew	[0.2,0.5)	dELS	ins_9	1307
+K562_skew	[0.2,0.5)	non-cCRE	del_1	118927
+K562_skew	[0.2,0.5)	non-cCRE	del_10plus	120966
+K562_skew	[0.2,0.5)	non-cCRE	del_2	44863
+K562_skew	[0.2,0.5)	non-cCRE	del_3	23318
+K562_skew	[0.2,0.5)	non-cCRE	del_4	30031
+K562_skew	[0.2,0.5)	non-cCRE	del_5	15659
+K562_skew	[0.2,0.5)	non-cCRE	del_6	13009
+K562_skew	[0.2,0.5)	non-cCRE	del_7	9037
+K562_skew	[0.2,0.5)	non-cCRE	del_8	8840
+K562_skew	[0.2,0.5)	non-cCRE	del_9	9046
+K562_skew	[0.2,0.5)	non-cCRE	ins_1	67427
+K562_skew	[0.2,0.5)	non-cCRE	ins_10plus	91432
+K562_skew	[0.2,0.5)	non-cCRE	ins_2	28268
+K562_skew	[0.2,0.5)	non-cCRE	ins_3	23342
+K562_skew	[0.2,0.5)	non-cCRE	ins_4	21310
+K562_skew	[0.2,0.5)	non-cCRE	ins_5	11204
+K562_skew	[0.2,0.5)	non-cCRE	ins_6	11212
+K562_skew	[0.2,0.5)	non-cCRE	ins_7	7374
+K562_skew	[0.2,0.5)	non-cCRE	ins_8	13552
+K562_skew	[0.2,0.5)	non-cCRE	ins_9	5572
+K562_skew	[0.2,0.5)	pELS	del_1	8631
+K562_skew	[0.2,0.5)	pELS	del_10plus	6440
+K562_skew	[0.2,0.5)	pELS	del_2	3192
+K562_skew	[0.2,0.5)	pELS	del_3	1886
+K562_skew	[0.2,0.5)	pELS	del_4	2024
+K562_skew	[0.2,0.5)	pELS	del_5	1055
+K562_skew	[0.2,0.5)	pELS	del_6	958
+K562_skew	[0.2,0.5)	pELS	del_7	648
+K562_skew	[0.2,0.5)	pELS	del_8	598
+K562_skew	[0.2,0.5)	pELS	del_9	646
+K562_skew	[0.2,0.5)	pELS	ins_1	5775
+K562_skew	[0.2,0.5)	pELS	ins_10plus	5351
+K562_skew	[0.2,0.5)	pELS	ins_2	1824
+K562_skew	[0.2,0.5)	pELS	ins_3	1171
+K562_skew	[0.2,0.5)	pELS	ins_4	1164
+K562_skew	[0.2,0.5)	pELS	ins_5	711
+K562_skew	[0.2,0.5)	pELS	ins_6	909
+K562_skew	[0.2,0.5)	pELS	ins_7	404
+K562_skew	[0.2,0.5)	pELS	ins_8	784
+K562_skew	[0.2,0.5)	pELS	ins_9	290
+K562_skew	[0.5,1.0)	Other cCREs	del_1	3342
+K562_skew	[0.5,1.0)	Other cCREs	del_10plus	1424
+K562_skew	[0.5,1.0)	Other cCREs	del_2	1237
+K562_skew	[0.5,1.0)	Other cCREs	del_3	582
+K562_skew	[0.5,1.0)	Other cCREs	del_4	532
+K562_skew	[0.5,1.0)	Other cCREs	del_5	290
+K562_skew	[0.5,1.0)	Other cCREs	del_6	237
+K562_skew	[0.5,1.0)	Other cCREs	del_7	158
+K562_skew	[0.5,1.0)	Other cCREs	del_8	188
+K562_skew	[0.5,1.0)	Other cCREs	del_9	163
+K562_skew	[0.5,1.0)	Other cCREs	ins_1	1755
+K562_skew	[0.5,1.0)	Other cCREs	ins_10plus	2029
+K562_skew	[0.5,1.0)	Other cCREs	ins_2	792
+K562_skew	[0.5,1.0)	Other cCREs	ins_3	426
+K562_skew	[0.5,1.0)	Other cCREs	ins_4	509
+K562_skew	[0.5,1.0)	Other cCREs	ins_5	233
+K562_skew	[0.5,1.0)	Other cCREs	ins_6	355
+K562_skew	[0.5,1.0)	Other cCREs	ins_7	173
+K562_skew	[0.5,1.0)	Other cCREs	ins_8	350
+K562_skew	[0.5,1.0)	Other cCREs	ins_9	95
+K562_skew	[0.5,1.0)	PLS	del_1	712
+K562_skew	[0.5,1.0)	PLS	del_10plus	337
+K562_skew	[0.5,1.0)	PLS	del_2	190
+K562_skew	[0.5,1.0)	PLS	del_3	105
+K562_skew	[0.5,1.0)	PLS	del_4	90
+K562_skew	[0.5,1.0)	PLS	del_5	40
+K562_skew	[0.5,1.0)	PLS	del_6	49
+K562_skew	[0.5,1.0)	PLS	del_7	35
+K562_skew	[0.5,1.0)	PLS	del_8	41
+K562_skew	[0.5,1.0)	PLS	del_9	32
+K562_skew	[0.5,1.0)	PLS	ins_1	360
+K562_skew	[0.5,1.0)	PLS	ins_10plus	1055
+K562_skew	[0.5,1.0)	PLS	ins_2	117
+K562_skew	[0.5,1.0)	PLS	ins_3	63
+K562_skew	[0.5,1.0)	PLS	ins_4	78
+K562_skew	[0.5,1.0)	PLS	ins_5	104
+K562_skew	[0.5,1.0)	PLS	ins_6	107
+K562_skew	[0.5,1.0)	PLS	ins_7	28
+K562_skew	[0.5,1.0)	PLS	ins_8	48
+K562_skew	[0.5,1.0)	PLS	ins_9	31
+K562_skew	[0.5,1.0)	dELS	del_1	10942
+K562_skew	[0.5,1.0)	dELS	del_10plus	4595
+K562_skew	[0.5,1.0)	dELS	del_2	3961
+K562_skew	[0.5,1.0)	dELS	del_3	1929
+K562_skew	[0.5,1.0)	dELS	del_4	1794
+K562_skew	[0.5,1.0)	dELS	del_5	880
+K562_skew	[0.5,1.0)	dELS	del_6	744
+K562_skew	[0.5,1.0)	dELS	del_7	567
+K562_skew	[0.5,1.0)	dELS	del_8	497
+K562_skew	[0.5,1.0)	dELS	del_9	568
+K562_skew	[0.5,1.0)	dELS	ins_1	6045
+K562_skew	[0.5,1.0)	dELS	ins_10plus	5675
+K562_skew	[0.5,1.0)	dELS	ins_2	2227
+K562_skew	[0.5,1.0)	dELS	ins_3	1259
+K562_skew	[0.5,1.0)	dELS	ins_4	1474
+K562_skew	[0.5,1.0)	dELS	ins_5	701
+K562_skew	[0.5,1.0)	dELS	ins_6	932
+K562_skew	[0.5,1.0)	dELS	ins_7	418
+K562_skew	[0.5,1.0)	dELS	ins_8	885
+K562_skew	[0.5,1.0)	dELS	ins_9	277
+K562_skew	[0.5,1.0)	non-cCRE	del_1	22111
+K562_skew	[0.5,1.0)	non-cCRE	del_10plus	9222
+K562_skew	[0.5,1.0)	non-cCRE	del_2	7978
+K562_skew	[0.5,1.0)	non-cCRE	del_3	3727
+K562_skew	[0.5,1.0)	non-cCRE	del_4	3571
+K562_skew	[0.5,1.0)	non-cCRE	del_5	1966
+K562_skew	[0.5,1.0)	non-cCRE	del_6	1476
+K562_skew	[0.5,1.0)	non-cCRE	del_7	1181
+K562_skew	[0.5,1.0)	non-cCRE	del_8	1017
+K562_skew	[0.5,1.0)	non-cCRE	del_9	1095
+K562_skew	[0.5,1.0)	non-cCRE	ins_1	12774
+K562_skew	[0.5,1.0)	non-cCRE	ins_10plus	13472
+K562_skew	[0.5,1.0)	non-cCRE	ins_2	5200
+K562_skew	[0.5,1.0)	non-cCRE	ins_3	3167
+K562_skew	[0.5,1.0)	non-cCRE	ins_4	3565
+K562_skew	[0.5,1.0)	non-cCRE	ins_5	1790
+K562_skew	[0.5,1.0)	non-cCRE	ins_6	2123
+K562_skew	[0.5,1.0)	non-cCRE	ins_7	1182
+K562_skew	[0.5,1.0)	non-cCRE	ins_8	2236
+K562_skew	[0.5,1.0)	non-cCRE	ins_9	868
+K562_skew	[0.5,1.0)	pELS	del_1	2254
+K562_skew	[0.5,1.0)	pELS	del_10plus	1102
+K562_skew	[0.5,1.0)	pELS	del_2	743
+K562_skew	[0.5,1.0)	pELS	del_3	365
+K562_skew	[0.5,1.0)	pELS	del_4	386
+K562_skew	[0.5,1.0)	pELS	del_5	189
+K562_skew	[0.5,1.0)	pELS	del_6	144
+K562_skew	[0.5,1.0)	pELS	del_7	112
+K562_skew	[0.5,1.0)	pELS	del_8	119
+K562_skew	[0.5,1.0)	pELS	del_9	150
+K562_skew	[0.5,1.0)	pELS	ins_1	1433
+K562_skew	[0.5,1.0)	pELS	ins_10plus	1459
+K562_skew	[0.5,1.0)	pELS	ins_2	495
+K562_skew	[0.5,1.0)	pELS	ins_3	283
+K562_skew	[0.5,1.0)	pELS	ins_4	317
+K562_skew	[0.5,1.0)	pELS	ins_5	264
+K562_skew	[0.5,1.0)	pELS	ins_6	240
+K562_skew	[0.5,1.0)	pELS	ins_7	114
+K562_skew	[0.5,1.0)	pELS	ins_8	168
+K562_skew	[0.5,1.0)	pELS	ins_9	79
+K562_skew	[1.0,1.5)	Other cCREs	del_1	614
+K562_skew	[1.0,1.5)	Other cCREs	del_10plus	161
+K562_skew	[1.0,1.5)	Other cCREs	del_2	224
+K562_skew	[1.0,1.5)	Other cCREs	del_3	98
+K562_skew	[1.0,1.5)	Other cCREs	del_4	95
+K562_skew	[1.0,1.5)	Other cCREs	del_5	48
+K562_skew	[1.0,1.5)	Other cCREs	del_6	35
+K562_skew	[1.0,1.5)	Other cCREs	del_7	17
+K562_skew	[1.0,1.5)	Other cCREs	del_8	19
+K562_skew	[1.0,1.5)	Other cCREs	del_9	25
+K562_skew	[1.0,1.5)	Other cCREs	ins_1	342
+K562_skew	[1.0,1.5)	Other cCREs	ins_10plus	552
+K562_skew	[1.0,1.5)	Other cCREs	ins_2	151
+K562_skew	[1.0,1.5)	Other cCREs	ins_3	85
+K562_skew	[1.0,1.5)	Other cCREs	ins_4	93
+K562_skew	[1.0,1.5)	Other cCREs	ins_5	48
+K562_skew	[1.0,1.5)	Other cCREs	ins_6	83
+K562_skew	[1.0,1.5)	Other cCREs	ins_7	30
+K562_skew	[1.0,1.5)	Other cCREs	ins_8	71
+K562_skew	[1.0,1.5)	Other cCREs	ins_9	14
+K562_skew	[1.0,1.5)	PLS	del_1	160
+K562_skew	[1.0,1.5)	PLS	del_10plus	56
+K562_skew	[1.0,1.5)	PLS	del_2	32
+K562_skew	[1.0,1.5)	PLS	del_3	12
+K562_skew	[1.0,1.5)	PLS	del_4	14
+K562_skew	[1.0,1.5)	PLS	del_5	3
+K562_skew	[1.0,1.5)	PLS	del_6	4
+K562_skew	[1.0,1.5)	PLS	del_7	7
+K562_skew	[1.0,1.5)	PLS	del_8	6
+K562_skew	[1.0,1.5)	PLS	del_9	7
+K562_skew	[1.0,1.5)	PLS	ins_1	63
+K562_skew	[1.0,1.5)	PLS	ins_10plus	184
+K562_skew	[1.0,1.5)	PLS	ins_2	25
+K562_skew	[1.0,1.5)	PLS	ins_3	17
+K562_skew	[1.0,1.5)	PLS	ins_4	16
+K562_skew	[1.0,1.5)	PLS	ins_5	20
+K562_skew	[1.0,1.5)	PLS	ins_6	31
+K562_skew	[1.0,1.5)	PLS	ins_7	2
+K562_skew	[1.0,1.5)	PLS	ins_8	9
+K562_skew	[1.0,1.5)	PLS	ins_9	5
+K562_skew	[1.0,1.5)	dELS	del_1	2249
+K562_skew	[1.0,1.5)	dELS	del_10plus	635
+K562_skew	[1.0,1.5)	dELS	del_2	801
+K562_skew	[1.0,1.5)	dELS	del_3	327
+K562_skew	[1.0,1.5)	dELS	del_4	322
+K562_skew	[1.0,1.5)	dELS	del_5	157
+K562_skew	[1.0,1.5)	dELS	del_6	117
+K562_skew	[1.0,1.5)	dELS	del_7	85
+K562_skew	[1.0,1.5)	dELS	del_8	85
+K562_skew	[1.0,1.5)	dELS	del_9	98
+K562_skew	[1.0,1.5)	dELS	ins_1	1197
+K562_skew	[1.0,1.5)	dELS	ins_10plus	1455
+K562_skew	[1.0,1.5)	dELS	ins_2	483
+K562_skew	[1.0,1.5)	dELS	ins_3	234
+K562_skew	[1.0,1.5)	dELS	ins_4	386
+K562_skew	[1.0,1.5)	dELS	ins_5	186
+K562_skew	[1.0,1.5)	dELS	ins_6	284
+K562_skew	[1.0,1.5)	dELS	ins_7	85
+K562_skew	[1.0,1.5)	dELS	ins_8	190
+K562_skew	[1.0,1.5)	dELS	ins_9	44
+K562_skew	[1.0,1.5)	non-cCRE	del_1	3864
+K562_skew	[1.0,1.5)	non-cCRE	del_10plus	884
+K562_skew	[1.0,1.5)	non-cCRE	del_2	1311
+K562_skew	[1.0,1.5)	non-cCRE	del_3	511
+K562_skew	[1.0,1.5)	non-cCRE	del_4	431
+K562_skew	[1.0,1.5)	non-cCRE	del_5	237
+K562_skew	[1.0,1.5)	non-cCRE	del_6	162
+K562_skew	[1.0,1.5)	non-cCRE	del_7	131
+K562_skew	[1.0,1.5)	non-cCRE	del_8	132
+K562_skew	[1.0,1.5)	non-cCRE	del_9	138
+K562_skew	[1.0,1.5)	non-cCRE	ins_1	2079
+K562_skew	[1.0,1.5)	non-cCRE	ins_10plus	2498
+K562_skew	[1.0,1.5)	non-cCRE	ins_2	973
+K562_skew	[1.0,1.5)	non-cCRE	ins_3	446
+K562_skew	[1.0,1.5)	non-cCRE	ins_4	691
+K562_skew	[1.0,1.5)	non-cCRE	ins_5	269
+K562_skew	[1.0,1.5)	non-cCRE	ins_6	412
+K562_skew	[1.0,1.5)	non-cCRE	ins_7	132
+K562_skew	[1.0,1.5)	non-cCRE	ins_8	353
+K562_skew	[1.0,1.5)	non-cCRE	ins_9	88
+K562_skew	[1.0,1.5)	pELS	del_1	539
+K562_skew	[1.0,1.5)	pELS	del_10plus	134
+K562_skew	[1.0,1.5)	pELS	del_2	168
+K562_skew	[1.0,1.5)	pELS	del_3	76
+K562_skew	[1.0,1.5)	pELS	del_4	51
+K562_skew	[1.0,1.5)	pELS	del_5	37
+K562_skew	[1.0,1.5)	pELS	del_6	21
+K562_skew	[1.0,1.5)	pELS	del_7	30
+K562_skew	[1.0,1.5)	pELS	del_8	21
+K562_skew	[1.0,1.5)	pELS	del_9	28
+K562_skew	[1.0,1.5)	pELS	ins_1	306
+K562_skew	[1.0,1.5)	pELS	ins_10plus	398
+K562_skew	[1.0,1.5)	pELS	ins_2	107
+K562_skew	[1.0,1.5)	pELS	ins_3	62
+K562_skew	[1.0,1.5)	pELS	ins_4	75
+K562_skew	[1.0,1.5)	pELS	ins_5	51
+K562_skew	[1.0,1.5)	pELS	ins_6	64
+K562_skew	[1.0,1.5)	pELS	ins_7	15
+K562_skew	[1.0,1.5)	pELS	ins_8	35
+K562_skew	[1.0,1.5)	pELS	ins_9	15
+K562_skew	[1.5,Inf)	Other cCREs	del_1	227
+K562_skew	[1.5,Inf)	Other cCREs	del_10plus	64
+K562_skew	[1.5,Inf)	Other cCREs	del_2	79
+K562_skew	[1.5,Inf)	Other cCREs	del_3	21
+K562_skew	[1.5,Inf)	Other cCREs	del_4	37
+K562_skew	[1.5,Inf)	Other cCREs	del_5	17
+K562_skew	[1.5,Inf)	Other cCREs	del_6	15
+K562_skew	[1.5,Inf)	Other cCREs	del_7	10
+K562_skew	[1.5,Inf)	Other cCREs	del_8	12
+K562_skew	[1.5,Inf)	Other cCREs	del_9	10
+K562_skew	[1.5,Inf)	Other cCREs	ins_1	78
+K562_skew	[1.5,Inf)	Other cCREs	ins_10plus	165
+K562_skew	[1.5,Inf)	Other cCREs	ins_2	63
+K562_skew	[1.5,Inf)	Other cCREs	ins_3	30
+K562_skew	[1.5,Inf)	Other cCREs	ins_4	29
+K562_skew	[1.5,Inf)	Other cCREs	ins_5	19
+K562_skew	[1.5,Inf)	Other cCREs	ins_6	27
+K562_skew	[1.5,Inf)	Other cCREs	ins_7	10
+K562_skew	[1.5,Inf)	Other cCREs	ins_8	13
+K562_skew	[1.5,Inf)	Other cCREs	ins_9	4
+K562_skew	[1.5,Inf)	PLS	del_1	47
+K562_skew	[1.5,Inf)	PLS	del_10plus	9
+K562_skew	[1.5,Inf)	PLS	del_2	11
+K562_skew	[1.5,Inf)	PLS	del_3	6
+K562_skew	[1.5,Inf)	PLS	del_4	2
+K562_skew	[1.5,Inf)	PLS	del_5	4
+K562_skew	[1.5,Inf)	PLS	del_6	3
+K562_skew	[1.5,Inf)	PLS	del_7	1
+K562_skew	[1.5,Inf)	PLS	ins_1	20
+K562_skew	[1.5,Inf)	PLS	ins_10plus	39
+K562_skew	[1.5,Inf)	PLS	ins_2	9
+K562_skew	[1.5,Inf)	PLS	ins_3	4
+K562_skew	[1.5,Inf)	PLS	ins_4	3
+K562_skew	[1.5,Inf)	PLS	ins_5	7
+K562_skew	[1.5,Inf)	PLS	ins_6	9
+K562_skew	[1.5,Inf)	PLS	ins_7	3
+K562_skew	[1.5,Inf)	PLS	ins_8	3
+K562_skew	[1.5,Inf)	PLS	ins_9	1
+K562_skew	[1.5,Inf)	dELS	del_1	847
+K562_skew	[1.5,Inf)	dELS	del_10plus	186
+K562_skew	[1.5,Inf)	dELS	del_2	309
+K562_skew	[1.5,Inf)	dELS	del_3	104
+K562_skew	[1.5,Inf)	dELS	del_4	93
+K562_skew	[1.5,Inf)	dELS	del_5	56
+K562_skew	[1.5,Inf)	dELS	del_6	35
+K562_skew	[1.5,Inf)	dELS	del_7	31
+K562_skew	[1.5,Inf)	dELS	del_8	25
+K562_skew	[1.5,Inf)	dELS	del_9	41
+K562_skew	[1.5,Inf)	dELS	ins_1	371
+K562_skew	[1.5,Inf)	dELS	ins_10plus	577
+K562_skew	[1.5,Inf)	dELS	ins_2	189
+K562_skew	[1.5,Inf)	dELS	ins_3	84
+K562_skew	[1.5,Inf)	dELS	ins_4	137
+K562_skew	[1.5,Inf)	dELS	ins_5	97
+K562_skew	[1.5,Inf)	dELS	ins_6	81
+K562_skew	[1.5,Inf)	dELS	ins_7	28
+K562_skew	[1.5,Inf)	dELS	ins_8	51
+K562_skew	[1.5,Inf)	dELS	ins_9	16
+K562_skew	[1.5,Inf)	non-cCRE	del_1	1224
+K562_skew	[1.5,Inf)	non-cCRE	del_10plus	240
+K562_skew	[1.5,Inf)	non-cCRE	del_2	494
+K562_skew	[1.5,Inf)	non-cCRE	del_3	149
+K562_skew	[1.5,Inf)	non-cCRE	del_4	120
+K562_skew	[1.5,Inf)	non-cCRE	del_5	60
+K562_skew	[1.5,Inf)	non-cCRE	del_6	44
+K562_skew	[1.5,Inf)	non-cCRE	del_7	49
+K562_skew	[1.5,Inf)	non-cCRE	del_8	38
+K562_skew	[1.5,Inf)	non-cCRE	del_9	33
+K562_skew	[1.5,Inf)	non-cCRE	ins_1	527
+K562_skew	[1.5,Inf)	non-cCRE	ins_10plus	1106
+K562_skew	[1.5,Inf)	non-cCRE	ins_2	334
+K562_skew	[1.5,Inf)	non-cCRE	ins_3	183
+K562_skew	[1.5,Inf)	non-cCRE	ins_4	209
+K562_skew	[1.5,Inf)	non-cCRE	ins_5	133
+K562_skew	[1.5,Inf)	non-cCRE	ins_6	138
+K562_skew	[1.5,Inf)	non-cCRE	ins_7	46
+K562_skew	[1.5,Inf)	non-cCRE	ins_8	108
+K562_skew	[1.5,Inf)	non-cCRE	ins_9	28
+K562_skew	[1.5,Inf)	pELS	del_1	210
+K562_skew	[1.5,Inf)	pELS	del_10plus	53
+K562_skew	[1.5,Inf)	pELS	del_2	70
+K562_skew	[1.5,Inf)	pELS	del_3	25
+K562_skew	[1.5,Inf)	pELS	del_4	21
+K562_skew	[1.5,Inf)	pELS	del_5	13
+K562_skew	[1.5,Inf)	pELS	del_6	11
+K562_skew	[1.5,Inf)	pELS	del_7	9
+K562_skew	[1.5,Inf)	pELS	del_8	7
+K562_skew	[1.5,Inf)	pELS	del_9	3
+K562_skew	[1.5,Inf)	pELS	ins_1	94
+K562_skew	[1.5,Inf)	pELS	ins_10plus	176
+K562_skew	[1.5,Inf)	pELS	ins_2	37
+K562_skew	[1.5,Inf)	pELS	ins_3	28
+K562_skew	[1.5,Inf)	pELS	ins_4	35
+K562_skew	[1.5,Inf)	pELS	ins_5	37
+K562_skew	[1.5,Inf)	pELS	ins_6	22
+K562_skew	[1.5,Inf)	pELS	ins_7	7
+K562_skew	[1.5,Inf)	pELS	ins_8	12
+K562_skew	[1.5,Inf)	pELS	ins_9	10
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_1	403
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_10plus	222
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_2	108
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_3	51
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_4	59
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_5	26
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_6	48
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_7	18
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_8	34
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	del_9	21
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_1	79
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_10plus	22
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_2	34
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_3	9
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_4	15
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_5	4
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_6	3
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_7	5
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_8	3
+SKNSH_skew	(-Inf,-1.5)	Other cCREs	ins_9	4
+SKNSH_skew	(-Inf,-1.5)	PLS	del_1	196
+SKNSH_skew	(-Inf,-1.5)	PLS	del_10plus	130
+SKNSH_skew	(-Inf,-1.5)	PLS	del_2	35
+SKNSH_skew	(-Inf,-1.5)	PLS	del_3	17
+SKNSH_skew	(-Inf,-1.5)	PLS	del_4	29
+SKNSH_skew	(-Inf,-1.5)	PLS	del_5	19
+SKNSH_skew	(-Inf,-1.5)	PLS	del_6	26
+SKNSH_skew	(-Inf,-1.5)	PLS	del_7	14
+SKNSH_skew	(-Inf,-1.5)	PLS	del_8	14
+SKNSH_skew	(-Inf,-1.5)	PLS	del_9	7
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_1	45
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_10plus	5
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_2	21
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_3	5
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_4	10
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_5	3
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_6	3
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_7	5
+SKNSH_skew	(-Inf,-1.5)	PLS	ins_9	1
+SKNSH_skew	(-Inf,-1.5)	dELS	del_1	1381
+SKNSH_skew	(-Inf,-1.5)	dELS	del_10plus	647
+SKNSH_skew	(-Inf,-1.5)	dELS	del_2	338
+SKNSH_skew	(-Inf,-1.5)	dELS	del_3	188
+SKNSH_skew	(-Inf,-1.5)	dELS	del_4	234
+SKNSH_skew	(-Inf,-1.5)	dELS	del_5	102
+SKNSH_skew	(-Inf,-1.5)	dELS	del_6	166
+SKNSH_skew	(-Inf,-1.5)	dELS	del_7	89
+SKNSH_skew	(-Inf,-1.5)	dELS	del_8	97
+SKNSH_skew	(-Inf,-1.5)	dELS	del_9	55
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_1	297
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_10plus	33
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_2	112
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_3	50
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_4	56
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_5	17
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_6	21
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_7	5
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_8	15
+SKNSH_skew	(-Inf,-1.5)	dELS	ins_9	17
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_1	1543
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_10plus	614
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_2	355
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_3	199
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_4	210
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_5	80
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_6	136
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_7	75
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_8	103
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	del_9	87
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_1	331
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_10plus	62
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_2	165
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_3	55
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_4	93
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_5	21
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_6	35
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_7	13
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_8	14
+SKNSH_skew	(-Inf,-1.5)	non-cCRE	ins_9	12
+SKNSH_skew	(-Inf,-1.5)	pELS	del_1	200
+SKNSH_skew	(-Inf,-1.5)	pELS	del_10plus	120
+SKNSH_skew	(-Inf,-1.5)	pELS	del_2	60
+SKNSH_skew	(-Inf,-1.5)	pELS	del_3	23
+SKNSH_skew	(-Inf,-1.5)	pELS	del_4	39
+SKNSH_skew	(-Inf,-1.5)	pELS	del_5	14
+SKNSH_skew	(-Inf,-1.5)	pELS	del_6	33
+SKNSH_skew	(-Inf,-1.5)	pELS	del_7	20
+SKNSH_skew	(-Inf,-1.5)	pELS	del_8	16
+SKNSH_skew	(-Inf,-1.5)	pELS	del_9	14
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_1	44
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_10plus	19
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_2	23
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_3	7
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_4	7
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_5	3
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_6	4
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_7	4
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_8	3
+SKNSH_skew	(-Inf,-1.5)	pELS	ins_9	3
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_1	537273
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_10plus	56524
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_2	239883
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_3	128937
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_4	147820
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_5	44389
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_6	32356
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_7	15906
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_8	24642
+SKNSH_skew	[-0.05,0.05)	Other cCREs	del_9	8200
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_1	336904
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_10plus	54449
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_2	114058
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_3	46291
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_4	76777
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_5	22504
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_6	26757
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_7	12519
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_8	29823
+SKNSH_skew	[-0.05,0.05)	Other cCREs	ins_9	7141
+SKNSH_skew	[-0.05,0.05)	PLS	del_1	21602
+SKNSH_skew	[-0.05,0.05)	PLS	del_10plus	2404
+SKNSH_skew	[-0.05,0.05)	PLS	del_2	8096
+SKNSH_skew	[-0.05,0.05)	PLS	del_3	4291
+SKNSH_skew	[-0.05,0.05)	PLS	del_4	3379
+SKNSH_skew	[-0.05,0.05)	PLS	del_5	1374
+SKNSH_skew	[-0.05,0.05)	PLS	del_6	1193
+SKNSH_skew	[-0.05,0.05)	PLS	del_7	642
+SKNSH_skew	[-0.05,0.05)	PLS	del_8	650
+SKNSH_skew	[-0.05,0.05)	PLS	del_9	397
+SKNSH_skew	[-0.05,0.05)	PLS	ins_1	17075
+SKNSH_skew	[-0.05,0.05)	PLS	ins_10plus	3093
+SKNSH_skew	[-0.05,0.05)	PLS	ins_2	4648
+SKNSH_skew	[-0.05,0.05)	PLS	ins_3	2521
+SKNSH_skew	[-0.05,0.05)	PLS	ins_4	2173
+SKNSH_skew	[-0.05,0.05)	PLS	ins_5	1588
+SKNSH_skew	[-0.05,0.05)	PLS	ins_6	1821
+SKNSH_skew	[-0.05,0.05)	PLS	ins_7	823
+SKNSH_skew	[-0.05,0.05)	PLS	ins_8	820
+SKNSH_skew	[-0.05,0.05)	PLS	ins_9	433
+SKNSH_skew	[-0.05,0.05)	dELS	del_1	1221461
+SKNSH_skew	[-0.05,0.05)	dELS	del_10plus	101241
+SKNSH_skew	[-0.05,0.05)	dELS	del_2	547733
+SKNSH_skew	[-0.05,0.05)	dELS	del_3	277470
+SKNSH_skew	[-0.05,0.05)	dELS	del_4	272090
+SKNSH_skew	[-0.05,0.05)	dELS	del_5	88436
+SKNSH_skew	[-0.05,0.05)	dELS	del_6	64508
+SKNSH_skew	[-0.05,0.05)	dELS	del_7	32425
+SKNSH_skew	[-0.05,0.05)	dELS	del_8	38199
+SKNSH_skew	[-0.05,0.05)	dELS	del_9	15373
+SKNSH_skew	[-0.05,0.05)	dELS	ins_1	802378
+SKNSH_skew	[-0.05,0.05)	dELS	ins_10plus	90539
+SKNSH_skew	[-0.05,0.05)	dELS	ins_2	252027
+SKNSH_skew	[-0.05,0.05)	dELS	ins_3	96816
+SKNSH_skew	[-0.05,0.05)	dELS	ins_4	128880
+SKNSH_skew	[-0.05,0.05)	dELS	ins_5	46398
+SKNSH_skew	[-0.05,0.05)	dELS	ins_6	56394
+SKNSH_skew	[-0.05,0.05)	dELS	ins_7	24446
+SKNSH_skew	[-0.05,0.05)	dELS	ins_8	41195
+SKNSH_skew	[-0.05,0.05)	dELS	ins_9	12435
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_1	9212037
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_10plus	725556
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_2	3757720
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_3	2101437
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_4	2395444
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_5	845179
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_6	545074
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_7	240101
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_8	303692
+SKNSH_skew	[-0.05,0.05)	non-cCRE	del_9	129321
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_1	6028121
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_10plus	832006
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_2	1992744
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_3	772577
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_4	1081209
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_5	387229
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_6	479327
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_7	202153
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_8	377526
+SKNSH_skew	[-0.05,0.05)	non-cCRE	ins_9	136759
+SKNSH_skew	[-0.05,0.05)	pELS	del_1	174442
+SKNSH_skew	[-0.05,0.05)	pELS	del_10plus	16534
+SKNSH_skew	[-0.05,0.05)	pELS	del_2	87243
+SKNSH_skew	[-0.05,0.05)	pELS	del_3	44391
+SKNSH_skew	[-0.05,0.05)	pELS	del_4	42627
+SKNSH_skew	[-0.05,0.05)	pELS	del_5	14150
+SKNSH_skew	[-0.05,0.05)	pELS	del_6	10409
+SKNSH_skew	[-0.05,0.05)	pELS	del_7	5303
+SKNSH_skew	[-0.05,0.05)	pELS	del_8	6099
+SKNSH_skew	[-0.05,0.05)	pELS	del_9	2565
+SKNSH_skew	[-0.05,0.05)	pELS	ins_1	132154
+SKNSH_skew	[-0.05,0.05)	pELS	ins_10plus	15051
+SKNSH_skew	[-0.05,0.05)	pELS	ins_2	40087
+SKNSH_skew	[-0.05,0.05)	pELS	ins_3	16309
+SKNSH_skew	[-0.05,0.05)	pELS	ins_4	20021
+SKNSH_skew	[-0.05,0.05)	pELS	ins_5	7756
+SKNSH_skew	[-0.05,0.05)	pELS	ins_6	9453
+SKNSH_skew	[-0.05,0.05)	pELS	ins_7	4290
+SKNSH_skew	[-0.05,0.05)	pELS	ins_8	6276
+SKNSH_skew	[-0.05,0.05)	pELS	ins_9	2135
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_1	114593
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_10plus	24912
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_2	34329
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_3	46966
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_4	27459
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_5	16159
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_6	8277
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_7	6809
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_8	5498
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	del_9	2078
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_1	40941
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_10plus	39368
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_2	16332
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_3	7673
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_4	18087
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_5	5444
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_6	7376
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_7	3708
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_8	10679
+SKNSH_skew	[-0.2,-0.05)	Other cCREs	ins_9	7719
+SKNSH_skew	[-0.2,-0.05)	PLS	del_1	10238
+SKNSH_skew	[-0.2,-0.05)	PLS	del_10plus	1886
+SKNSH_skew	[-0.2,-0.05)	PLS	del_2	1901
+SKNSH_skew	[-0.2,-0.05)	PLS	del_3	1852
+SKNSH_skew	[-0.2,-0.05)	PLS	del_4	902
+SKNSH_skew	[-0.2,-0.05)	PLS	del_5	624
+SKNSH_skew	[-0.2,-0.05)	PLS	del_6	514
+SKNSH_skew	[-0.2,-0.05)	PLS	del_7	403
+SKNSH_skew	[-0.2,-0.05)	PLS	del_8	334
+SKNSH_skew	[-0.2,-0.05)	PLS	del_9	224
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_1	6432
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_10plus	4560
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_2	2248
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_3	1438
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_4	2014
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_5	1189
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_6	1441
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_7	724
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_8	883
+SKNSH_skew	[-0.2,-0.05)	PLS	ins_9	919
+SKNSH_skew	[-0.2,-0.05)	dELS	del_1	312560
+SKNSH_skew	[-0.2,-0.05)	dELS	del_10plus	50305
+SKNSH_skew	[-0.2,-0.05)	dELS	del_2	88320
+SKNSH_skew	[-0.2,-0.05)	dELS	del_3	110422
+SKNSH_skew	[-0.2,-0.05)	dELS	del_4	60848
+SKNSH_skew	[-0.2,-0.05)	dELS	del_5	35754
+SKNSH_skew	[-0.2,-0.05)	dELS	del_6	19320
+SKNSH_skew	[-0.2,-0.05)	dELS	del_7	16986
+SKNSH_skew	[-0.2,-0.05)	dELS	del_8	12172
+SKNSH_skew	[-0.2,-0.05)	dELS	del_9	5402
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_1	122144
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_10plus	82156
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_2	45034
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_3	20295
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_4	46320
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_5	14237
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_6	19379
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_7	9144
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_8	21479
+SKNSH_skew	[-0.2,-0.05)	dELS	ins_9	16450
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_1	1268686
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_10plus	345756
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_2	478339
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_3	722911
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_4	470197
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_5	328122
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_6	140972
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_7	108983
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_8	73203
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	del_9	32282
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_1	437627
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_10plus	512874
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_2	167724
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_3	80819
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_4	190000
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_5	69232
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_6	85310
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_7	44627
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_8	117689
+SKNSH_skew	[-0.2,-0.05)	non-cCRE	ins_9	102579
+SKNSH_skew	[-0.2,-0.05)	pELS	del_1	48911
+SKNSH_skew	[-0.2,-0.05)	pELS	del_10plus	8699
+SKNSH_skew	[-0.2,-0.05)	pELS	del_2	13683
+SKNSH_skew	[-0.2,-0.05)	pELS	del_3	16629
+SKNSH_skew	[-0.2,-0.05)	pELS	del_4	9348
+SKNSH_skew	[-0.2,-0.05)	pELS	del_5	5698
+SKNSH_skew	[-0.2,-0.05)	pELS	del_6	3323
+SKNSH_skew	[-0.2,-0.05)	pELS	del_7	2961
+SKNSH_skew	[-0.2,-0.05)	pELS	del_8	2133
+SKNSH_skew	[-0.2,-0.05)	pELS	del_9	972
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_1	24279
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_10plus	15282
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_2	8598
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_3	4351
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_4	8689
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_5	2766
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_6	3966
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_7	1859
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_8	3785
+SKNSH_skew	[-0.2,-0.05)	pELS	ins_9	2877
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_1	16915
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_10plus	5952
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_2	4937
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_3	4430
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_4	3702
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_5	1742
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_6	1465
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_7	1208
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_8	1145
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	del_9	570
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_1	5760
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_10plus	8213
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_2	2226
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_3	1090
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_4	1700
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_5	732
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_6	748
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_7	435
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_8	827
+SKNSH_skew	[-0.5,-0.2)	Other cCREs	ins_9	1123
+SKNSH_skew	[-0.5,-0.2)	PLS	del_1	3338
+SKNSH_skew	[-0.5,-0.2)	PLS	del_10plus	1304
+SKNSH_skew	[-0.5,-0.2)	PLS	del_2	555
+SKNSH_skew	[-0.5,-0.2)	PLS	del_3	537
+SKNSH_skew	[-0.5,-0.2)	PLS	del_4	332
+SKNSH_skew	[-0.5,-0.2)	PLS	del_5	226
+SKNSH_skew	[-0.5,-0.2)	PLS	del_6	221
+SKNSH_skew	[-0.5,-0.2)	PLS	del_7	182
+SKNSH_skew	[-0.5,-0.2)	PLS	del_8	165
+SKNSH_skew	[-0.5,-0.2)	PLS	del_9	101
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_1	1633
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_10plus	2794
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_2	579
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_3	332
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_4	395
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_5	220
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_6	251
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_7	166
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_8	256
+SKNSH_skew	[-0.5,-0.2)	PLS	ins_9	436
+SKNSH_skew	[-0.5,-0.2)	dELS	del_1	51845
+SKNSH_skew	[-0.5,-0.2)	dELS	del_10plus	15872
+SKNSH_skew	[-0.5,-0.2)	dELS	del_2	14607
+SKNSH_skew	[-0.5,-0.2)	dELS	del_3	13083
+SKNSH_skew	[-0.5,-0.2)	dELS	del_4	10299
+SKNSH_skew	[-0.5,-0.2)	dELS	del_5	5031
+SKNSH_skew	[-0.5,-0.2)	dELS	del_6	3897
+SKNSH_skew	[-0.5,-0.2)	dELS	del_7	3347
+SKNSH_skew	[-0.5,-0.2)	dELS	del_8	2780
+SKNSH_skew	[-0.5,-0.2)	dELS	del_9	1572
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_1	18729
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_10plus	23245
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_2	6832
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_3	3210
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_4	5004
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_5	2013
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_6	2043
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_7	1322
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_8	2400
+SKNSH_skew	[-0.5,-0.2)	dELS	ins_9	3287
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_1	115779
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_10plus	60725
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_2	37260
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_3	37059
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_4	34060
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_5	21711
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_6	15049
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_7	13534
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_8	11659
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	del_9	6237
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_1	38235
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_10plus	72656
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_2	16765
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_3	7388
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_4	11160
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_5	6343
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_6	4912
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_7	3375
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_8	6333
+SKNSH_skew	[-0.5,-0.2)	non-cCRE	ins_9	8867
+SKNSH_skew	[-0.5,-0.2)	pELS	del_1	8973
+SKNSH_skew	[-0.5,-0.2)	pELS	del_10plus	3353
+SKNSH_skew	[-0.5,-0.2)	pELS	del_2	2457
+SKNSH_skew	[-0.5,-0.2)	pELS	del_3	2268
+SKNSH_skew	[-0.5,-0.2)	pELS	del_4	1672
+SKNSH_skew	[-0.5,-0.2)	pELS	del_5	830
+SKNSH_skew	[-0.5,-0.2)	pELS	del_6	762
+SKNSH_skew	[-0.5,-0.2)	pELS	del_7	591
+SKNSH_skew	[-0.5,-0.2)	pELS	del_8	528
+SKNSH_skew	[-0.5,-0.2)	pELS	del_9	292
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_1	3848
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_10plus	5099
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_2	1321
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_3	705
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_4	994
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_5	397
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_6	441
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_7	297
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_8	492
+SKNSH_skew	[-0.5,-0.2)	pELS	ins_9	737
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_1	4270
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_10plus	1564
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_2	1319
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_3	883
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_4	816
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_5	337
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_6	338
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_7	252
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_8	255
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	del_9	146
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_1	1279
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_10plus	584
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_2	490
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_3	188
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_4	284
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_5	117
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_6	118
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_7	60
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_8	109
+SKNSH_skew	[-1.0,-0.5)	Other cCREs	ins_9	85
+SKNSH_skew	[-1.0,-0.5)	PLS	del_1	1119
+SKNSH_skew	[-1.0,-0.5)	PLS	del_10plus	609
+SKNSH_skew	[-1.0,-0.5)	PLS	del_2	217
+SKNSH_skew	[-1.0,-0.5)	PLS	del_3	177
+SKNSH_skew	[-1.0,-0.5)	PLS	del_4	119
+SKNSH_skew	[-1.0,-0.5)	PLS	del_5	86
+SKNSH_skew	[-1.0,-0.5)	PLS	del_6	80
+SKNSH_skew	[-1.0,-0.5)	PLS	del_7	75
+SKNSH_skew	[-1.0,-0.5)	PLS	del_8	67
+SKNSH_skew	[-1.0,-0.5)	PLS	del_9	53
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_1	473
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_10plus	325
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_2	133
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_3	59
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_4	73
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_5	35
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_6	39
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_7	28
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_8	28
+SKNSH_skew	[-1.0,-0.5)	PLS	ins_9	42
+SKNSH_skew	[-1.0,-0.5)	dELS	del_1	13973
+SKNSH_skew	[-1.0,-0.5)	dELS	del_10plus	4471
+SKNSH_skew	[-1.0,-0.5)	dELS	del_2	4052
+SKNSH_skew	[-1.0,-0.5)	dELS	del_3	2821
+SKNSH_skew	[-1.0,-0.5)	dELS	del_4	2476
+SKNSH_skew	[-1.0,-0.5)	dELS	del_5	973
+SKNSH_skew	[-1.0,-0.5)	dELS	del_6	1049
+SKNSH_skew	[-1.0,-0.5)	dELS	del_7	737
+SKNSH_skew	[-1.0,-0.5)	dELS	del_8	669
+SKNSH_skew	[-1.0,-0.5)	dELS	del_9	412
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_1	4584
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_10plus	1672
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_2	1466
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_3	667
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_4	823
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_5	338
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_6	295
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_7	194
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_8	285
+SKNSH_skew	[-1.0,-0.5)	dELS	ins_9	258
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_1	20941
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_10plus	8325
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_2	5782
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_3	4559
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_4	3575
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_5	1857
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_6	1868
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_7	1396
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_8	1366
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	del_9	778
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_1	6045
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_10plus	3762
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_2	2646
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_3	1141
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_4	1363
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_5	624
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_6	535
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_7	323
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_8	438
+SKNSH_skew	[-1.0,-0.5)	non-cCRE	ins_9	459
+SKNSH_skew	[-1.0,-0.5)	pELS	del_1	2260
+SKNSH_skew	[-1.0,-0.5)	pELS	del_10plus	940
+SKNSH_skew	[-1.0,-0.5)	pELS	del_2	655
+SKNSH_skew	[-1.0,-0.5)	pELS	del_3	551
+SKNSH_skew	[-1.0,-0.5)	pELS	del_4	409
+SKNSH_skew	[-1.0,-0.5)	pELS	del_5	180
+SKNSH_skew	[-1.0,-0.5)	pELS	del_6	189
+SKNSH_skew	[-1.0,-0.5)	pELS	del_7	130
+SKNSH_skew	[-1.0,-0.5)	pELS	del_8	139
+SKNSH_skew	[-1.0,-0.5)	pELS	del_9	92
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_1	906
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_10plus	381
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_2	271
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_3	143
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_4	145
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_5	77
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_6	66
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_7	33
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_8	40
+SKNSH_skew	[-1.0,-0.5)	pELS	ins_9	56
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_1	878
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_10plus	392
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_2	236
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_3	168
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_4	179
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_5	61
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_6	92
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_7	51
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_8	52
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	del_9	37
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_1	241
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_10plus	58
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_2	95
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_3	45
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_4	55
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_5	17
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_6	12
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_7	4
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_8	15
+SKNSH_skew	[-1.5,-1.0)	Other cCREs	ins_9	10
+SKNSH_skew	[-1.5,-1.0)	PLS	del_1	290
+SKNSH_skew	[-1.5,-1.0)	PLS	del_10plus	191
+SKNSH_skew	[-1.5,-1.0)	PLS	del_2	54
+SKNSH_skew	[-1.5,-1.0)	PLS	del_3	46
+SKNSH_skew	[-1.5,-1.0)	PLS	del_4	45
+SKNSH_skew	[-1.5,-1.0)	PLS	del_5	25
+SKNSH_skew	[-1.5,-1.0)	PLS	del_6	41
+SKNSH_skew	[-1.5,-1.0)	PLS	del_7	23
+SKNSH_skew	[-1.5,-1.0)	PLS	del_8	14
+SKNSH_skew	[-1.5,-1.0)	PLS	del_9	15
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_1	90
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_10plus	32
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_2	25
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_3	16
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_4	12
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_5	8
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_6	4
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_7	4
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_8	6
+SKNSH_skew	[-1.5,-1.0)	PLS	ins_9	3
+SKNSH_skew	[-1.5,-1.0)	dELS	del_1	3058
+SKNSH_skew	[-1.5,-1.0)	dELS	del_10plus	1223
+SKNSH_skew	[-1.5,-1.0)	dELS	del_2	940
+SKNSH_skew	[-1.5,-1.0)	dELS	del_3	578
+SKNSH_skew	[-1.5,-1.0)	dELS	del_4	534
+SKNSH_skew	[-1.5,-1.0)	dELS	del_5	234
+SKNSH_skew	[-1.5,-1.0)	dELS	del_6	278
+SKNSH_skew	[-1.5,-1.0)	dELS	del_7	176
+SKNSH_skew	[-1.5,-1.0)	dELS	del_8	187
+SKNSH_skew	[-1.5,-1.0)	dELS	del_9	112
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_1	861
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_10plus	178
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_2	275
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_3	126
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_4	152
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_5	60
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_6	53
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_7	32
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_8	30
+SKNSH_skew	[-1.5,-1.0)	dELS	ins_9	25
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_1	3885
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_10plus	1522
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_2	897
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_3	656
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_4	612
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_5	270
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_6	389
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_7	237
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_8	210
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	del_9	167
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_1	957
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_10plus	247
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_2	404
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_3	189
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_4	196
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_5	72
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_6	76
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_7	27
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_8	46
+SKNSH_skew	[-1.5,-1.0)	non-cCRE	ins_9	37
+SKNSH_skew	[-1.5,-1.0)	pELS	del_1	500
+SKNSH_skew	[-1.5,-1.0)	pELS	del_10plus	259
+SKNSH_skew	[-1.5,-1.0)	pELS	del_2	155
+SKNSH_skew	[-1.5,-1.0)	pELS	del_3	101
+SKNSH_skew	[-1.5,-1.0)	pELS	del_4	81
+SKNSH_skew	[-1.5,-1.0)	pELS	del_5	33
+SKNSH_skew	[-1.5,-1.0)	pELS	del_6	49
+SKNSH_skew	[-1.5,-1.0)	pELS	del_7	26
+SKNSH_skew	[-1.5,-1.0)	pELS	del_8	27
+SKNSH_skew	[-1.5,-1.0)	pELS	del_9	16
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_1	151
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_10plus	23
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_2	58
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_3	31
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_4	28
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_5	7
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_6	10
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_7	4
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_8	4
+SKNSH_skew	[-1.5,-1.0)	pELS	ins_9	7
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_1	87198
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_10plus	56147
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_2	44474
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_3	20365
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_4	35656
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_5	10473
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_6	10814
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_7	5709
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_8	11773
+SKNSH_skew	[0.05,0.2)	Other cCREs	del_9	10646
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_1	67658
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_10plus	28924
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_2	17366
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_3	18804
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_4	10935
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_5	7166
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_6	5494
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_7	4956
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_8	5190
+SKNSH_skew	[0.05,0.2)	Other cCREs	ins_9	1169
+SKNSH_skew	[0.05,0.2)	PLS	del_1	8458
+SKNSH_skew	[0.05,0.2)	PLS	del_10plus	3590
+SKNSH_skew	[0.05,0.2)	PLS	del_2	3753
+SKNSH_skew	[0.05,0.2)	PLS	del_3	2144
+SKNSH_skew	[0.05,0.2)	PLS	del_4	2408
+SKNSH_skew	[0.05,0.2)	PLS	del_5	882
+SKNSH_skew	[0.05,0.2)	PLS	del_6	951
+SKNSH_skew	[0.05,0.2)	PLS	del_7	508
+SKNSH_skew	[0.05,0.2)	PLS	del_8	700
+SKNSH_skew	[0.05,0.2)	PLS	del_9	750
+SKNSH_skew	[0.05,0.2)	PLS	ins_1	6428
+SKNSH_skew	[0.05,0.2)	PLS	ins_10plus	2346
+SKNSH_skew	[0.05,0.2)	PLS	ins_2	1207
+SKNSH_skew	[0.05,0.2)	PLS	ins_3	1005
+SKNSH_skew	[0.05,0.2)	PLS	ins_4	598
+SKNSH_skew	[0.05,0.2)	PLS	ins_5	682
+SKNSH_skew	[0.05,0.2)	PLS	ins_6	772
+SKNSH_skew	[0.05,0.2)	PLS	ins_7	363
+SKNSH_skew	[0.05,0.2)	PLS	ins_8	336
+SKNSH_skew	[0.05,0.2)	PLS	ins_9	128
+SKNSH_skew	[0.05,0.2)	dELS	del_1	231142
+SKNSH_skew	[0.05,0.2)	dELS	del_10plus	117259
+SKNSH_skew	[0.05,0.2)	dELS	del_2	127129
+SKNSH_skew	[0.05,0.2)	dELS	del_3	54687
+SKNSH_skew	[0.05,0.2)	dELS	del_4	89574
+SKNSH_skew	[0.05,0.2)	dELS	del_5	26698
+SKNSH_skew	[0.05,0.2)	dELS	del_6	25879
+SKNSH_skew	[0.05,0.2)	dELS	del_7	14710
+SKNSH_skew	[0.05,0.2)	dELS	del_8	23281
+SKNSH_skew	[0.05,0.2)	dELS	del_9	23830
+SKNSH_skew	[0.05,0.2)	dELS	ins_1	181479
+SKNSH_skew	[0.05,0.2)	dELS	ins_10plus	53688
+SKNSH_skew	[0.05,0.2)	dELS	ins_2	39541
+SKNSH_skew	[0.05,0.2)	dELS	ins_3	42668
+SKNSH_skew	[0.05,0.2)	dELS	ins_4	22624
+SKNSH_skew	[0.05,0.2)	dELS	ins_5	16080
+SKNSH_skew	[0.05,0.2)	dELS	ins_6	12417
+SKNSH_skew	[0.05,0.2)	dELS	ins_7	11466
+SKNSH_skew	[0.05,0.2)	dELS	ins_8	9874
+SKNSH_skew	[0.05,0.2)	dELS	ins_9	2579
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_1	1053443
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_10plus	607649
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_2	471308
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_3	211812
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_4	384318
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_5	125979
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_6	125014
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_7	67353
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_8	123976
+SKNSH_skew	[0.05,0.2)	non-cCRE	del_9	125988
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_1	851531
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_10plus	481608
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_2	259868
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_3	290261
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_4	141077
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_5	114521
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_6	80253
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_7	82420
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_8	65117
+SKNSH_skew	[0.05,0.2)	non-cCRE	ins_9	19417
+SKNSH_skew	[0.05,0.2)	pELS	del_1	38856
+SKNSH_skew	[0.05,0.2)	pELS	del_10plus	20098
+SKNSH_skew	[0.05,0.2)	pELS	del_2	22779
+SKNSH_skew	[0.05,0.2)	pELS	del_3	10887
+SKNSH_skew	[0.05,0.2)	pELS	del_4	16512
+SKNSH_skew	[0.05,0.2)	pELS	del_5	4966
+SKNSH_skew	[0.05,0.2)	pELS	del_6	4976
+SKNSH_skew	[0.05,0.2)	pELS	del_7	2735
+SKNSH_skew	[0.05,0.2)	pELS	del_8	4135
+SKNSH_skew	[0.05,0.2)	pELS	del_9	4086
+SKNSH_skew	[0.05,0.2)	pELS	ins_1	32458
+SKNSH_skew	[0.05,0.2)	pELS	ins_10plus	9217
+SKNSH_skew	[0.05,0.2)	pELS	ins_2	6649
+SKNSH_skew	[0.05,0.2)	pELS	ins_3	6796
+SKNSH_skew	[0.05,0.2)	pELS	ins_4	3716
+SKNSH_skew	[0.05,0.2)	pELS	ins_5	2807
+SKNSH_skew	[0.05,0.2)	pELS	ins_6	2446
+SKNSH_skew	[0.05,0.2)	pELS	ins_7	2024
+SKNSH_skew	[0.05,0.2)	pELS	ins_8	1688
+SKNSH_skew	[0.05,0.2)	pELS	ins_9	511
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_1	13410
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_10plus	14774
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_2	5954
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_3	2687
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_4	3548
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_5	1308
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_6	1269
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_7	889
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_8	1408
+SKNSH_skew	[0.2,0.5)	Other cCREs	del_9	2029
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_1	5822
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_10plus	4293
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_2	2246
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_3	1902
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_4	1557
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_5	838
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_6	976
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_7	564
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_8	790
+SKNSH_skew	[0.2,0.5)	Other cCREs	ins_9	228
+SKNSH_skew	[0.2,0.5)	PLS	del_1	2136
+SKNSH_skew	[0.2,0.5)	PLS	del_10plus	2229
+SKNSH_skew	[0.2,0.5)	PLS	del_2	802
+SKNSH_skew	[0.2,0.5)	PLS	del_3	447
+SKNSH_skew	[0.2,0.5)	PLS	del_4	484
+SKNSH_skew	[0.2,0.5)	PLS	del_5	222
+SKNSH_skew	[0.2,0.5)	PLS	del_6	216
+SKNSH_skew	[0.2,0.5)	PLS	del_7	154
+SKNSH_skew	[0.2,0.5)	PLS	del_8	202
+SKNSH_skew	[0.2,0.5)	PLS	del_9	349
+SKNSH_skew	[0.2,0.5)	PLS	ins_1	1187
+SKNSH_skew	[0.2,0.5)	PLS	ins_10plus	1151
+SKNSH_skew	[0.2,0.5)	PLS	ins_2	335
+SKNSH_skew	[0.2,0.5)	PLS	ins_3	223
+SKNSH_skew	[0.2,0.5)	PLS	ins_4	229
+SKNSH_skew	[0.2,0.5)	PLS	ins_5	183
+SKNSH_skew	[0.2,0.5)	PLS	ins_6	291
+SKNSH_skew	[0.2,0.5)	PLS	ins_7	79
+SKNSH_skew	[0.2,0.5)	PLS	ins_8	107
+SKNSH_skew	[0.2,0.5)	PLS	ins_9	47
+SKNSH_skew	[0.2,0.5)	dELS	del_1	39055
+SKNSH_skew	[0.2,0.5)	dELS	del_10plus	40808
+SKNSH_skew	[0.2,0.5)	dELS	del_2	18845
+SKNSH_skew	[0.2,0.5)	dELS	del_3	7943
+SKNSH_skew	[0.2,0.5)	dELS	del_4	10102
+SKNSH_skew	[0.2,0.5)	dELS	del_5	3804
+SKNSH_skew	[0.2,0.5)	dELS	del_6	3807
+SKNSH_skew	[0.2,0.5)	dELS	del_7	2601
+SKNSH_skew	[0.2,0.5)	dELS	del_8	3767
+SKNSH_skew	[0.2,0.5)	dELS	del_9	6015
+SKNSH_skew	[0.2,0.5)	dELS	ins_1	18820
+SKNSH_skew	[0.2,0.5)	dELS	ins_10plus	10611
+SKNSH_skew	[0.2,0.5)	dELS	ins_2	5805
+SKNSH_skew	[0.2,0.5)	dELS	ins_3	4741
+SKNSH_skew	[0.2,0.5)	dELS	ins_4	4298
+SKNSH_skew	[0.2,0.5)	dELS	ins_5	2290
+SKNSH_skew	[0.2,0.5)	dELS	ins_6	2578
+SKNSH_skew	[0.2,0.5)	dELS	ins_7	1317
+SKNSH_skew	[0.2,0.5)	dELS	ins_8	1827
+SKNSH_skew	[0.2,0.5)	dELS	ins_9	574
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_1	119003
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_10plus	120722
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_2	50000
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_3	21532
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_4	27640
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_5	11524
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_6	10940
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_7	7605
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_8	11848
+SKNSH_skew	[0.2,0.5)	non-cCRE	del_9	16657
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_1	48981
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_10plus	43788
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_2	19345
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_3	17234
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_4	14599
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_5	10118
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_6	8936
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_7	5692
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_8	6839
+SKNSH_skew	[0.2,0.5)	non-cCRE	ins_9	2714
+SKNSH_skew	[0.2,0.5)	pELS	del_1	7307
+SKNSH_skew	[0.2,0.5)	pELS	del_10plus	8250
+SKNSH_skew	[0.2,0.5)	pELS	del_2	3567
+SKNSH_skew	[0.2,0.5)	pELS	del_3	1560
+SKNSH_skew	[0.2,0.5)	pELS	del_4	1940
+SKNSH_skew	[0.2,0.5)	pELS	del_5	776
+SKNSH_skew	[0.2,0.5)	pELS	del_6	757
+SKNSH_skew	[0.2,0.5)	pELS	del_7	461
+SKNSH_skew	[0.2,0.5)	pELS	del_8	780
+SKNSH_skew	[0.2,0.5)	pELS	del_9	1242
+SKNSH_skew	[0.2,0.5)	pELS	ins_1	4141
+SKNSH_skew	[0.2,0.5)	pELS	ins_10plus	2299
+SKNSH_skew	[0.2,0.5)	pELS	ins_2	1267
+SKNSH_skew	[0.2,0.5)	pELS	ins_3	945
+SKNSH_skew	[0.2,0.5)	pELS	ins_4	796
+SKNSH_skew	[0.2,0.5)	pELS	ins_5	496
+SKNSH_skew	[0.2,0.5)	pELS	ins_6	576
+SKNSH_skew	[0.2,0.5)	pELS	ins_7	326
+SKNSH_skew	[0.2,0.5)	pELS	ins_8	339
+SKNSH_skew	[0.2,0.5)	pELS	ins_9	119
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_1	2847
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_10plus	1436
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_2	1249
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_3	452
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_4	517
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_5	234
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_6	191
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_7	136
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_8	184
+SKNSH_skew	[0.5,1.0)	Other cCREs	del_9	201
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_1	1017
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_10plus	1240
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_2	738
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_3	344
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_4	438
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_5	223
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_6	315
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_7	107
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_8	239
+SKNSH_skew	[0.5,1.0)	Other cCREs	ins_9	67
+SKNSH_skew	[0.5,1.0)	PLS	del_1	524
+SKNSH_skew	[0.5,1.0)	PLS	del_10plus	348
+SKNSH_skew	[0.5,1.0)	PLS	del_2	165
+SKNSH_skew	[0.5,1.0)	PLS	del_3	91
+SKNSH_skew	[0.5,1.0)	PLS	del_4	78
+SKNSH_skew	[0.5,1.0)	PLS	del_5	32
+SKNSH_skew	[0.5,1.0)	PLS	del_6	38
+SKNSH_skew	[0.5,1.0)	PLS	del_7	22
+SKNSH_skew	[0.5,1.0)	PLS	del_8	49
+SKNSH_skew	[0.5,1.0)	PLS	del_9	41
+SKNSH_skew	[0.5,1.0)	PLS	ins_1	222
+SKNSH_skew	[0.5,1.0)	PLS	ins_10plus	395
+SKNSH_skew	[0.5,1.0)	PLS	ins_2	98
+SKNSH_skew	[0.5,1.0)	PLS	ins_3	46
+SKNSH_skew	[0.5,1.0)	PLS	ins_4	52
+SKNSH_skew	[0.5,1.0)	PLS	ins_5	44
+SKNSH_skew	[0.5,1.0)	PLS	ins_6	73
+SKNSH_skew	[0.5,1.0)	PLS	ins_7	21
+SKNSH_skew	[0.5,1.0)	PLS	ins_8	47
+SKNSH_skew	[0.5,1.0)	PLS	ins_9	7
+SKNSH_skew	[0.5,1.0)	dELS	del_1	9291
+SKNSH_skew	[0.5,1.0)	dELS	del_10plus	4482
+SKNSH_skew	[0.5,1.0)	dELS	del_2	4109
+SKNSH_skew	[0.5,1.0)	dELS	del_3	1570
+SKNSH_skew	[0.5,1.0)	dELS	del_4	1570
+SKNSH_skew	[0.5,1.0)	dELS	del_5	617
+SKNSH_skew	[0.5,1.0)	dELS	del_6	591
+SKNSH_skew	[0.5,1.0)	dELS	del_7	453
+SKNSH_skew	[0.5,1.0)	dELS	del_8	499
+SKNSH_skew	[0.5,1.0)	dELS	del_9	680
+SKNSH_skew	[0.5,1.0)	dELS	ins_1	3586
+SKNSH_skew	[0.5,1.0)	dELS	ins_10plus	2954
+SKNSH_skew	[0.5,1.0)	dELS	ins_2	1790
+SKNSH_skew	[0.5,1.0)	dELS	ins_3	996
+SKNSH_skew	[0.5,1.0)	dELS	ins_4	1238
+SKNSH_skew	[0.5,1.0)	dELS	ins_5	569
+SKNSH_skew	[0.5,1.0)	dELS	ins_6	799
+SKNSH_skew	[0.5,1.0)	dELS	ins_7	307
+SKNSH_skew	[0.5,1.0)	dELS	ins_8	538
+SKNSH_skew	[0.5,1.0)	dELS	ins_9	164
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_1	21520
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_10plus	9293
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_2	8591
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_3	3778
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_4	3393
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_5	1457
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_6	1282
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_7	994
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_8	1201
+SKNSH_skew	[0.5,1.0)	non-cCRE	del_9	1384
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_1	7861
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_10plus	7076
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_2	4520
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_3	2465
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_4	2996
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_5	2106
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_6	1938
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_7	796
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_8	1218
+SKNSH_skew	[0.5,1.0)	non-cCRE	ins_9	446
+SKNSH_skew	[0.5,1.0)	pELS	del_1	1868
+SKNSH_skew	[0.5,1.0)	pELS	del_10plus	940
+SKNSH_skew	[0.5,1.0)	pELS	del_2	728
+SKNSH_skew	[0.5,1.0)	pELS	del_3	322
+SKNSH_skew	[0.5,1.0)	pELS	del_4	297
+SKNSH_skew	[0.5,1.0)	pELS	del_5	126
+SKNSH_skew	[0.5,1.0)	pELS	del_6	133
+SKNSH_skew	[0.5,1.0)	pELS	del_7	108
+SKNSH_skew	[0.5,1.0)	pELS	del_8	134
+SKNSH_skew	[0.5,1.0)	pELS	del_9	156
+SKNSH_skew	[0.5,1.0)	pELS	ins_1	799
+SKNSH_skew	[0.5,1.0)	pELS	ins_10plus	704
+SKNSH_skew	[0.5,1.0)	pELS	ins_2	365
+SKNSH_skew	[0.5,1.0)	pELS	ins_3	201
+SKNSH_skew	[0.5,1.0)	pELS	ins_4	277
+SKNSH_skew	[0.5,1.0)	pELS	ins_5	134
+SKNSH_skew	[0.5,1.0)	pELS	ins_6	159
+SKNSH_skew	[0.5,1.0)	pELS	ins_7	61
+SKNSH_skew	[0.5,1.0)	pELS	ins_8	91
+SKNSH_skew	[0.5,1.0)	pELS	ins_9	35
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_1	537
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_10plus	157
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_2	214
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_3	68
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_4	82
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_5	31
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_6	31
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_7	15
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_8	27
+SKNSH_skew	[1.0,1.5)	Other cCREs	del_9	23
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_1	145
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_10plus	320
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_2	191
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_3	50
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_4	107
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_5	28
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_6	115
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_7	27
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_8	53
+SKNSH_skew	[1.0,1.5)	Other cCREs	ins_9	9
+SKNSH_skew	[1.0,1.5)	PLS	del_1	125
+SKNSH_skew	[1.0,1.5)	PLS	del_10plus	44
+SKNSH_skew	[1.0,1.5)	PLS	del_2	29
+SKNSH_skew	[1.0,1.5)	PLS	del_3	10
+SKNSH_skew	[1.0,1.5)	PLS	del_4	13
+SKNSH_skew	[1.0,1.5)	PLS	del_5	3
+SKNSH_skew	[1.0,1.5)	PLS	del_6	5
+SKNSH_skew	[1.0,1.5)	PLS	del_7	6
+SKNSH_skew	[1.0,1.5)	PLS	del_8	7
+SKNSH_skew	[1.0,1.5)	PLS	del_9	5
+SKNSH_skew	[1.0,1.5)	PLS	ins_1	32
+SKNSH_skew	[1.0,1.5)	PLS	ins_10plus	110
+SKNSH_skew	[1.0,1.5)	PLS	ins_2	22
+SKNSH_skew	[1.0,1.5)	PLS	ins_3	9
+SKNSH_skew	[1.0,1.5)	PLS	ins_4	13
+SKNSH_skew	[1.0,1.5)	PLS	ins_5	13
+SKNSH_skew	[1.0,1.5)	PLS	ins_6	25
+SKNSH_skew	[1.0,1.5)	PLS	ins_7	7
+SKNSH_skew	[1.0,1.5)	PLS	ins_8	12
+SKNSH_skew	[1.0,1.5)	PLS	ins_9	1
+SKNSH_skew	[1.0,1.5)	dELS	del_1	1847
+SKNSH_skew	[1.0,1.5)	dELS	del_10plus	492
+SKNSH_skew	[1.0,1.5)	dELS	del_2	809
+SKNSH_skew	[1.0,1.5)	dELS	del_3	249
+SKNSH_skew	[1.0,1.5)	dELS	del_4	262
+SKNSH_skew	[1.0,1.5)	dELS	del_5	116
+SKNSH_skew	[1.0,1.5)	dELS	del_6	89
+SKNSH_skew	[1.0,1.5)	dELS	del_7	63
+SKNSH_skew	[1.0,1.5)	dELS	del_8	75
+SKNSH_skew	[1.0,1.5)	dELS	del_9	87
+SKNSH_skew	[1.0,1.5)	dELS	ins_1	594
+SKNSH_skew	[1.0,1.5)	dELS	ins_10plus	1001
+SKNSH_skew	[1.0,1.5)	dELS	ins_2	523
+SKNSH_skew	[1.0,1.5)	dELS	ins_3	175
+SKNSH_skew	[1.0,1.5)	dELS	ins_4	358
+SKNSH_skew	[1.0,1.5)	dELS	ins_5	126
+SKNSH_skew	[1.0,1.5)	dELS	ins_6	283
+SKNSH_skew	[1.0,1.5)	dELS	ins_7	83
+SKNSH_skew	[1.0,1.5)	dELS	ins_8	169
+SKNSH_skew	[1.0,1.5)	dELS	ins_9	35
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_1	3206
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_10plus	853
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_2	1502
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_3	432
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_4	406
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_5	205
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_6	161
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_7	104
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_8	140
+SKNSH_skew	[1.0,1.5)	non-cCRE	del_9	145
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_1	1037
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_10plus	1615
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_2	921
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_3	359
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_4	646
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_5	206
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_6	564
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_7	121
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_8	311
+SKNSH_skew	[1.0,1.5)	non-cCRE	ins_9	60
+SKNSH_skew	[1.0,1.5)	pELS	del_1	351
+SKNSH_skew	[1.0,1.5)	pELS	del_10plus	125
+SKNSH_skew	[1.0,1.5)	pELS	del_2	142
+SKNSH_skew	[1.0,1.5)	pELS	del_3	52
+SKNSH_skew	[1.0,1.5)	pELS	del_4	49
+SKNSH_skew	[1.0,1.5)	pELS	del_5	24
+SKNSH_skew	[1.0,1.5)	pELS	del_6	15
+SKNSH_skew	[1.0,1.5)	pELS	del_7	11
+SKNSH_skew	[1.0,1.5)	pELS	del_8	16
+SKNSH_skew	[1.0,1.5)	pELS	del_9	16
+SKNSH_skew	[1.0,1.5)	pELS	ins_1	134
+SKNSH_skew	[1.0,1.5)	pELS	ins_10plus	209
+SKNSH_skew	[1.0,1.5)	pELS	ins_2	87
+SKNSH_skew	[1.0,1.5)	pELS	ins_3	37
+SKNSH_skew	[1.0,1.5)	pELS	ins_4	69
+SKNSH_skew	[1.0,1.5)	pELS	ins_5	34
+SKNSH_skew	[1.0,1.5)	pELS	ins_6	54
+SKNSH_skew	[1.0,1.5)	pELS	ins_7	16
+SKNSH_skew	[1.0,1.5)	pELS	ins_8	21
+SKNSH_skew	[1.0,1.5)	pELS	ins_9	14
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_1	143
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_10plus	50
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_2	54
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_3	28
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_4	29
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_5	9
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_6	6
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_7	5
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_8	13
+SKNSH_skew	[1.5,Inf)	Other cCREs	del_9	6
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_1	31
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_10plus	130
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_2	74
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_3	22
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_4	27
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_5	8
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_6	59
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_7	11
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_8	10
+SKNSH_skew	[1.5,Inf)	Other cCREs	ins_9	1
+SKNSH_skew	[1.5,Inf)	PLS	del_1	24
+SKNSH_skew	[1.5,Inf)	PLS	del_10plus	12
+SKNSH_skew	[1.5,Inf)	PLS	del_2	8
+SKNSH_skew	[1.5,Inf)	PLS	del_3	6
+SKNSH_skew	[1.5,Inf)	PLS	del_4	2
+SKNSH_skew	[1.5,Inf)	PLS	del_5	1
+SKNSH_skew	[1.5,Inf)	PLS	del_7	4
+SKNSH_skew	[1.5,Inf)	PLS	del_9	1
+SKNSH_skew	[1.5,Inf)	PLS	ins_1	6
+SKNSH_skew	[1.5,Inf)	PLS	ins_10plus	34
+SKNSH_skew	[1.5,Inf)	PLS	ins_2	4
+SKNSH_skew	[1.5,Inf)	PLS	ins_3	3
+SKNSH_skew	[1.5,Inf)	PLS	ins_4	2
+SKNSH_skew	[1.5,Inf)	PLS	ins_5	3
+SKNSH_skew	[1.5,Inf)	PLS	ins_6	19
+SKNSH_skew	[1.5,Inf)	PLS	ins_8	3
+SKNSH_skew	[1.5,Inf)	PLS	ins_9	1
+SKNSH_skew	[1.5,Inf)	dELS	del_1	545
+SKNSH_skew	[1.5,Inf)	dELS	del_10plus	170
+SKNSH_skew	[1.5,Inf)	dELS	del_2	253
+SKNSH_skew	[1.5,Inf)	dELS	del_3	66
+SKNSH_skew	[1.5,Inf)	dELS	del_4	78
+SKNSH_skew	[1.5,Inf)	dELS	del_5	34
+SKNSH_skew	[1.5,Inf)	dELS	del_6	35
+SKNSH_skew	[1.5,Inf)	dELS	del_7	19
+SKNSH_skew	[1.5,Inf)	dELS	del_8	23
+SKNSH_skew	[1.5,Inf)	dELS	del_9	38
+SKNSH_skew	[1.5,Inf)	dELS	ins_1	205
+SKNSH_skew	[1.5,Inf)	dELS	ins_10plus	443
+SKNSH_skew	[1.5,Inf)	dELS	ins_2	187
+SKNSH_skew	[1.5,Inf)	dELS	ins_3	43
+SKNSH_skew	[1.5,Inf)	dELS	ins_4	117
+SKNSH_skew	[1.5,Inf)	dELS	ins_5	36
+SKNSH_skew	[1.5,Inf)	dELS	ins_6	192
+SKNSH_skew	[1.5,Inf)	dELS	ins_7	41
+SKNSH_skew	[1.5,Inf)	dELS	ins_8	56
+SKNSH_skew	[1.5,Inf)	dELS	ins_9	11
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_1	1057
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_10plus	218
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_2	392
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_3	107
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_4	142
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_5	46
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_6	49
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_7	27
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_8	47
+SKNSH_skew	[1.5,Inf)	non-cCRE	del_9	31
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_1	256
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_10plus	936
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_2	400
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_3	93
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_4	232
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_5	62
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_6	352
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_7	36
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_8	123
+SKNSH_skew	[1.5,Inf)	non-cCRE	ins_9	28
+SKNSH_skew	[1.5,Inf)	pELS	del_1	110
+SKNSH_skew	[1.5,Inf)	pELS	del_10plus	37
+SKNSH_skew	[1.5,Inf)	pELS	del_2	53
+SKNSH_skew	[1.5,Inf)	pELS	del_3	8
+SKNSH_skew	[1.5,Inf)	pELS	del_4	14
+SKNSH_skew	[1.5,Inf)	pELS	del_5	4
+SKNSH_skew	[1.5,Inf)	pELS	del_6	8
+SKNSH_skew	[1.5,Inf)	pELS	del_7	3
+SKNSH_skew	[1.5,Inf)	pELS	del_8	6
+SKNSH_skew	[1.5,Inf)	pELS	del_9	5
+SKNSH_skew	[1.5,Inf)	pELS	ins_1	46
+SKNSH_skew	[1.5,Inf)	pELS	ins_10plus	79
+SKNSH_skew	[1.5,Inf)	pELS	ins_2	39
+SKNSH_skew	[1.5,Inf)	pELS	ins_3	12
+SKNSH_skew	[1.5,Inf)	pELS	ins_4	14
+SKNSH_skew	[1.5,Inf)	pELS	ins_5	14
+SKNSH_skew	[1.5,Inf)	pELS	ins_6	42
+SKNSH_skew	[1.5,Inf)	pELS	ins_7	4
+SKNSH_skew	[1.5,Inf)	pELS	ins_8	11
+SKNSH_skew	[1.5,Inf)	pELS	ins_9	1
+mean_skew	(-Inf,-1.5)	Other cCREs	del_1	299
+mean_skew	(-Inf,-1.5)	Other cCREs	del_10plus	194
+mean_skew	(-Inf,-1.5)	Other cCREs	del_2	70
+mean_skew	(-Inf,-1.5)	Other cCREs	del_3	34
+mean_skew	(-Inf,-1.5)	Other cCREs	del_4	44
+mean_skew	(-Inf,-1.5)	Other cCREs	del_5	16
+mean_skew	(-Inf,-1.5)	Other cCREs	del_6	34
+mean_skew	(-Inf,-1.5)	Other cCREs	del_7	16
+mean_skew	(-Inf,-1.5)	Other cCREs	del_8	26
+mean_skew	(-Inf,-1.5)	Other cCREs	del_9	17
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_1	56
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_10plus	14
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_2	22
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_3	7
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_4	6
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_5	6
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_6	1
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_7	2
+mean_skew	(-Inf,-1.5)	Other cCREs	ins_9	2
+mean_skew	(-Inf,-1.5)	PLS	del_1	132
+mean_skew	(-Inf,-1.5)	PLS	del_10plus	99
+mean_skew	(-Inf,-1.5)	PLS	del_2	28
+mean_skew	(-Inf,-1.5)	PLS	del_3	14
+mean_skew	(-Inf,-1.5)	PLS	del_4	19
+mean_skew	(-Inf,-1.5)	PLS	del_5	15
+mean_skew	(-Inf,-1.5)	PLS	del_6	10
+mean_skew	(-Inf,-1.5)	PLS	del_7	11
+mean_skew	(-Inf,-1.5)	PLS	del_8	10
+mean_skew	(-Inf,-1.5)	PLS	del_9	9
+mean_skew	(-Inf,-1.5)	PLS	ins_1	33
+mean_skew	(-Inf,-1.5)	PLS	ins_10plus	2
+mean_skew	(-Inf,-1.5)	PLS	ins_2	19
+mean_skew	(-Inf,-1.5)	PLS	ins_3	7
+mean_skew	(-Inf,-1.5)	PLS	ins_4	8
+mean_skew	(-Inf,-1.5)	PLS	ins_5	2
+mean_skew	(-Inf,-1.5)	PLS	ins_6	2
+mean_skew	(-Inf,-1.5)	PLS	ins_7	7
+mean_skew	(-Inf,-1.5)	dELS	del_1	975
+mean_skew	(-Inf,-1.5)	dELS	del_10plus	531
+mean_skew	(-Inf,-1.5)	dELS	del_2	249
+mean_skew	(-Inf,-1.5)	dELS	del_3	143
+mean_skew	(-Inf,-1.5)	dELS	del_4	156
+mean_skew	(-Inf,-1.5)	dELS	del_5	79
+mean_skew	(-Inf,-1.5)	dELS	del_6	112
+mean_skew	(-Inf,-1.5)	dELS	del_7	67
+mean_skew	(-Inf,-1.5)	dELS	del_8	65
+mean_skew	(-Inf,-1.5)	dELS	del_9	44
+mean_skew	(-Inf,-1.5)	dELS	ins_1	212
+mean_skew	(-Inf,-1.5)	dELS	ins_10plus	26
+mean_skew	(-Inf,-1.5)	dELS	ins_2	84
+mean_skew	(-Inf,-1.5)	dELS	ins_3	32
+mean_skew	(-Inf,-1.5)	dELS	ins_4	40
+mean_skew	(-Inf,-1.5)	dELS	ins_5	17
+mean_skew	(-Inf,-1.5)	dELS	ins_6	13
+mean_skew	(-Inf,-1.5)	dELS	ins_7	5
+mean_skew	(-Inf,-1.5)	dELS	ins_8	11
+mean_skew	(-Inf,-1.5)	dELS	ins_9	5
+mean_skew	(-Inf,-1.5)	non-cCRE	del_1	1230
+mean_skew	(-Inf,-1.5)	non-cCRE	del_10plus	539
+mean_skew	(-Inf,-1.5)	non-cCRE	del_2	249
+mean_skew	(-Inf,-1.5)	non-cCRE	del_3	145
+mean_skew	(-Inf,-1.5)	non-cCRE	del_4	160
+mean_skew	(-Inf,-1.5)	non-cCRE	del_5	75
+mean_skew	(-Inf,-1.5)	non-cCRE	del_6	118
+mean_skew	(-Inf,-1.5)	non-cCRE	del_7	61
+mean_skew	(-Inf,-1.5)	non-cCRE	del_8	82
+mean_skew	(-Inf,-1.5)	non-cCRE	del_9	70
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_1	245
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_10plus	43
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_2	145
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_3	57
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_4	68
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_5	25
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_6	22
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_7	11
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_8	7
+mean_skew	(-Inf,-1.5)	non-cCRE	ins_9	10
+mean_skew	(-Inf,-1.5)	pELS	del_1	159
+mean_skew	(-Inf,-1.5)	pELS	del_10plus	114
+mean_skew	(-Inf,-1.5)	pELS	del_2	42
+mean_skew	(-Inf,-1.5)	pELS	del_3	14
+mean_skew	(-Inf,-1.5)	pELS	del_4	19
+mean_skew	(-Inf,-1.5)	pELS	del_5	9
+mean_skew	(-Inf,-1.5)	pELS	del_6	24
+mean_skew	(-Inf,-1.5)	pELS	del_7	15
+mean_skew	(-Inf,-1.5)	pELS	del_8	13
+mean_skew	(-Inf,-1.5)	pELS	del_9	11
+mean_skew	(-Inf,-1.5)	pELS	ins_1	39
+mean_skew	(-Inf,-1.5)	pELS	ins_10plus	13
+mean_skew	(-Inf,-1.5)	pELS	ins_2	17
+mean_skew	(-Inf,-1.5)	pELS	ins_3	7
+mean_skew	(-Inf,-1.5)	pELS	ins_4	5
+mean_skew	(-Inf,-1.5)	pELS	ins_5	5
+mean_skew	(-Inf,-1.5)	pELS	ins_6	2
+mean_skew	(-Inf,-1.5)	pELS	ins_7	1
+mean_skew	(-Inf,-1.5)	pELS	ins_8	2
+mean_skew	(-Inf,-1.5)	pELS	ins_9	2
+mean_skew	[-0.05,0.05)	Other cCREs	del_1	539876
+mean_skew	[-0.05,0.05)	Other cCREs	del_10plus	53979
+mean_skew	[-0.05,0.05)	Other cCREs	del_2	250147
+mean_skew	[-0.05,0.05)	Other cCREs	del_3	134938
+mean_skew	[-0.05,0.05)	Other cCREs	del_4	151827
+mean_skew	[-0.05,0.05)	Other cCREs	del_5	46815
+mean_skew	[-0.05,0.05)	Other cCREs	del_6	32942
+mean_skew	[-0.05,0.05)	Other cCREs	del_7	16758
+mean_skew	[-0.05,0.05)	Other cCREs	del_8	25629
+mean_skew	[-0.05,0.05)	Other cCREs	del_9	9478
+mean_skew	[-0.05,0.05)	Other cCREs	ins_1	329910
+mean_skew	[-0.05,0.05)	Other cCREs	ins_10plus	49585
+mean_skew	[-0.05,0.05)	Other cCREs	ins_2	115269
+mean_skew	[-0.05,0.05)	Other cCREs	ins_3	48863
+mean_skew	[-0.05,0.05)	Other cCREs	ins_4	77592
+mean_skew	[-0.05,0.05)	Other cCREs	ins_5	23472
+mean_skew	[-0.05,0.05)	Other cCREs	ins_6	26746
+mean_skew	[-0.05,0.05)	Other cCREs	ins_7	13440
+mean_skew	[-0.05,0.05)	Other cCREs	ins_8	30198
+mean_skew	[-0.05,0.05)	Other cCREs	ins_9	8099
+mean_skew	[-0.05,0.05)	PLS	del_1	22030
+mean_skew	[-0.05,0.05)	PLS	del_10plus	2555
+mean_skew	[-0.05,0.05)	PLS	del_2	8635
+mean_skew	[-0.05,0.05)	PLS	del_3	4310
+mean_skew	[-0.05,0.05)	PLS	del_4	3563
+mean_skew	[-0.05,0.05)	PLS	del_5	1301
+mean_skew	[-0.05,0.05)	PLS	del_6	1234
+mean_skew	[-0.05,0.05)	PLS	del_7	663
+mean_skew	[-0.05,0.05)	PLS	del_8	747
+mean_skew	[-0.05,0.05)	PLS	del_9	489
+mean_skew	[-0.05,0.05)	PLS	ins_1	16836
+mean_skew	[-0.05,0.05)	PLS	ins_10plus	3244
+mean_skew	[-0.05,0.05)	PLS	ins_2	4911
+mean_skew	[-0.05,0.05)	PLS	ins_3	2549
+mean_skew	[-0.05,0.05)	PLS	ins_4	2374
+mean_skew	[-0.05,0.05)	PLS	ins_5	1490
+mean_skew	[-0.05,0.05)	PLS	ins_6	1784
+mean_skew	[-0.05,0.05)	PLS	ins_7	843
+mean_skew	[-0.05,0.05)	PLS	ins_8	916
+mean_skew	[-0.05,0.05)	PLS	ins_9	562
+mean_skew	[-0.05,0.05)	dELS	del_1	1223500
+mean_skew	[-0.05,0.05)	dELS	del_10plus	95487
+mean_skew	[-0.05,0.05)	dELS	del_2	574291
+mean_skew	[-0.05,0.05)	dELS	del_3	287295
+mean_skew	[-0.05,0.05)	dELS	del_4	279261
+mean_skew	[-0.05,0.05)	dELS	del_5	91828
+mean_skew	[-0.05,0.05)	dELS	del_6	65548
+mean_skew	[-0.05,0.05)	dELS	del_7	34147
+mean_skew	[-0.05,0.05)	dELS	del_8	39917
+mean_skew	[-0.05,0.05)	dELS	del_9	18431
+mean_skew	[-0.05,0.05)	dELS	ins_1	784209
+mean_skew	[-0.05,0.05)	dELS	ins_10plus	78584
+mean_skew	[-0.05,0.05)	dELS	ins_2	252762
+mean_skew	[-0.05,0.05)	dELS	ins_3	101405
+mean_skew	[-0.05,0.05)	dELS	ins_4	130662
+mean_skew	[-0.05,0.05)	dELS	ins_5	47730
+mean_skew	[-0.05,0.05)	dELS	ins_6	55399
+mean_skew	[-0.05,0.05)	dELS	ins_7	26063
+mean_skew	[-0.05,0.05)	dELS	ins_8	41794
+mean_skew	[-0.05,0.05)	dELS	ins_9	14337
+mean_skew	[-0.05,0.05)	non-cCRE	del_1	9287628
+mean_skew	[-0.05,0.05)	non-cCRE	del_10plus	680232
+mean_skew	[-0.05,0.05)	non-cCRE	del_2	3900057
+mean_skew	[-0.05,0.05)	non-cCRE	del_3	2241230
+mean_skew	[-0.05,0.05)	non-cCRE	del_4	2457795
+mean_skew	[-0.05,0.05)	non-cCRE	del_5	921297
+mean_skew	[-0.05,0.05)	non-cCRE	del_6	564890
+mean_skew	[-0.05,0.05)	non-cCRE	del_7	257951
+mean_skew	[-0.05,0.05)	non-cCRE	del_8	314912
+mean_skew	[-0.05,0.05)	non-cCRE	del_9	147781
+mean_skew	[-0.05,0.05)	non-cCRE	ins_1	5905057
+mean_skew	[-0.05,0.05)	non-cCRE	ins_10plus	754772
+mean_skew	[-0.05,0.05)	non-cCRE	ins_2	2012614
+mean_skew	[-0.05,0.05)	non-cCRE	ins_3	818703
+mean_skew	[-0.05,0.05)	non-cCRE	ins_4	1092344
+mean_skew	[-0.05,0.05)	non-cCRE	ins_5	407969
+mean_skew	[-0.05,0.05)	non-cCRE	ins_6	479235
+mean_skew	[-0.05,0.05)	non-cCRE	ins_7	219699
+mean_skew	[-0.05,0.05)	non-cCRE	ins_8	383036
+mean_skew	[-0.05,0.05)	non-cCRE	ins_9	149824
+mean_skew	[-0.05,0.05)	pELS	del_1	174388
+mean_skew	[-0.05,0.05)	pELS	del_10plus	15925
+mean_skew	[-0.05,0.05)	pELS	del_2	91760
+mean_skew	[-0.05,0.05)	pELS	del_3	45410
+mean_skew	[-0.05,0.05)	pELS	del_4	43849
+mean_skew	[-0.05,0.05)	pELS	del_5	14399
+mean_skew	[-0.05,0.05)	pELS	del_6	10502
+mean_skew	[-0.05,0.05)	pELS	del_7	5623
+mean_skew	[-0.05,0.05)	pELS	del_8	6456
+mean_skew	[-0.05,0.05)	pELS	del_9	3036
+mean_skew	[-0.05,0.05)	pELS	ins_1	128158
+mean_skew	[-0.05,0.05)	pELS	ins_10plus	13481
+mean_skew	[-0.05,0.05)	pELS	ins_2	40175
+mean_skew	[-0.05,0.05)	pELS	ins_3	16912
+mean_skew	[-0.05,0.05)	pELS	ins_4	20370
+mean_skew	[-0.05,0.05)	pELS	ins_5	7780
+mean_skew	[-0.05,0.05)	pELS	ins_6	9203
+mean_skew	[-0.05,0.05)	pELS	ins_7	4466
+mean_skew	[-0.05,0.05)	pELS	ins_8	6371
+mean_skew	[-0.05,0.05)	pELS	ins_9	2440
+mean_skew	[-0.2,-0.05)	Other cCREs	del_1	130808
+mean_skew	[-0.2,-0.05)	Other cCREs	del_10plus	31112
+mean_skew	[-0.2,-0.05)	Other cCREs	del_2	36122
+mean_skew	[-0.2,-0.05)	Other cCREs	del_3	39406
+mean_skew	[-0.2,-0.05)	Other cCREs	del_4	28196
+mean_skew	[-0.2,-0.05)	Other cCREs	del_5	12491
+mean_skew	[-0.2,-0.05)	Other cCREs	del_6	7467
+mean_skew	[-0.2,-0.05)	Other cCREs	del_7	5708
+mean_skew	[-0.2,-0.05)	Other cCREs	del_8	7664
+mean_skew	[-0.2,-0.05)	Other cCREs	del_9	2516
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_1	37773
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_10plus	37860
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_2	14961
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_3	8702
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_4	16847
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_5	6783
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_6	8003
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_7	4262
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_8	7551
+mean_skew	[-0.2,-0.05)	Other cCREs	ins_9	6793
+mean_skew	[-0.2,-0.05)	PLS	del_1	10817
+mean_skew	[-0.2,-0.05)	PLS	del_10plus	2115
+mean_skew	[-0.2,-0.05)	PLS	del_2	2062
+mean_skew	[-0.2,-0.05)	PLS	del_3	1654
+mean_skew	[-0.2,-0.05)	PLS	del_4	1028
+mean_skew	[-0.2,-0.05)	PLS	del_5	597
+mean_skew	[-0.2,-0.05)	PLS	del_6	507
+mean_skew	[-0.2,-0.05)	PLS	del_7	402
+mean_skew	[-0.2,-0.05)	PLS	del_8	416
+mean_skew	[-0.2,-0.05)	PLS	del_9	252
+mean_skew	[-0.2,-0.05)	PLS	ins_1	5974
+mean_skew	[-0.2,-0.05)	PLS	ins_10plus	4040
+mean_skew	[-0.2,-0.05)	PLS	ins_2	1910
+mean_skew	[-0.2,-0.05)	PLS	ins_3	1514
+mean_skew	[-0.2,-0.05)	PLS	ins_4	1782
+mean_skew	[-0.2,-0.05)	PLS	ins_5	1206
+mean_skew	[-0.2,-0.05)	PLS	ins_6	1328
+mean_skew	[-0.2,-0.05)	PLS	ins_7	678
+mean_skew	[-0.2,-0.05)	PLS	ins_8	674
+mean_skew	[-0.2,-0.05)	PLS	ins_9	862
+mean_skew	[-0.2,-0.05)	dELS	del_1	355711
+mean_skew	[-0.2,-0.05)	dELS	del_10plus	65808
+mean_skew	[-0.2,-0.05)	dELS	del_2	94801
+mean_skew	[-0.2,-0.05)	dELS	del_3	94413
+mean_skew	[-0.2,-0.05)	dELS	del_4	65605
+mean_skew	[-0.2,-0.05)	dELS	del_5	28875
+mean_skew	[-0.2,-0.05)	dELS	del_6	18021
+mean_skew	[-0.2,-0.05)	dELS	del_7	14379
+mean_skew	[-0.2,-0.05)	dELS	del_8	16985
+mean_skew	[-0.2,-0.05)	dELS	del_9	6422
+mean_skew	[-0.2,-0.05)	dELS	ins_1	113322
+mean_skew	[-0.2,-0.05)	dELS	ins_10plus	76111
+mean_skew	[-0.2,-0.05)	dELS	ins_2	41701
+mean_skew	[-0.2,-0.05)	dELS	ins_3	23393
+mean_skew	[-0.2,-0.05)	dELS	ins_4	42905
+mean_skew	[-0.2,-0.05)	dELS	ins_5	17684
+mean_skew	[-0.2,-0.05)	dELS	ins_6	20714
+mean_skew	[-0.2,-0.05)	dELS	ins_7	10566
+mean_skew	[-0.2,-0.05)	dELS	ins_8	15402
+mean_skew	[-0.2,-0.05)	dELS	ins_9	14790
+mean_skew	[-0.2,-0.05)	non-cCRE	del_1	1496523
+mean_skew	[-0.2,-0.05)	non-cCRE	del_10plus	391990
+mean_skew	[-0.2,-0.05)	non-cCRE	del_2	481854
+mean_skew	[-0.2,-0.05)	non-cCRE	del_3	578020
+mean_skew	[-0.2,-0.05)	non-cCRE	del_4	455453
+mean_skew	[-0.2,-0.05)	non-cCRE	del_5	234508
+mean_skew	[-0.2,-0.05)	non-cCRE	del_6	114873
+mean_skew	[-0.2,-0.05)	non-cCRE	del_7	85536
+mean_skew	[-0.2,-0.05)	non-cCRE	del_8	93833
+mean_skew	[-0.2,-0.05)	non-cCRE	del_9	37030
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_1	391623
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_10plus	533967
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_2	151978
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_3	94329
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_4	179094
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_5	89067
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_6	100293
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_7	55825
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_8	86738
+mean_skew	[-0.2,-0.05)	non-cCRE	ins_9	88004
+mean_skew	[-0.2,-0.05)	pELS	del_1	54843
+mean_skew	[-0.2,-0.05)	pELS	del_10plus	10977
+mean_skew	[-0.2,-0.05)	pELS	del_2	14837
+mean_skew	[-0.2,-0.05)	pELS	del_3	14426
+mean_skew	[-0.2,-0.05)	pELS	del_4	10068
+mean_skew	[-0.2,-0.05)	pELS	del_5	4672
+mean_skew	[-0.2,-0.05)	pELS	del_6	3078
+mean_skew	[-0.2,-0.05)	pELS	del_7	2493
+mean_skew	[-0.2,-0.05)	pELS	del_8	2886
+mean_skew	[-0.2,-0.05)	pELS	del_9	1208
+mean_skew	[-0.2,-0.05)	pELS	ins_1	22545
+mean_skew	[-0.2,-0.05)	pELS	ins_10plus	13700
+mean_skew	[-0.2,-0.05)	pELS	ins_2	7795
+mean_skew	[-0.2,-0.05)	pELS	ins_3	4725
+mean_skew	[-0.2,-0.05)	pELS	ins_4	7893
+mean_skew	[-0.2,-0.05)	pELS	ins_5	3293
+mean_skew	[-0.2,-0.05)	pELS	ins_6	4115
+mean_skew	[-0.2,-0.05)	pELS	ins_7	2081
+mean_skew	[-0.2,-0.05)	pELS	ins_8	2718
+mean_skew	[-0.2,-0.05)	pELS	ins_9	2546
+mean_skew	[-0.5,-0.2)	Other cCREs	del_1	16648
+mean_skew	[-0.5,-0.2)	Other cCREs	del_10plus	6318
+mean_skew	[-0.5,-0.2)	Other cCREs	del_2	4950
+mean_skew	[-0.5,-0.2)	Other cCREs	del_3	4289
+mean_skew	[-0.5,-0.2)	Other cCREs	del_4	3907
+mean_skew	[-0.5,-0.2)	Other cCREs	del_5	1773
+mean_skew	[-0.5,-0.2)	Other cCREs	del_6	1440
+mean_skew	[-0.5,-0.2)	Other cCREs	del_7	1215
+mean_skew	[-0.5,-0.2)	Other cCREs	del_8	1371
+mean_skew	[-0.5,-0.2)	Other cCREs	del_9	686
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_1	5796
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_10plus	8299
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_2	2168
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_3	1178
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_4	1534
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_5	685
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_6	755
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_7	435
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_8	604
+mean_skew	[-0.5,-0.2)	Other cCREs	ins_9	823
+mean_skew	[-0.5,-0.2)	PLS	del_1	3331
+mean_skew	[-0.5,-0.2)	PLS	del_10plus	1560
+mean_skew	[-0.5,-0.2)	PLS	del_2	582
+mean_skew	[-0.5,-0.2)	PLS	del_3	508
+mean_skew	[-0.5,-0.2)	PLS	del_4	339
+mean_skew	[-0.5,-0.2)	PLS	del_5	235
+mean_skew	[-0.5,-0.2)	PLS	del_6	234
+mean_skew	[-0.5,-0.2)	PLS	del_7	176
+mean_skew	[-0.5,-0.2)	PLS	del_8	200
+mean_skew	[-0.5,-0.2)	PLS	del_9	127
+mean_skew	[-0.5,-0.2)	PLS	ins_1	1667
+mean_skew	[-0.5,-0.2)	PLS	ins_10plus	2061
+mean_skew	[-0.5,-0.2)	PLS	ins_2	543
+mean_skew	[-0.5,-0.2)	PLS	ins_3	317
+mean_skew	[-0.5,-0.2)	PLS	ins_4	346
+mean_skew	[-0.5,-0.2)	PLS	ins_5	214
+mean_skew	[-0.5,-0.2)	PLS	ins_6	258
+mean_skew	[-0.5,-0.2)	PLS	ins_7	189
+mean_skew	[-0.5,-0.2)	PLS	ins_8	204
+mean_skew	[-0.5,-0.2)	PLS	ins_9	285
+mean_skew	[-0.5,-0.2)	dELS	del_1	51362
+mean_skew	[-0.5,-0.2)	dELS	del_10plus	17164
+mean_skew	[-0.5,-0.2)	dELS	del_2	14787
+mean_skew	[-0.5,-0.2)	dELS	del_3	12772
+mean_skew	[-0.5,-0.2)	dELS	del_4	10880
+mean_skew	[-0.5,-0.2)	dELS	del_5	5185
+mean_skew	[-0.5,-0.2)	dELS	del_6	3969
+mean_skew	[-0.5,-0.2)	dELS	del_7	3332
+mean_skew	[-0.5,-0.2)	dELS	del_8	3426
+mean_skew	[-0.5,-0.2)	dELS	del_9	1958
+mean_skew	[-0.5,-0.2)	dELS	ins_1	18430
+mean_skew	[-0.5,-0.2)	dELS	ins_10plus	22398
+mean_skew	[-0.5,-0.2)	dELS	ins_2	6476
+mean_skew	[-0.5,-0.2)	dELS	ins_3	3383
+mean_skew	[-0.5,-0.2)	dELS	ins_4	4681
+mean_skew	[-0.5,-0.2)	dELS	ins_5	2027
+mean_skew	[-0.5,-0.2)	dELS	ins_6	2096
+mean_skew	[-0.5,-0.2)	dELS	ins_7	1406
+mean_skew	[-0.5,-0.2)	dELS	ins_8	1826
+mean_skew	[-0.5,-0.2)	dELS	ins_9	2508
+mean_skew	[-0.5,-0.2)	non-cCRE	del_1	105204
+mean_skew	[-0.5,-0.2)	non-cCRE	del_10plus	60032
+mean_skew	[-0.5,-0.2)	non-cCRE	del_2	35152
+mean_skew	[-0.5,-0.2)	non-cCRE	del_3	36093
+mean_skew	[-0.5,-0.2)	non-cCRE	del_4	36517
+mean_skew	[-0.5,-0.2)	non-cCRE	del_5	22084
+mean_skew	[-0.5,-0.2)	non-cCRE	del_6	15290
+mean_skew	[-0.5,-0.2)	non-cCRE	del_7	14003
+mean_skew	[-0.5,-0.2)	non-cCRE	del_8	13884
+mean_skew	[-0.5,-0.2)	non-cCRE	del_9	7821
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_1	35220
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_10plus	88841
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_2	15076
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_3	7279
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_4	10049
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_5	5055
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_6	5140
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_7	3620
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_8	5167
+mean_skew	[-0.5,-0.2)	non-cCRE	ins_9	7130
+mean_skew	[-0.5,-0.2)	pELS	del_1	9065
+mean_skew	[-0.5,-0.2)	pELS	del_10plus	3597
+mean_skew	[-0.5,-0.2)	pELS	del_2	2481
+mean_skew	[-0.5,-0.2)	pELS	del_3	2160
+mean_skew	[-0.5,-0.2)	pELS	del_4	1753
+mean_skew	[-0.5,-0.2)	pELS	del_5	884
+mean_skew	[-0.5,-0.2)	pELS	del_6	801
+mean_skew	[-0.5,-0.2)	pELS	del_7	603
+mean_skew	[-0.5,-0.2)	pELS	del_8	642
+mean_skew	[-0.5,-0.2)	pELS	del_9	375
+mean_skew	[-0.5,-0.2)	pELS	ins_1	4032
+mean_skew	[-0.5,-0.2)	pELS	ins_10plus	4728
+mean_skew	[-0.5,-0.2)	pELS	ins_2	1249
+mean_skew	[-0.5,-0.2)	pELS	ins_3	794
+mean_skew	[-0.5,-0.2)	pELS	ins_4	912
+mean_skew	[-0.5,-0.2)	pELS	ins_5	406
+mean_skew	[-0.5,-0.2)	pELS	ins_6	483
+mean_skew	[-0.5,-0.2)	pELS	ins_7	330
+mean_skew	[-0.5,-0.2)	pELS	ins_8	405
+mean_skew	[-0.5,-0.2)	pELS	ins_9	563
+mean_skew	[-1.0,-0.5)	Other cCREs	del_1	4054
+mean_skew	[-1.0,-0.5)	Other cCREs	del_10plus	1618
+mean_skew	[-1.0,-0.5)	Other cCREs	del_2	1113
+mean_skew	[-1.0,-0.5)	Other cCREs	del_3	766
+mean_skew	[-1.0,-0.5)	Other cCREs	del_4	675
+mean_skew	[-1.0,-0.5)	Other cCREs	del_5	295
+mean_skew	[-1.0,-0.5)	Other cCREs	del_6	311
+mean_skew	[-1.0,-0.5)	Other cCREs	del_7	226
+mean_skew	[-1.0,-0.5)	Other cCREs	del_8	252
+mean_skew	[-1.0,-0.5)	Other cCREs	del_9	162
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_1	1248
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_10plus	419
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_2	430
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_3	176
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_4	286
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_5	87
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_6	94
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_7	47
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_8	86
+mean_skew	[-1.0,-0.5)	Other cCREs	ins_9	63
+mean_skew	[-1.0,-0.5)	PLS	del_1	1116
+mean_skew	[-1.0,-0.5)	PLS	del_10plus	795
+mean_skew	[-1.0,-0.5)	PLS	del_2	191
+mean_skew	[-1.0,-0.5)	PLS	del_3	184
+mean_skew	[-1.0,-0.5)	PLS	del_4	115
+mean_skew	[-1.0,-0.5)	PLS	del_5	91
+mean_skew	[-1.0,-0.5)	PLS	del_6	102
+mean_skew	[-1.0,-0.5)	PLS	del_7	70
+mean_skew	[-1.0,-0.5)	PLS	del_8	70
+mean_skew	[-1.0,-0.5)	PLS	del_9	63
+mean_skew	[-1.0,-0.5)	PLS	ins_1	515
+mean_skew	[-1.0,-0.5)	PLS	ins_10plus	268
+mean_skew	[-1.0,-0.5)	PLS	ins_2	133
+mean_skew	[-1.0,-0.5)	PLS	ins_3	60
+mean_skew	[-1.0,-0.5)	PLS	ins_4	65
+mean_skew	[-1.0,-0.5)	PLS	ins_5	36
+mean_skew	[-1.0,-0.5)	PLS	ins_6	37
+mean_skew	[-1.0,-0.5)	PLS	ins_7	23
+mean_skew	[-1.0,-0.5)	PLS	ins_8	31
+mean_skew	[-1.0,-0.5)	PLS	ins_9	30
+mean_skew	[-1.0,-0.5)	dELS	del_1	12884
+mean_skew	[-1.0,-0.5)	dELS	del_10plus	4796
+mean_skew	[-1.0,-0.5)	dELS	del_2	3721
+mean_skew	[-1.0,-0.5)	dELS	del_3	2522
+mean_skew	[-1.0,-0.5)	dELS	del_4	2105
+mean_skew	[-1.0,-0.5)	dELS	del_5	943
+mean_skew	[-1.0,-0.5)	dELS	del_6	925
+mean_skew	[-1.0,-0.5)	dELS	del_7	756
+mean_skew	[-1.0,-0.5)	dELS	del_8	681
+mean_skew	[-1.0,-0.5)	dELS	del_9	442
+mean_skew	[-1.0,-0.5)	dELS	ins_1	4260
+mean_skew	[-1.0,-0.5)	dELS	ins_10plus	1303
+mean_skew	[-1.0,-0.5)	dELS	ins_2	1297
+mean_skew	[-1.0,-0.5)	dELS	ins_3	661
+mean_skew	[-1.0,-0.5)	dELS	ins_4	730
+mean_skew	[-1.0,-0.5)	dELS	ins_5	281
+mean_skew	[-1.0,-0.5)	dELS	ins_6	255
+mean_skew	[-1.0,-0.5)	dELS	ins_7	180
+mean_skew	[-1.0,-0.5)	dELS	ins_8	188
+mean_skew	[-1.0,-0.5)	dELS	ins_9	185
+mean_skew	[-1.0,-0.5)	non-cCRE	del_1	16868
+mean_skew	[-1.0,-0.5)	non-cCRE	del_10plus	8563
+mean_skew	[-1.0,-0.5)	non-cCRE	del_2	4128
+mean_skew	[-1.0,-0.5)	non-cCRE	del_3	3402
+mean_skew	[-1.0,-0.5)	non-cCRE	del_4	2848
+mean_skew	[-1.0,-0.5)	non-cCRE	del_5	1437
+mean_skew	[-1.0,-0.5)	non-cCRE	del_6	1601
+mean_skew	[-1.0,-0.5)	non-cCRE	del_7	1401
+mean_skew	[-1.0,-0.5)	non-cCRE	del_8	1458
+mean_skew	[-1.0,-0.5)	non-cCRE	del_9	826
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_1	4553
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_10plus	2261
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_2	1990
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_3	923
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_4	990
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_5	426
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_6	412
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_7	254
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_8	289
+mean_skew	[-1.0,-0.5)	non-cCRE	ins_9	281
+mean_skew	[-1.0,-0.5)	pELS	del_1	2267
+mean_skew	[-1.0,-0.5)	pELS	del_10plus	1154
+mean_skew	[-1.0,-0.5)	pELS	del_2	631
+mean_skew	[-1.0,-0.5)	pELS	del_3	492
+mean_skew	[-1.0,-0.5)	pELS	del_4	351
+mean_skew	[-1.0,-0.5)	pELS	del_5	172
+mean_skew	[-1.0,-0.5)	pELS	del_6	182
+mean_skew	[-1.0,-0.5)	pELS	del_7	120
+mean_skew	[-1.0,-0.5)	pELS	del_8	164
+mean_skew	[-1.0,-0.5)	pELS	del_9	85
+mean_skew	[-1.0,-0.5)	pELS	ins_1	887
+mean_skew	[-1.0,-0.5)	pELS	ins_10plus	326
+mean_skew	[-1.0,-0.5)	pELS	ins_2	266
+mean_skew	[-1.0,-0.5)	pELS	ins_3	148
+mean_skew	[-1.0,-0.5)	pELS	ins_4	119
+mean_skew	[-1.0,-0.5)	pELS	ins_5	75
+mean_skew	[-1.0,-0.5)	pELS	ins_6	69
+mean_skew	[-1.0,-0.5)	pELS	ins_7	31
+mean_skew	[-1.0,-0.5)	pELS	ins_8	30
+mean_skew	[-1.0,-0.5)	pELS	ins_9	48
+mean_skew	[-1.5,-1.0)	Other cCREs	del_1	893
+mean_skew	[-1.5,-1.0)	Other cCREs	del_10plus	435
+mean_skew	[-1.5,-1.0)	Other cCREs	del_2	222
+mean_skew	[-1.5,-1.0)	Other cCREs	del_3	156
+mean_skew	[-1.5,-1.0)	Other cCREs	del_4	126
+mean_skew	[-1.5,-1.0)	Other cCREs	del_5	62
+mean_skew	[-1.5,-1.0)	Other cCREs	del_6	81
+mean_skew	[-1.5,-1.0)	Other cCREs	del_7	51
+mean_skew	[-1.5,-1.0)	Other cCREs	del_8	54
+mean_skew	[-1.5,-1.0)	Other cCREs	del_9	36
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_1	221
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_10plus	40
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_2	91
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_3	41
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_4	47
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_5	16
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_6	10
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_7	6
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_8	11
+mean_skew	[-1.5,-1.0)	Other cCREs	ins_9	10
+mean_skew	[-1.5,-1.0)	PLS	del_1	277
+mean_skew	[-1.5,-1.0)	PLS	del_10plus	234
+mean_skew	[-1.5,-1.0)	PLS	del_2	53
+mean_skew	[-1.5,-1.0)	PLS	del_3	43
+mean_skew	[-1.5,-1.0)	PLS	del_4	41
+mean_skew	[-1.5,-1.0)	PLS	del_5	26
+mean_skew	[-1.5,-1.0)	PLS	del_6	35
+mean_skew	[-1.5,-1.0)	PLS	del_7	21
+mean_skew	[-1.5,-1.0)	PLS	del_8	15
+mean_skew	[-1.5,-1.0)	PLS	del_9	16
+mean_skew	[-1.5,-1.0)	PLS	ins_1	80
+mean_skew	[-1.5,-1.0)	PLS	ins_10plus	17
+mean_skew	[-1.5,-1.0)	PLS	ins_2	25
+mean_skew	[-1.5,-1.0)	PLS	ins_3	11
+mean_skew	[-1.5,-1.0)	PLS	ins_4	11
+mean_skew	[-1.5,-1.0)	PLS	ins_5	9
+mean_skew	[-1.5,-1.0)	PLS	ins_6	4
+mean_skew	[-1.5,-1.0)	PLS	ins_7	2
+mean_skew	[-1.5,-1.0)	PLS	ins_8	3
+mean_skew	[-1.5,-1.0)	PLS	ins_9	2
+mean_skew	[-1.5,-1.0)	dELS	del_1	2798
+mean_skew	[-1.5,-1.0)	dELS	del_10plus	1240
+mean_skew	[-1.5,-1.0)	dELS	del_2	775
+mean_skew	[-1.5,-1.0)	dELS	del_3	491
+mean_skew	[-1.5,-1.0)	dELS	del_4	473
+mean_skew	[-1.5,-1.0)	dELS	del_5	180
+mean_skew	[-1.5,-1.0)	dELS	del_6	260
+mean_skew	[-1.5,-1.0)	dELS	del_7	151
+mean_skew	[-1.5,-1.0)	dELS	del_8	187
+mean_skew	[-1.5,-1.0)	dELS	del_9	115
+mean_skew	[-1.5,-1.0)	dELS	ins_1	793
+mean_skew	[-1.5,-1.0)	dELS	ins_10plus	128
+mean_skew	[-1.5,-1.0)	dELS	ins_2	236
+mean_skew	[-1.5,-1.0)	dELS	ins_3	115
+mean_skew	[-1.5,-1.0)	dELS	ins_4	127
+mean_skew	[-1.5,-1.0)	dELS	ins_5	60
+mean_skew	[-1.5,-1.0)	dELS	ins_6	45
+mean_skew	[-1.5,-1.0)	dELS	ins_7	23
+mean_skew	[-1.5,-1.0)	dELS	ins_8	30
+mean_skew	[-1.5,-1.0)	dELS	ins_9	27
+mean_skew	[-1.5,-1.0)	non-cCRE	del_1	3330
+mean_skew	[-1.5,-1.0)	non-cCRE	del_10plus	1439
+mean_skew	[-1.5,-1.0)	non-cCRE	del_2	700
+mean_skew	[-1.5,-1.0)	non-cCRE	del_3	567
+mean_skew	[-1.5,-1.0)	non-cCRE	del_4	474
+mean_skew	[-1.5,-1.0)	non-cCRE	del_5	204
+mean_skew	[-1.5,-1.0)	non-cCRE	del_6	303
+mean_skew	[-1.5,-1.0)	non-cCRE	del_7	175
+mean_skew	[-1.5,-1.0)	non-cCRE	del_8	187
+mean_skew	[-1.5,-1.0)	non-cCRE	del_9	151
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_1	839
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_10plus	142
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_2	375
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_3	156
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_4	182
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_5	50
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_6	69
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_7	27
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_8	28
+mean_skew	[-1.5,-1.0)	non-cCRE	ins_9	29
+mean_skew	[-1.5,-1.0)	pELS	del_1	452
+mean_skew	[-1.5,-1.0)	pELS	del_10plus	290
+mean_skew	[-1.5,-1.0)	pELS	del_2	149
+mean_skew	[-1.5,-1.0)	pELS	del_3	117
+mean_skew	[-1.5,-1.0)	pELS	del_4	84
+mean_skew	[-1.5,-1.0)	pELS	del_5	36
+mean_skew	[-1.5,-1.0)	pELS	del_6	50
+mean_skew	[-1.5,-1.0)	pELS	del_7	25
+mean_skew	[-1.5,-1.0)	pELS	del_8	35
+mean_skew	[-1.5,-1.0)	pELS	del_9	27
+mean_skew	[-1.5,-1.0)	pELS	ins_1	174
+mean_skew	[-1.5,-1.0)	pELS	ins_10plus	21
+mean_skew	[-1.5,-1.0)	pELS	ins_2	44
+mean_skew	[-1.5,-1.0)	pELS	ins_3	30
+mean_skew	[-1.5,-1.0)	pELS	ins_4	34
+mean_skew	[-1.5,-1.0)	pELS	ins_5	5
+mean_skew	[-1.5,-1.0)	pELS	ins_6	6
+mean_skew	[-1.5,-1.0)	pELS	ins_7	6
+mean_skew	[-1.5,-1.0)	pELS	ins_8	2
+mean_skew	[-1.5,-1.0)	pELS	ins_9	5
+mean_skew	[0.05,0.2)	Other cCREs	del_1	71757
+mean_skew	[0.05,0.2)	Other cCREs	del_10plus	53256
+mean_skew	[0.05,0.2)	Other cCREs	del_2	34148
+mean_skew	[0.05,0.2)	Other cCREs	del_3	22484
+mean_skew	[0.05,0.2)	Other cCREs	del_4	31551
+mean_skew	[0.05,0.2)	Other cCREs	del_5	11755
+mean_skew	[0.05,0.2)	Other cCREs	del_6	11241
+mean_skew	[0.05,0.2)	Other cCREs	del_7	6059
+mean_skew	[0.05,0.2)	Other cCREs	del_8	8786
+mean_skew	[0.05,0.2)	Other cCREs	del_9	9479
+mean_skew	[0.05,0.2)	Other cCREs	ins_1	77808
+mean_skew	[0.05,0.2)	Other cCREs	ins_10plus	34877
+mean_skew	[0.05,0.2)	Other cCREs	ins_2	17784
+mean_skew	[0.05,0.2)	Other cCREs	ins_3	15331
+mean_skew	[0.05,0.2)	Other cCREs	ins_4	11539
+mean_skew	[0.05,0.2)	Other cCREs	ins_5	5063
+mean_skew	[0.05,0.2)	Other cCREs	ins_6	4892
+mean_skew	[0.05,0.2)	Other cCREs	ins_7	3498
+mean_skew	[0.05,0.2)	Other cCREs	ins_8	7951
+mean_skew	[0.05,0.2)	Other cCREs	ins_9	1458
+mean_skew	[0.05,0.2)	PLS	del_1	7692
+mean_skew	[0.05,0.2)	PLS	del_10plus	3308
+mean_skew	[0.05,0.2)	PLS	del_2	3241
+mean_skew	[0.05,0.2)	PLS	del_3	2352
+mean_skew	[0.05,0.2)	PLS	del_4	2185
+mean_skew	[0.05,0.2)	PLS	del_5	984
+mean_skew	[0.05,0.2)	PLS	del_6	929
+mean_skew	[0.05,0.2)	PLS	del_7	493
+mean_skew	[0.05,0.2)	PLS	del_8	545
+mean_skew	[0.05,0.2)	PLS	del_9	715
+mean_skew	[0.05,0.2)	PLS	ins_1	6981
+mean_skew	[0.05,0.2)	PLS	ins_10plus	2922
+mean_skew	[0.05,0.2)	PLS	ins_2	1317
+mean_skew	[0.05,0.2)	PLS	ins_3	923
+mean_skew	[0.05,0.2)	PLS	ins_4	674
+mean_skew	[0.05,0.2)	PLS	ins_5	691
+mean_skew	[0.05,0.2)	PLS	ins_6	885
+mean_skew	[0.05,0.2)	PLS	ins_7	365
+mean_skew	[0.05,0.2)	PLS	ins_8	452
+mean_skew	[0.05,0.2)	PLS	ins_9	195
+mean_skew	[0.05,0.2)	dELS	del_1	194609
+mean_skew	[0.05,0.2)	dELS	del_10plus	110050
+mean_skew	[0.05,0.2)	dELS	del_2	99233
+mean_skew	[0.05,0.2)	dELS	del_3	62021
+mean_skew	[0.05,0.2)	dELS	del_4	79252
+mean_skew	[0.05,0.2)	dELS	del_5	30138
+mean_skew	[0.05,0.2)	dELS	del_6	26596
+mean_skew	[0.05,0.2)	dELS	del_7	15812
+mean_skew	[0.05,0.2)	dELS	del_8	17281
+mean_skew	[0.05,0.2)	dELS	del_9	21317
+mean_skew	[0.05,0.2)	dELS	ins_1	208386
+mean_skew	[0.05,0.2)	dELS	ins_10plus	70642
+mean_skew	[0.05,0.2)	dELS	ins_2	42539
+mean_skew	[0.05,0.2)	dELS	ins_3	35212
+mean_skew	[0.05,0.2)	dELS	ins_4	24561
+mean_skew	[0.05,0.2)	dELS	ins_5	11501
+mean_skew	[0.05,0.2)	dELS	ins_6	12026
+mean_skew	[0.05,0.2)	dELS	ins_7	8288
+mean_skew	[0.05,0.2)	dELS	ins_8	15323
+mean_skew	[0.05,0.2)	dELS	ins_9	3052
+mean_skew	[0.05,0.2)	non-cCRE	del_1	798647
+mean_skew	[0.05,0.2)	non-cCRE	del_10plus	608348
+mean_skew	[0.05,0.2)	non-cCRE	del_2	344145
+mean_skew	[0.05,0.2)	non-cCRE	del_3	222704
+mean_skew	[0.05,0.2)	non-cCRE	del_4	340876
+mean_skew	[0.05,0.2)	non-cCRE	del_5	144359
+mean_skew	[0.05,0.2)	non-cCRE	del_6	132859
+mean_skew	[0.05,0.2)	non-cCRE	del_7	73453
+mean_skew	[0.05,0.2)	non-cCRE	del_8	93496
+mean_skew	[0.05,0.2)	non-cCRE	del_9	106858
+mean_skew	[0.05,0.2)	non-cCRE	ins_1	1026875
+mean_skew	[0.05,0.2)	non-cCRE	ins_10plus	524825
+mean_skew	[0.05,0.2)	non-cCRE	ins_2	258030
+mean_skew	[0.05,0.2)	non-cCRE	ins_3	231839
+mean_skew	[0.05,0.2)	non-cCRE	ins_4	141876
+mean_skew	[0.05,0.2)	non-cCRE	ins_5	77373
+mean_skew	[0.05,0.2)	non-cCRE	ins_6	65795
+mean_skew	[0.05,0.2)	non-cCRE	ins_7	53146
+mean_skew	[0.05,0.2)	non-cCRE	ins_8	90084
+mean_skew	[0.05,0.2)	non-cCRE	ins_9	22332
+mean_skew	[0.05,0.2)	pELS	del_1	33656
+mean_skew	[0.05,0.2)	pELS	del_10plus	18921
+mean_skew	[0.05,0.2)	pELS	del_2	17948
+mean_skew	[0.05,0.2)	pELS	del_3	12198
+mean_skew	[0.05,0.2)	pELS	del_4	14866
+mean_skew	[0.05,0.2)	pELS	del_5	5641
+mean_skew	[0.05,0.2)	pELS	del_6	5129
+mean_skew	[0.05,0.2)	pELS	del_7	2867
+mean_skew	[0.05,0.2)	pELS	del_8	3094
+mean_skew	[0.05,0.2)	pELS	del_9	3702
+mean_skew	[0.05,0.2)	pELS	ins_1	37454
+mean_skew	[0.05,0.2)	pELS	ins_10plus	11940
+mean_skew	[0.05,0.2)	pELS	ins_2	7326
+mean_skew	[0.05,0.2)	pELS	ins_3	5754
+mean_skew	[0.05,0.2)	pELS	ins_4	4184
+mean_skew	[0.05,0.2)	pELS	ins_5	2175
+mean_skew	[0.05,0.2)	pELS	ins_6	2413
+mean_skew	[0.05,0.2)	pELS	ins_7	1566
+mean_skew	[0.05,0.2)	pELS	ins_8	2603
+mean_skew	[0.05,0.2)	pELS	ins_9	674
+mean_skew	[0.2,0.5)	Other cCREs	del_1	11389
+mean_skew	[0.2,0.5)	Other cCREs	del_10plus	14021
+mean_skew	[0.2,0.5)	Other cCREs	del_2	4877
+mean_skew	[0.2,0.5)	Other cCREs	del_3	2521
+mean_skew	[0.2,0.5)	Other cCREs	del_4	3109
+mean_skew	[0.2,0.5)	Other cCREs	del_5	1352
+mean_skew	[0.2,0.5)	Other cCREs	del_6	1200
+mean_skew	[0.2,0.5)	Other cCREs	del_7	855
+mean_skew	[0.2,0.5)	Other cCREs	del_8	1102
+mean_skew	[0.2,0.5)	Other cCREs	del_9	1424
+mean_skew	[0.2,0.5)	Other cCREs	ins_1	5983
+mean_skew	[0.2,0.5)	Other cCREs	ins_10plus	4602
+mean_skew	[0.2,0.5)	Other cCREs	ins_2	2272
+mean_skew	[0.2,0.5)	Other cCREs	ins_3	1754
+mean_skew	[0.2,0.5)	Other cCREs	ins_4	1634
+mean_skew	[0.2,0.5)	Other cCREs	ins_5	784
+mean_skew	[0.2,0.5)	Other cCREs	ins_6	1065
+mean_skew	[0.2,0.5)	Other cCREs	ins_7	557
+mean_skew	[0.2,0.5)	Other cCREs	ins_8	1009
+mean_skew	[0.2,0.5)	Other cCREs	ins_9	237
+mean_skew	[0.2,0.5)	PLS	del_1	2060
+mean_skew	[0.2,0.5)	PLS	del_10plus	1774
+mean_skew	[0.2,0.5)	PLS	del_2	654
+mean_skew	[0.2,0.5)	PLS	del_3	468
+mean_skew	[0.2,0.5)	PLS	del_4	422
+mean_skew	[0.2,0.5)	PLS	del_5	212
+mean_skew	[0.2,0.5)	PLS	del_6	197
+mean_skew	[0.2,0.5)	PLS	del_7	169
+mean_skew	[0.2,0.5)	PLS	del_8	161
+mean_skew	[0.2,0.5)	PLS	del_9	244
+mean_skew	[0.2,0.5)	PLS	ins_1	1290
+mean_skew	[0.2,0.5)	PLS	ins_10plus	1665
+mean_skew	[0.2,0.5)	PLS	ins_2	348
+mean_skew	[0.2,0.5)	PLS	ins_3	224
+mean_skew	[0.2,0.5)	PLS	ins_4	249
+mean_skew	[0.2,0.5)	PLS	ins_5	254
+mean_skew	[0.2,0.5)	PLS	ins_6	337
+mean_skew	[0.2,0.5)	PLS	ins_7	90
+mean_skew	[0.2,0.5)	PLS	ins_8	175
+mean_skew	[0.2,0.5)	PLS	ins_9	68
+mean_skew	[0.2,0.5)	dELS	del_1	34795
+mean_skew	[0.2,0.5)	dELS	del_10plus	37990
+mean_skew	[0.2,0.5)	dELS	del_2	15426
+mean_skew	[0.2,0.5)	dELS	del_3	7971
+mean_skew	[0.2,0.5)	dELS	del_4	8947
+mean_skew	[0.2,0.5)	dELS	del_5	3945
+mean_skew	[0.2,0.5)	dELS	del_6	3633
+mean_skew	[0.2,0.5)	dELS	del_7	2526
+mean_skew	[0.2,0.5)	dELS	del_8	2796
+mean_skew	[0.2,0.5)	dELS	del_9	4280
+mean_skew	[0.2,0.5)	dELS	ins_1	20081
+mean_skew	[0.2,0.5)	dELS	ins_10plus	12273
+mean_skew	[0.2,0.5)	dELS	ins_2	6206
+mean_skew	[0.2,0.5)	dELS	ins_3	4541
+mean_skew	[0.2,0.5)	dELS	ins_4	4588
+mean_skew	[0.2,0.5)	dELS	ins_5	2244
+mean_skew	[0.2,0.5)	dELS	ins_6	2798
+mean_skew	[0.2,0.5)	dELS	ins_7	1418
+mean_skew	[0.2,0.5)	dELS	ins_8	2478
+mean_skew	[0.2,0.5)	dELS	ins_9	735
+mean_skew	[0.2,0.5)	non-cCRE	del_1	93049
+mean_skew	[0.2,0.5)	non-cCRE	del_10plus	122966
+mean_skew	[0.2,0.5)	non-cCRE	del_2	38468
+mean_skew	[0.2,0.5)	non-cCRE	del_3	19321
+mean_skew	[0.2,0.5)	non-cCRE	del_4	23177
+mean_skew	[0.2,0.5)	non-cCRE	del_5	11233
+mean_skew	[0.2,0.5)	non-cCRE	del_6	9971
+mean_skew	[0.2,0.5)	non-cCRE	del_7	7000
+mean_skew	[0.2,0.5)	non-cCRE	del_8	8689
+mean_skew	[0.2,0.5)	non-cCRE	del_9	11538
+mean_skew	[0.2,0.5)	non-cCRE	ins_1	48906
+mean_skew	[0.2,0.5)	non-cCRE	ins_10plus	41391
+mean_skew	[0.2,0.5)	non-cCRE	ins_2	20381
+mean_skew	[0.2,0.5)	non-cCRE	ins_3	16850
+mean_skew	[0.2,0.5)	non-cCRE	ins_4	15683
+mean_skew	[0.2,0.5)	non-cCRE	ins_5	9237
+mean_skew	[0.2,0.5)	non-cCRE	ins_6	8952
+mean_skew	[0.2,0.5)	non-cCRE	ins_7	6082
+mean_skew	[0.2,0.5)	non-cCRE	ins_8	8472
+mean_skew	[0.2,0.5)	non-cCRE	ins_9	3285
+mean_skew	[0.2,0.5)	pELS	del_1	6865
+mean_skew	[0.2,0.5)	pELS	del_10plus	7454
+mean_skew	[0.2,0.5)	pELS	del_2	2923
+mean_skew	[0.2,0.5)	pELS	del_3	1659
+mean_skew	[0.2,0.5)	pELS	del_4	1714
+mean_skew	[0.2,0.5)	pELS	del_5	846
+mean_skew	[0.2,0.5)	pELS	del_6	752
+mean_skew	[0.2,0.5)	pELS	del_7	504
+mean_skew	[0.2,0.5)	pELS	del_8	614
+mean_skew	[0.2,0.5)	pELS	del_9	863
+mean_skew	[0.2,0.5)	pELS	ins_1	4705
+mean_skew	[0.2,0.5)	pELS	ins_10plus	2929
+mean_skew	[0.2,0.5)	pELS	ins_2	1419
+mean_skew	[0.2,0.5)	pELS	ins_3	924
+mean_skew	[0.2,0.5)	pELS	ins_4	893
+mean_skew	[0.2,0.5)	pELS	ins_5	551
+mean_skew	[0.2,0.5)	pELS	ins_6	680
+mean_skew	[0.2,0.5)	pELS	ins_7	348
+mean_skew	[0.2,0.5)	pELS	ins_8	480
+mean_skew	[0.2,0.5)	pELS	ins_9	168
+mean_skew	[0.5,1.0)	Other cCREs	del_1	2251
+mean_skew	[0.5,1.0)	Other cCREs	del_10plus	1073
+mean_skew	[0.5,1.0)	Other cCREs	del_2	939
+mean_skew	[0.5,1.0)	Other cCREs	del_3	377
+mean_skew	[0.5,1.0)	Other cCREs	del_4	363
+mean_skew	[0.5,1.0)	Other cCREs	del_5	186
+mean_skew	[0.5,1.0)	Other cCREs	del_6	140
+mean_skew	[0.5,1.0)	Other cCREs	del_7	91
+mean_skew	[0.5,1.0)	Other cCREs	del_8	126
+mean_skew	[0.5,1.0)	Other cCREs	del_9	142
+mean_skew	[0.5,1.0)	Other cCREs	ins_1	937
+mean_skew	[0.5,1.0)	Other cCREs	ins_10plus	1457
+mean_skew	[0.5,1.0)	Other cCREs	ins_2	671
+mean_skew	[0.5,1.0)	Other cCREs	ins_3	307
+mean_skew	[0.5,1.0)	Other cCREs	ins_4	396
+mean_skew	[0.5,1.0)	Other cCREs	ins_5	153
+mean_skew	[0.5,1.0)	Other cCREs	ins_6	286
+mean_skew	[0.5,1.0)	Other cCREs	ins_7	127
+mean_skew	[0.5,1.0)	Other cCREs	ins_8	269
+mean_skew	[0.5,1.0)	Other cCREs	ins_9	66
+mean_skew	[0.5,1.0)	PLS	del_1	475
+mean_skew	[0.5,1.0)	PLS	del_10plus	273
+mean_skew	[0.5,1.0)	PLS	del_2	143
+mean_skew	[0.5,1.0)	PLS	del_3	75
+mean_skew	[0.5,1.0)	PLS	del_4	71
+mean_skew	[0.5,1.0)	PLS	del_5	27
+mean_skew	[0.5,1.0)	PLS	del_6	33
+mean_skew	[0.5,1.0)	PLS	del_7	21
+mean_skew	[0.5,1.0)	PLS	del_8	34
+mean_skew	[0.5,1.0)	PLS	del_9	26
+mean_skew	[0.5,1.0)	PLS	ins_1	212
+mean_skew	[0.5,1.0)	PLS	ins_10plus	550
+mean_skew	[0.5,1.0)	PLS	ins_2	94
+mean_skew	[0.5,1.0)	PLS	ins_3	43
+mean_skew	[0.5,1.0)	PLS	ins_4	50
+mean_skew	[0.5,1.0)	PLS	ins_5	53
+mean_skew	[0.5,1.0)	PLS	ins_6	65
+mean_skew	[0.5,1.0)	PLS	ins_7	18
+mean_skew	[0.5,1.0)	PLS	ins_8	33
+mean_skew	[0.5,1.0)	PLS	ins_9	11
+mean_skew	[0.5,1.0)	dELS	del_1	7771
+mean_skew	[0.5,1.0)	dELS	del_10plus	3473
+mean_skew	[0.5,1.0)	dELS	del_2	3153
+mean_skew	[0.5,1.0)	dELS	del_3	1226
+mean_skew	[0.5,1.0)	dELS	del_4	1182
+mean_skew	[0.5,1.0)	dELS	del_5	514
+mean_skew	[0.5,1.0)	dELS	del_6	472
+mean_skew	[0.5,1.0)	dELS	del_7	378
+mean_skew	[0.5,1.0)	dELS	del_8	352
+mean_skew	[0.5,1.0)	dELS	del_9	483
+mean_skew	[0.5,1.0)	dELS	ins_1	3341
+mean_skew	[0.5,1.0)	dELS	ins_10plus	3658
+mean_skew	[0.5,1.0)	dELS	ins_2	1753
+mean_skew	[0.5,1.0)	dELS	ins_3	870
+mean_skew	[0.5,1.0)	dELS	ins_4	1170
+mean_skew	[0.5,1.0)	dELS	ins_5	466
+mean_skew	[0.5,1.0)	dELS	ins_6	737
+mean_skew	[0.5,1.0)	dELS	ins_7	316
+mean_skew	[0.5,1.0)	dELS	ins_8	608
+mean_skew	[0.5,1.0)	dELS	ins_9	162
+mean_skew	[0.5,1.0)	non-cCRE	del_1	15556
+mean_skew	[0.5,1.0)	non-cCRE	del_10plus	6470
+mean_skew	[0.5,1.0)	non-cCRE	del_2	6247
+mean_skew	[0.5,1.0)	non-cCRE	del_3	2641
+mean_skew	[0.5,1.0)	non-cCRE	del_4	2402
+mean_skew	[0.5,1.0)	non-cCRE	del_5	1106
+mean_skew	[0.5,1.0)	non-cCRE	del_6	915
+mean_skew	[0.5,1.0)	non-cCRE	del_7	747
+mean_skew	[0.5,1.0)	non-cCRE	del_8	806
+mean_skew	[0.5,1.0)	non-cCRE	del_9	910
+mean_skew	[0.5,1.0)	non-cCRE	ins_1	6613
+mean_skew	[0.5,1.0)	non-cCRE	ins_10plus	7861
+mean_skew	[0.5,1.0)	non-cCRE	ins_2	3884
+mean_skew	[0.5,1.0)	non-cCRE	ins_3	2103
+mean_skew	[0.5,1.0)	non-cCRE	ins_4	2613
+mean_skew	[0.5,1.0)	non-cCRE	ins_5	1098
+mean_skew	[0.5,1.0)	non-cCRE	ins_6	1708
+mean_skew	[0.5,1.0)	non-cCRE	ins_7	803
+mean_skew	[0.5,1.0)	non-cCRE	ins_8	1442
+mean_skew	[0.5,1.0)	non-cCRE	ins_9	415
+mean_skew	[0.5,1.0)	pELS	del_1	1675
+mean_skew	[0.5,1.0)	pELS	del_10plus	815
+mean_skew	[0.5,1.0)	pELS	del_2	610
+mean_skew	[0.5,1.0)	pELS	del_3	265
+mean_skew	[0.5,1.0)	pELS	del_4	241
+mean_skew	[0.5,1.0)	pELS	del_5	120
+mean_skew	[0.5,1.0)	pELS	del_6	118
+mean_skew	[0.5,1.0)	pELS	del_7	80
+mean_skew	[0.5,1.0)	pELS	del_8	96
+mean_skew	[0.5,1.0)	pELS	del_9	133
+mean_skew	[0.5,1.0)	pELS	ins_1	787
+mean_skew	[0.5,1.0)	pELS	ins_10plus	902
+mean_skew	[0.5,1.0)	pELS	ins_2	377
+mean_skew	[0.5,1.0)	pELS	ins_3	192
+mean_skew	[0.5,1.0)	pELS	ins_4	271
+mean_skew	[0.5,1.0)	pELS	ins_5	153
+mean_skew	[0.5,1.0)	pELS	ins_6	164
+mean_skew	[0.5,1.0)	pELS	ins_7	73
+mean_skew	[0.5,1.0)	pELS	ins_8	106
+mean_skew	[0.5,1.0)	pELS	ins_9	30
+mean_skew	[1.0,1.5)	Other cCREs	del_1	391
+mean_skew	[1.0,1.5)	Other cCREs	del_10plus	93
+mean_skew	[1.0,1.5)	Other cCREs	del_2	136
+mean_skew	[1.0,1.5)	Other cCREs	del_3	46
+mean_skew	[1.0,1.5)	Other cCREs	del_4	55
+mean_skew	[1.0,1.5)	Other cCREs	del_5	18
+mean_skew	[1.0,1.5)	Other cCREs	del_6	29
+mean_skew	[1.0,1.5)	Other cCREs	del_7	16
+mean_skew	[1.0,1.5)	Other cCREs	del_8	13
+mean_skew	[1.0,1.5)	Other cCREs	del_9	12
+mean_skew	[1.0,1.5)	Other cCREs	ins_1	127
+mean_skew	[1.0,1.5)	Other cCREs	ins_10plus	364
+mean_skew	[1.0,1.5)	Other cCREs	ins_2	127
+mean_skew	[1.0,1.5)	Other cCREs	ins_3	41
+mean_skew	[1.0,1.5)	Other cCREs	ins_4	82
+mean_skew	[1.0,1.5)	Other cCREs	ins_5	25
+mean_skew	[1.0,1.5)	Other cCREs	ins_6	93
+mean_skew	[1.0,1.5)	Other cCREs	ins_7	15
+mean_skew	[1.0,1.5)	Other cCREs	ins_8	53
+mean_skew	[1.0,1.5)	Other cCREs	ins_9	4
+mean_skew	[1.0,1.5)	PLS	del_1	95
+mean_skew	[1.0,1.5)	PLS	del_10plus	30
+mean_skew	[1.0,1.5)	PLS	del_2	23
+mean_skew	[1.0,1.5)	PLS	del_3	5
+mean_skew	[1.0,1.5)	PLS	del_4	7
+mean_skew	[1.0,1.5)	PLS	del_5	5
+mean_skew	[1.0,1.5)	PLS	del_6	4
+mean_skew	[1.0,1.5)	PLS	del_7	6
+mean_skew	[1.0,1.5)	PLS	del_8	4
+mean_skew	[1.0,1.5)	PLS	del_9	2
+mean_skew	[1.0,1.5)	PLS	ins_1	29
+mean_skew	[1.0,1.5)	PLS	ins_10plus	60
+mean_skew	[1.0,1.5)	PLS	ins_2	16
+mean_skew	[1.0,1.5)	PLS	ins_3	6
+mean_skew	[1.0,1.5)	PLS	ins_4	9
+mean_skew	[1.0,1.5)	PLS	ins_5	13
+mean_skew	[1.0,1.5)	PLS	ins_6	30
+mean_skew	[1.0,1.5)	PLS	ins_7	5
+mean_skew	[1.0,1.5)	PLS	ins_8	7
+mean_skew	[1.0,1.5)	PLS	ins_9	3
+mean_skew	[1.0,1.5)	dELS	del_1	1379
+mean_skew	[1.0,1.5)	dELS	del_10plus	333
+mean_skew	[1.0,1.5)	dELS	del_2	544
+mean_skew	[1.0,1.5)	dELS	del_3	178
+mean_skew	[1.0,1.5)	dELS	del_4	171
+mean_skew	[1.0,1.5)	dELS	del_5	89
+mean_skew	[1.0,1.5)	dELS	del_6	57
+mean_skew	[1.0,1.5)	dELS	del_7	44
+mean_skew	[1.0,1.5)	dELS	del_8	51
+mean_skew	[1.0,1.5)	dELS	del_9	55
+mean_skew	[1.0,1.5)	dELS	ins_1	501
+mean_skew	[1.0,1.5)	dELS	ins_10plus	1051
+mean_skew	[1.0,1.5)	dELS	ins_2	415
+mean_skew	[1.0,1.5)	dELS	ins_3	147
+mean_skew	[1.0,1.5)	dELS	ins_4	320
+mean_skew	[1.0,1.5)	dELS	ins_5	117
+mean_skew	[1.0,1.5)	dELS	ins_6	277
+mean_skew	[1.0,1.5)	dELS	ins_7	69
+mean_skew	[1.0,1.5)	dELS	ins_8	171
+mean_skew	[1.0,1.5)	dELS	ins_9	27
+mean_skew	[1.0,1.5)	non-cCRE	del_1	2404
+mean_skew	[1.0,1.5)	non-cCRE	del_10plus	526
+mean_skew	[1.0,1.5)	non-cCRE	del_2	938
+mean_skew	[1.0,1.5)	non-cCRE	del_3	311
+mean_skew	[1.0,1.5)	non-cCRE	del_4	230
+mean_skew	[1.0,1.5)	non-cCRE	del_5	104
+mean_skew	[1.0,1.5)	non-cCRE	del_6	85
+mean_skew	[1.0,1.5)	non-cCRE	del_7	61
+mean_skew	[1.0,1.5)	non-cCRE	del_8	71
+mean_skew	[1.0,1.5)	non-cCRE	del_9	76
+mean_skew	[1.0,1.5)	non-cCRE	ins_1	885
+mean_skew	[1.0,1.5)	non-cCRE	ins_10plus	1775
+mean_skew	[1.0,1.5)	non-cCRE	ins_2	762
+mean_skew	[1.0,1.5)	non-cCRE	ins_3	277
+mean_skew	[1.0,1.5)	non-cCRE	ins_4	519
+mean_skew	[1.0,1.5)	non-cCRE	ins_5	185
+mean_skew	[1.0,1.5)	non-cCRE	ins_6	444
+mean_skew	[1.0,1.5)	non-cCRE	ins_7	92
+mean_skew	[1.0,1.5)	non-cCRE	ins_8	289
+mean_skew	[1.0,1.5)	non-cCRE	ins_9	53
+mean_skew	[1.0,1.5)	pELS	del_1	323
+mean_skew	[1.0,1.5)	pELS	del_10plus	86
+mean_skew	[1.0,1.5)	pELS	del_2	108
+mean_skew	[1.0,1.5)	pELS	del_3	46
+mean_skew	[1.0,1.5)	pELS	del_4	35
+mean_skew	[1.0,1.5)	pELS	del_5	18
+mean_skew	[1.0,1.5)	pELS	del_6	10
+mean_skew	[1.0,1.5)	pELS	del_7	17
+mean_skew	[1.0,1.5)	pELS	del_8	9
+mean_skew	[1.0,1.5)	pELS	del_9	12
+mean_skew	[1.0,1.5)	pELS	ins_1	143
+mean_skew	[1.0,1.5)	pELS	ins_10plus	246
+mean_skew	[1.0,1.5)	pELS	ins_2	71
+mean_skew	[1.0,1.5)	pELS	ins_3	41
+mean_skew	[1.0,1.5)	pELS	ins_4	58
+mean_skew	[1.0,1.5)	pELS	ins_5	33
+mean_skew	[1.0,1.5)	pELS	ins_6	60
+mean_skew	[1.0,1.5)	pELS	ins_7	10
+mean_skew	[1.0,1.5)	pELS	ins_8	23
+mean_skew	[1.0,1.5)	pELS	ins_9	16
+mean_skew	[1.5,Inf)	Other cCREs	del_1	101
+mean_skew	[1.5,Inf)	Other cCREs	del_10plus	31
+mean_skew	[1.5,Inf)	Other cCREs	del_2	33
+mean_skew	[1.5,Inf)	Other cCREs	del_3	18
+mean_skew	[1.5,Inf)	Other cCREs	del_4	14
+mean_skew	[1.5,Inf)	Other cCREs	del_5	6
+mean_skew	[1.5,Inf)	Other cCREs	del_6	2
+mean_skew	[1.5,Inf)	Other cCREs	del_7	3
+mean_skew	[1.5,Inf)	Other cCREs	del_8	8
+mean_skew	[1.5,Inf)	Other cCREs	del_9	5
+mean_skew	[1.5,Inf)	Other cCREs	ins_1	18
+mean_skew	[1.5,Inf)	Other cCREs	ins_10plus	84
+mean_skew	[1.5,Inf)	Other cCREs	ins_2	55
+mean_skew	[1.5,Inf)	Other cCREs	ins_3	18
+mean_skew	[1.5,Inf)	Other cCREs	ins_4	19
+mean_skew	[1.5,Inf)	Other cCREs	ins_5	7
+mean_skew	[1.5,Inf)	Other cCREs	ins_6	28
+mean_skew	[1.5,Inf)	Other cCREs	ins_7	7
+mean_skew	[1.5,Inf)	Other cCREs	ins_8	6
+mean_skew	[1.5,Inf)	Other cCREs	ins_9	1
+mean_skew	[1.5,Inf)	PLS	del_1	25
+mean_skew	[1.5,Inf)	PLS	del_10plus	4
+mean_skew	[1.5,Inf)	PLS	del_2	3
+mean_skew	[1.5,Inf)	PLS	del_3	5
+mean_skew	[1.5,Inf)	PLS	del_4	1
+mean_skew	[1.5,Inf)	PLS	del_5	1
+mean_skew	[1.5,Inf)	PLS	del_7	1
+mean_skew	[1.5,Inf)	PLS	ins_1	6
+mean_skew	[1.5,Inf)	PLS	ins_10plus	16
+mean_skew	[1.5,Inf)	PLS	ins_2	4
+mean_skew	[1.5,Inf)	PLS	ins_3	3
+mean_skew	[1.5,Inf)	PLS	ins_4	3
+mean_skew	[1.5,Inf)	PLS	ins_6	9
+mean_skew	[1.5,Inf)	PLS	ins_8	3
+mean_skew	[1.5,Inf)	dELS	del_1	374
+mean_skew	[1.5,Inf)	dELS	del_10plus	98
+mean_skew	[1.5,Inf)	dELS	del_2	155
+mean_skew	[1.5,Inf)	dELS	del_3	45
+mean_skew	[1.5,Inf)	dELS	del_4	35
+mean_skew	[1.5,Inf)	dELS	del_5	23
+mean_skew	[1.5,Inf)	dELS	del_6	26
+mean_skew	[1.5,Inf)	dELS	del_7	14
+mean_skew	[1.5,Inf)	dELS	del_8	8
+mean_skew	[1.5,Inf)	dELS	del_9	29
+mean_skew	[1.5,Inf)	dELS	ins_1	142
+mean_skew	[1.5,Inf)	dELS	ins_10plus	346
+mean_skew	[1.5,Inf)	dELS	ins_2	123
+mean_skew	[1.5,Inf)	dELS	ins_3	28
+mean_skew	[1.5,Inf)	dELS	ins_4	86
+mean_skew	[1.5,Inf)	dELS	ins_5	37
+mean_skew	[1.5,Inf)	dELS	ins_6	94
+mean_skew	[1.5,Inf)	dELS	ins_7	23
+mean_skew	[1.5,Inf)	dELS	ins_8	37
+mean_skew	[1.5,Inf)	dELS	ins_9	7
+mean_skew	[1.5,Inf)	non-cCRE	del_1	661
+mean_skew	[1.5,Inf)	non-cCRE	del_10plus	128
+mean_skew	[1.5,Inf)	non-cCRE	del_2	208
+mean_skew	[1.5,Inf)	non-cCRE	del_3	48
+mean_skew	[1.5,Inf)	non-cCRE	del_4	65
+mean_skew	[1.5,Inf)	non-cCRE	del_5	23
+mean_skew	[1.5,Inf)	non-cCRE	del_6	29
+mean_skew	[1.5,Inf)	non-cCRE	del_7	21
+mean_skew	[1.5,Inf)	non-cCRE	del_8	27
+mean_skew	[1.5,Inf)	non-cCRE	del_9	16
+mean_skew	[1.5,Inf)	non-cCRE	ins_1	166
+mean_skew	[1.5,Inf)	non-cCRE	ins_10plus	752
+mean_skew	[1.5,Inf)	non-cCRE	ins_2	267
+mean_skew	[1.5,Inf)	non-cCRE	ins_3	65
+mean_skew	[1.5,Inf)	non-cCRE	ins_4	153
+mean_skew	[1.5,Inf)	non-cCRE	ins_5	49
+mean_skew	[1.5,Inf)	non-cCRE	ins_6	168
+mean_skew	[1.5,Inf)	non-cCRE	ins_7	24
+mean_skew	[1.5,Inf)	non-cCRE	ins_8	102
+mean_skew	[1.5,Inf)	non-cCRE	ins_9	15
+mean_skew	[1.5,Inf)	pELS	del_1	85
+mean_skew	[1.5,Inf)	pELS	del_10plus	22
+mean_skew	[1.5,Inf)	pELS	del_2	33
+mean_skew	[1.5,Inf)	pELS	del_3	5
+mean_skew	[1.5,Inf)	pELS	del_4	8
+mean_skew	[1.5,Inf)	pELS	del_5	4
+mean_skew	[1.5,Inf)	pELS	del_6	8
+mean_skew	[1.5,Inf)	pELS	del_7	2
+mean_skew	[1.5,Inf)	pELS	del_8	4
+mean_skew	[1.5,Inf)	pELS	del_9	4
+mean_skew	[1.5,Inf)	pELS	ins_1	36
+mean_skew	[1.5,Inf)	pELS	ins_10plus	77
+mean_skew	[1.5,Inf)	pELS	ins_2	26
+mean_skew	[1.5,Inf)	pELS	ins_3	10
+mean_skew	[1.5,Inf)	pELS	ins_4	17
+mean_skew	[1.5,Inf)	pELS	ins_5	15
+mean_skew	[1.5,Inf)	pELS	ins_6	22
+mean_skew	[1.5,Inf)	pELS	ins_7	6
+mean_skew	[1.5,Inf)	pELS	ins_8	10
+mean_skew	[1.5,Inf)	pELS	ins_9	3

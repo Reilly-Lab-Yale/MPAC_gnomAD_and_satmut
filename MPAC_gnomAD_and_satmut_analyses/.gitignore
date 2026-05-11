@@ -1,0 +1,80 @@
+# Excel temp/lock files
+~$*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# R / RStudio
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Reference genomes
+data/reference_genomes/**/*.fa.gz
+data/reference_genomes/**/*.fa.gz.fai
+data/reference_genomes/**/*.fa.gz.gzi
+data/reference_genomes/**/*.fa.gz.dict
+data/reference_genomes/**/*.chrom.sizes
+data/reference_genomes/**/*.chromAlias.txt
+data/reference_genomes/**/md5sum.txt
+data/reference_genomes/**/CHECKSUMS
+
+# GENCODE source download (kept generated BEDs, ignore the raw GFF3)
+data/gencode_filtered_regions/gencode.v44.basic.annotation.gff3.gz
+
+# Zoonomia phyloP
+data/zoonomia_phylop/**/*.bigWig
+data/zoonomia_phylop/data_download/**
+
+# gnomAD genomes (would be large, downloaded externally)
+data/gnomAD_genomes_v3/*.vcf.gz
+data/gnomAD_genomes_v3/*.vcf.gz.tbi
+
+# gnomAD predictions (would be large, downloaded externally)
+data/gnomAD_snp_predictions/*.gz
+data/gnomAD_indels_predictions/*.gz
+data/gnomAD_roulette_predictions/*.gz
+
+# gnomAD per-chromosome intermediate summaries
+# (final aggregated files like gnomAD_snp_funnel.tsv are kept)
+data/gnomAD_snp_summaries/*_chr*.tsv
+data/gnomAD_indels_summaries/*_chr*.tsv
+data/gnomAD_vep_summaries/*_chr*.tsv
+
+# gnomAD miscellaneous downloads (TF ChIP, TF footprints)
+data/gnomAD_miscellaneous/**/*.bed.gz
+data/gnomAD_miscellaneous/**/*.bed.gz.tbi
+
+# Gene constraint metrics (downloaded via scripts)
+data/gene_constraint_metrics/**/*.gz
+data/gene_constraint_metrics/**/*.tsv.gz
+data/gene_constraint_metrics/**/*.txt.gz
+data/gene_constraint_metrics/**/*.xlsx
+
+# Gene expression catalogs (downloaded via scripts)
+data/gene_expression_catalogs/*.tsv.gz
+
+# ENCODE regulatory elements
+data/gene_regulatory_elements/*.bigWig
+data/gene_regulatory_elements/*.bed.gz
+data/gene_regulatory_elements/*.bed.gz.tbi
+
+# Saturation mutagenesis predictions (large VCFs)
+data/satmut_promoters_predictions/*.vcf.gz
+
+# Saturation mutagenesis preprocessed intermediates
+# Big regenerable subfolders (~11 GB total) — fully ignored
+data/satmut_promoters_preprocess/satmut_promoters_final/
+data/satmut_promoters_preprocess/satmut_promoters_final_base/
+data/satmut_promoters_preprocess/satmut_promoters_pred/
+data/satmut_promoters_preprocess/satmut_promoters_pred_phyloP/
+# In regions/, keep the size-aggregate .rds files, ignore per-chromosome BEDs
+data/satmut_promoters_preprocess/satmut_promoters_regions/*.bed
+# (final_dist/, final_prom/, gene_metadata/ kept in full)
+
+# Keep .gitignore-preserved directory stubs
+!**/.gitkeep

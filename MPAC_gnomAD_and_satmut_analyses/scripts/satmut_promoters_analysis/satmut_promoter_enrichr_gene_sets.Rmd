@@ -1,0 +1,274 @@
+---
+title: "EnrichR analysis of promoter groups in MPAC-satmut_promoters"
+author: "Stephen Rong"
+date: "2024-04-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r preamble}
+library(tidyverse)
+library(data.table)
+library(enrichR)
+library(scales)
+
+save_path <- "../../results/satmut_promoters_analysis/satmut_promoter_enrichr_gene_sets/"
+dir.create(save_path, recursive = TRUE, showWarnings = FALSE)
+
+# gene list input path (from overall_promoter notebook)
+genelist_path <- "../../results/satmut_promoters_analysis/satmut_promoters_overall_promoters/"
+
+websiteLive <- getOption("enrichR.live")
+
+if (websiteLive) {
+    listEnrichrSites()
+    setEnrichrSite("Enrichr") # Human genes
+}
+
+if (websiteLive) {
+    dbs <- listEnrichrDbs()
+    sort(dbs$libraryName)
+}
+
+top_ordered_genes_both <- as.vector(fread(paste0(genelist_path, "satmut_prom_genelist_both.txt"), header = F)$V1)
+top_ordered_genes_neg <- as.vector(fread(paste0(genelist_path, "satmut_prom_genelist_neg.txt"), header = F)$V1)
+top_ordered_genes_pos <- as.vector(fread(paste0(genelist_path, "satmut_prom_genelist_pos.txt"), header = F)$V1)
+top_ordered_genes_nonsig <- as.vector(fread(paste0(genelist_path, "satmut_prom_genelist_nonsig.txt"), header = F)$V1)
+top_ordered_genes_background <- as.vector(fread(paste0(genelist_path, "satmut_prom_genelist_background.txt"), header = F)$V1)
+```
+
+```{r enrichment}
+dbs <- c(
+  "GO_Biological_Process_2025", 
+  "Reactome_Pathways_2024", 
+  "MGI_Mammalian_Phenotype_Level_4_2024"
+)
+
+enriched <- list()
+if (websiteLive) {
+    enriched[["neg"]] <- enrichr(top_ordered_genes_neg, dbs, background = top_ordered_genes_background)
+    enriched[["pos"]] <- enrichr(top_ordered_genes_pos, dbs, background = top_ordered_genes_background)
+    enriched[["both"]] <- enrichr(top_ordered_genes_both, dbs, background = top_ordered_genes_background)
+}
+
+enriched <- map(enriched, function(x) {map(x, as_tibble)})
+```
+
+```{r visualize}
+# Clean up term labels
+clean_term <- function(term) {
+  str_remove(term, "\\s*\\(GO:\\d+\\)$") %>%
+    str_remove("\\s*R-HSA-\\d+$") %>%
+    str_remove("\\s*WP\\d+$") %>%
+    str_wrap(width = 50)
+}
+
+# Pretty database names for plot titles
+db_labels <- c(
+  "GO_Biological_Process_2025" = "GO Biological Process 2025",
+  "Reactome_Pathways_2024"     = "Reactome Pathways 2024",
+  "MGI_Mammalian_Phenotype_Level_4_2024" = "MGI Mammalian Phenotype Level 4 2024"
+)
+
+set_labels <- c(neg = "Negative ρ genes", pos = "Positive ρ genes", both = "Both (negative and positive) ρ genes")
+
+n_top <- 20
+
+for (set_name in names(enriched)) {
+  sig_all <- list()
+  for (db in names(enriched[[set_name]])) {
+    df <- enriched[[set_name]][[db]]
+    if (is.null(df) || nrow(df) == 0) next
+    df <- df %>%
+      mutate(
+        log10p = -log10(P.value),
+        Significance = case_when(
+          Adjusted.P.value < 0.05 ~ "FDR < 0.05",
+          Adjusted.P.value < 0.10 ~ "FDR < 0.10",
+          TRUE                    ~ "FDR ≥ 0.10"
+        ),
+        Significance = factor(Significance,
+                              levels = c("FDR < 0.05", "FDR < 0.10", "FDR ≥ 0.10")),
+        Term_clean = clean_term(Term)
+      ) %>%
+      arrange(P.value)
+    if (nrow(df) == 0) next
+
+    n_sig   <- sum(df$Significance == "FDR < 0.05")
+    n_suggestive <- sum(df$Significance == "FDR < 0.10")
+    df <- df %>%
+      slice_head(n = n_top) %>%
+      mutate(Term_clean = fct_reorder(Term_clean, log10p))
+    subtitle_text <- if (n_sig > 0 || n_suggestive > 0) {
+      parts <- c()
+      if (n_sig > 0)
+        parts <- c(parts, paste0(n_sig, " with FDR < 0.05"))
+      if (n_suggestive > 0)
+        parts <- c(parts, paste0(n_suggestive, " with FDR < 0.10"))
+      paste(parts, collapse = "; ")
+    } else {
+      "No terms with FDR < 0.10"
+    }
+
+    sig_colors <- c(both = "#984ea3", neg = "#fc8d62", pos = "#8da0cb")
+    mid_colors <- c(both = "#c9a5d6", neg = "#fdc6a1", pos = "#c6d0e5")
+    fill_values <- c(
+      "FDR < 0.05" = sig_colors[[set_name]],
+      "FDR < 0.10" = mid_colors[[set_name]],
+      "FDR ≥ 0.10" = "#e3e1ef"
+    )
+    p <- ggplot(df, aes(x = log10p, y = Term_clean, fill = Significance)) +
+      geom_col(width = 0.6, colour = "grey30", linewidth = 0.2) +
+      scale_fill_manual(
+        values = fill_values,
+        name = NULL,
+        drop = FALSE
+      ) +
+      labs(
+        x = expression(-log[10] ~ italic(P)),
+        y = NULL,
+        title = paste0(db_labels[db] %||% db),
+        subtitle = paste0(set_labels[set_name], " — ", subtitle_text)
+      ) +
+      theme_classic(base_size = 11) +
+      theme(
+        plot.title.position = "plot",
+        plot.title = element_text(face = "bold", size = 13),
+        plot.subtitle = element_text(size = 10, colour = "grey40"),
+        axis.text.y = element_text(size = 8, colour = "black", lineheight = 0.85),
+        axis.text.x = element_text(size = 9),
+        legend.position = "bottom",
+        legend.text = element_text(size = 9),
+        plot.margin = margin(10, 14, 6, 6)
+      )
+
+    fig_h <- max(5, 0.4 * nrow(df) + 2.5) / 1.5
+    fig_w <- 7 / 1.5
+
+    # save table
+    db_short <- str_replace_all(db, "[^A-Za-z0-9]+", "_") %>% str_to_lower()
+    write_tsv(enriched[[set_name]][[db]], paste0(save_path, "satmut_prom_enrichr_table_", set_name, "_", db_short, ".txt"))
+
+    # collect significant terms
+    sig_terms <- enriched[[set_name]][[db]] %>%
+      filter(Adjusted.P.value < 0.10) %>%
+      mutate(
+        Database = db_labels[db] %||% db,
+        Significance = ifelse(Adjusted.P.value < 0.05, "FDR < 0.05", "FDR < 0.10")
+      )
+    if (nrow(sig_terms) > 0) sig_all[[db]] <- sig_terms
+
+    # save plot
+    ggsave(
+      filename = paste0(save_path, "satmut_prom_enrichr_barplot_", set_name, "_", db_short, ".pdf"),
+      plot = p, width = fig_w, height = fig_h, device = cairo_pdf
+    )
+
+    cat("\n\n###", set_labels[set_name], "—", db_labels[db] %||% db, "\n\n")
+    print(p)
+    cat("\n\n")
+  }
+
+  # save combined significant results
+  sig_combined <- bind_rows(sig_all)
+  if (nrow(sig_combined) > 0) {
+    sig_combined <- sig_combined %>% arrange(Adjusted.P.value, Database)
+    write_tsv(sig_combined, paste0(save_path, "satmut_prom_enrichr_significant_", set_name, ".txt"))
+  }
+}
+```
+
+```{r main_figure}
+# Collect all significant terms (FDR < 0.10) across sets and databases
+sig_rows <- list()
+for (set_name in names(enriched)) {
+  for (db in names(enriched[[set_name]])) {
+    df <- enriched[[set_name]][[db]]
+    if (is.null(df) || nrow(df) == 0) next
+    hits <- df %>%
+      filter(Adjusted.P.value < 0.10) %>%
+      mutate(
+        Set = set_name,
+        Database = db_labels[db] %||% db,
+        Term_clean = clean_term(Term)
+      )
+    if (nrow(hits) > 0) sig_rows[[paste(set_name, db)]] <- hits
+  }
+}
+sig_df <- bind_rows(sig_rows)
+if (nrow(sig_df) > 0) {
+  sig_colors <- c(both = "#984ea3", neg = "#fc8d62", pos = "#8da0cb")
+  db_abbrev <- c(
+    "GO Biological Process 2025" = "GO",
+    "Reactome Pathways 2024"     = "RP",
+    "MGI Mammalian Phenotype Level 4 2024" = "MGI"
+  )
+  sig_df <- sig_df %>%
+    mutate(
+      log10p = -log10(P.value),
+      Set = factor(Set, levels = c("neg", "pos", "both")),
+      # strip MP/GO/R-HSA/WP codes
+      Term_short = str_remove(Term, "\\s*\\(GO:\\d+\\)$") %>%
+        str_remove("\\s*R-HSA-\\d+$") %>%
+        str_remove("\\s*WP\\d+$") %>%
+        str_remove("\\s*MP:\\d+$"),
+      Term_short = str_trim(Term_short),
+      db_short = db_abbrev[Database]
+    ) %>%
+    group_by(Set) %>%
+    {
+      bind_rows(
+        filter(., Set == "neg") %>% slice_min(P.value, n = 15, with_ties = FALSE),
+        filter(., Set == "both"),
+        filter(., Set == "pos")
+      )
+    } %>%
+    ungroup() %>%
+    mutate(
+      set_order = case_when(Set == "neg" ~ 3L, Set == "both" ~ 2L, Set == "pos" ~ 1L),
+      row_label = paste0(Term_short, " [", db_short, "]"),
+      row_label = fct_reorder2(row_label, set_order, -log10p)
+    )
+  p_main <- ggplot(sig_df, aes(x = log10p, y = row_label, fill = Set)) +
+    geom_col(width = 0.7, colour = "grey30", linewidth = 0.15) +
+    geom_text(
+      aes(label = row_label),
+      hjust = 0, nudge_x = 0.3, size = 3.5, colour = "black"
+    ) +
+    scale_fill_manual(
+      values = sig_colors,
+      labels = set_labels,
+      name = NULL
+    ) +
+    scale_x_continuous(expand = expansion(mult = c(0, 0.5))) +
+    labs(
+      x = expression(-log[10] ~ italic(P)),
+      y = NULL,
+      title = "Enriched gene sets",
+    ) +
+    theme_classic(base_size = 11) +
+    theme(
+      plot.title.position = "plot",
+      plot.title = element_text(face = "bold", size = 13),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.line.y = element_blank(),
+      legend.position = "bottom",
+      legend.text = element_text(size = 7),
+      legend.key.size = unit(0.35, "cm"),
+      plot.caption = element_text(size = 6.5, colour = "grey50", hjust = 0),
+      plot.margin = margin(10, 14, 6, 6)
+    )
+  fig_size <- 7
+  ggsave(
+    filename = paste0(save_path, "satmut_prom_enrichr_main_figure.pdf"),
+    plot = p_main, width = fig_size, height = fig_size, device = cairo_pdf
+  )
+  print(p_main)
+} else {
+  cat("No terms with FDR < 0.10 found across any analysis.\n")
+}
+```

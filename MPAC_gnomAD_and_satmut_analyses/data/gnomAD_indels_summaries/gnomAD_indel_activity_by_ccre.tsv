@@ -1,0 +1,121 @@
+activity_type	activity_bin	ccre_class	n
+HepG2_activity	[-Inf,1)	Other cCREs	2680419
+HepG2_activity	[-Inf,1)	PLS	57634
+HepG2_activity	[-Inf,1)	dELS	5777625
+HepG2_activity	[-Inf,1)	non-cCRE	43028578
+HepG2_activity	[-Inf,1)	pELS	859016
+HepG2_activity	[1,2)	Other cCREs	282841
+HepG2_activity	[1,2)	PLS	39606
+HepG2_activity	[1,2)	dELS	924605
+HepG2_activity	[1,2)	non-cCRE	2022133
+HepG2_activity	[1,2)	pELS	201639
+HepG2_activity	[2,3)	Other cCREs	50381
+HepG2_activity	[2,3)	PLS	31880
+HepG2_activity	[2,3)	dELS	170489
+HepG2_activity	[2,3)	non-cCRE	193298
+HepG2_activity	[2,3)	pELS	52812
+HepG2_activity	[3,4)	Other cCREs	15741
+HepG2_activity	[3,4)	PLS	32238
+HepG2_activity	[3,4)	dELS	44172
+HepG2_activity	[3,4)	non-cCRE	43824
+HepG2_activity	[3,4)	pELS	17880
+HepG2_activity	[4,5)	Other cCREs	2421
+HepG2_activity	[4,5)	PLS	23150
+HepG2_activity	[4,5)	dELS	9074
+HepG2_activity	[4,5)	non-cCRE	6709
+HepG2_activity	[4,5)	pELS	5619
+HepG2_activity	[5,Inf)	Other cCREs	567
+HepG2_activity	[5,Inf)	PLS	6729
+HepG2_activity	[5,Inf)	dELS	1915
+HepG2_activity	[5,Inf)	non-cCRE	1364
+HepG2_activity	[5,Inf)	pELS	994
+K562_activity	[-Inf,1)	Other cCREs	2583931
+K562_activity	[-Inf,1)	PLS	57230
+K562_activity	[-Inf,1)	dELS	5619923
+K562_activity	[-Inf,1)	non-cCRE	42306470
+K562_activity	[-Inf,1)	pELS	837893
+K562_activity	[1,2)	Other cCREs	334071
+K562_activity	[1,2)	PLS	31097
+K562_activity	[1,2)	dELS	961697
+K562_activity	[1,2)	non-cCRE	2486404
+K562_activity	[1,2)	pELS	193955
+K562_activity	[2,3)	Other cCREs	78016
+K562_activity	[2,3)	PLS	24152
+K562_activity	[2,3)	dELS	238378
+K562_activity	[2,3)	non-cCRE	385271
+K562_activity	[2,3)	pELS	62454
+K562_activity	[3,4)	Other cCREs	24383
+K562_activity	[3,4)	PLS	21862
+K562_activity	[3,4)	dELS	70659
+K562_activity	[3,4)	non-cCRE	84146
+K562_activity	[3,4)	pELS	24057
+K562_activity	[4,5)	Other cCREs	8819
+K562_activity	[4,5)	PLS	22342
+K562_activity	[4,5)	dELS	24540
+K562_activity	[4,5)	non-cCRE	24539
+K562_activity	[4,5)	pELS	11284
+K562_activity	[5,Inf)	Other cCREs	3150
+K562_activity	[5,Inf)	PLS	34554
+K562_activity	[5,Inf)	dELS	12683
+K562_activity	[5,Inf)	non-cCRE	9076
+K562_activity	[5,Inf)	pELS	8317
+SKNSH_activity	[-Inf,1)	Other cCREs	2673018
+SKNSH_activity	[-Inf,1)	PLS	58804
+SKNSH_activity	[-Inf,1)	dELS	5853700
+SKNSH_activity	[-Inf,1)	non-cCRE	42695291
+SKNSH_activity	[-Inf,1)	pELS	870079
+SKNSH_activity	[1,2)	Other cCREs	281239
+SKNSH_activity	[1,2)	PLS	37475
+SKNSH_activity	[1,2)	dELS	838908
+SKNSH_activity	[1,2)	non-cCRE	2258609
+SKNSH_activity	[1,2)	pELS	187958
+SKNSH_activity	[2,3)	Other cCREs	53803
+SKNSH_activity	[2,3)	PLS	28987
+SKNSH_activity	[2,3)	dELS	167936
+SKNSH_activity	[2,3)	non-cCRE	261589
+SKNSH_activity	[2,3)	pELS	52040
+SKNSH_activity	[3,4)	Other cCREs	17330
+SKNSH_activity	[3,4)	PLS	26968
+SKNSH_activity	[3,4)	dELS	47266
+SKNSH_activity	[3,4)	non-cCRE	60850
+SKNSH_activity	[3,4)	pELS	18249
+SKNSH_activity	[4,5)	Other cCREs	5149
+SKNSH_activity	[4,5)	PLS	20216
+SKNSH_activity	[4,5)	dELS	13663
+SKNSH_activity	[4,5)	non-cCRE	14211
+SKNSH_activity	[4,5)	pELS	6486
+SKNSH_activity	[5,Inf)	Other cCREs	1831
+SKNSH_activity	[5,Inf)	PLS	18787
+SKNSH_activity	[5,Inf)	dELS	6407
+SKNSH_activity	[5,Inf)	non-cCRE	5356
+SKNSH_activity	[5,Inf)	pELS	3148
+mean_activity	[-Inf,1)	Other cCREs	2680104
+mean_activity	[-Inf,1)	PLS	57497
+mean_activity	[-Inf,1)	dELS	5830093
+mean_activity	[-Inf,1)	non-cCRE	42978593
+mean_activity	[-Inf,1)	pELS	864609
+mean_activity	[1,2)	Other cCREs	276803
+mean_activity	[1,2)	PLS	35981
+mean_activity	[1,2)	dELS	866370
+mean_activity	[1,2)	non-cCRE	2021455
+mean_activity	[1,2)	pELS	191265
+mean_activity	[2,3)	Other cCREs	52164
+mean_activity	[2,3)	PLS	27554
+mean_activity	[2,3)	dELS	165988
+mean_activity	[2,3)	non-cCRE	229216
+mean_activity	[2,3)	pELS	52216
+mean_activity	[3,4)	Other cCREs	17545
+mean_activity	[3,4)	PLS	26146
+mean_activity	[3,4)	dELS	46975
+mean_activity	[3,4)	non-cCRE	51516
+mean_activity	[3,4)	pELS	18789
+mean_activity	[4,5)	Other cCREs	4675
+mean_activity	[4,5)	PLS	26199
+mean_activity	[4,5)	dELS	14482
+mean_activity	[4,5)	non-cCRE	12357
+mean_activity	[4,5)	pELS	8261
+mean_activity	[5,Inf)	Other cCREs	1079
+mean_activity	[5,Inf)	PLS	17860
+mean_activity	[5,Inf)	dELS	3972
+mean_activity	[5,Inf)	non-cCRE	2769
+mean_activity	[5,Inf)	pELS	2820

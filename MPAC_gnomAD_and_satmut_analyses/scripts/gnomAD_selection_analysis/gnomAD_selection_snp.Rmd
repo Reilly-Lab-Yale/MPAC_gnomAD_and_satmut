@@ -1,0 +1,1363 @@
+---
+title: "Analyses of purifying selection in MPAC-gnomAD for SNPs"
+author: "Stephen Rong"
+date: "2024-02-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r preamble, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(data.table)
+library(tidyverse)
+library(tidyplots)
+library(ggthemes)
+library(cowplot)
+
+save_path <- "../../results/gnomAD_purifying_selection/gnomAD_purifying_selection_snp/"
+data_path <- "../../data/gnomAD_snp_summaries/"
+
+dir.create(save_path, showWarnings = FALSE, recursive = TRUE)
+```
+
+```{r constants}
+ccre_colors <- c(PLS="#3E0751", pELS="#405187", dELS="#468E8B",
+                 `non-cCRE`="#79C66E",  # was: `non-cCRE`="#79C66E"
+                 `Other cCREs`="grey50", `Genome-wide`="black")
+ccre_order <- c("PLS", "pELS", "dELS",
+                "non-cCRE",  # was: "non-cCRE"
+                "Other cCREs")
+
+# Minimum observation count for statistics
+min_n <- 50
+
+skew_bin_order <- c("(-Inf,-1.5)", "[-1.5,-1.0)", "[-1.0,-0.5)", "[-0.5,-0.2)",
+                    "[-0.2,-0.05)", "[-0.05,0.05)", "[0.05,0.2)", "[0.2,0.5)",
+                    "[0.5,1.0)", "[1.0,1.5)", "[1.5,Inf)")
+activity_bin_order <- c("[-Inf,1)", "[1,2)", "[2,3)", "[3,4)", "[4,5)", "[5,Inf)")
+
+af_order <- c("SINGLETON", "ULTRARARE", "RARE", "LOW_FREQ", "COMMON")
+
+skew_labels_map <- c(mean_skew = "Mean allelic skew", K562_skew = "K562 allelic skew",
+                     HepG2_skew = "HepG2 allelic skew", SKNSH_skew = "SKNSH allelic skew")
+skew_save_map <- c(mean_skew = "mean", K562_skew = "K562", HepG2_skew = "HepG2", SKNSH_skew = "SKNSH")
+
+mut_order <- c("CpG", "non-CpG-ti", "non-CpG-tv")
+mut_labels <- c(CpG = "CpG transition", `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
+mut_colors <- c(`CpG transition` = "#E41A1C", `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
+```
+
+```{r load-data}
+totals    <- fread(paste0(data_path, "gnomAD_snp_totals_by_ccre.tsv"))
+skew      <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre.tsv"))
+activity  <- fread(paste0(data_path, "gnomAD_snp_activity_by_ccre.tsv"))
+emvar     <- fread(paste0(data_path, "gnomAD_snp_emvar_by_ccre.tsv"))
+skew_af   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af.tsv"))
+skew_af_mc <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af_mutclass.tsv"))
+skew_mc   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_mutclass.tsv"))
+
+# Relabel non-cCRE -> non-cCRE (revert by commenting out this block)
+relabel_ccre <- function(x) ifelse(x == "non-cCRE", "non-cCRE", x)
+totals    <- totals %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew      <- skew %>% mutate(ccre_class = relabel_ccre(ccre_class))
+activity  <- activity %>% mutate(ccre_class = relabel_ccre(ccre_class))
+emvar     <- emvar %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew_af   <- skew_af %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew_af_mc <- skew_af_mc %>% mutate(ccre_class = relabel_ccre(ccre_class))
+skew_mc   <- skew_mc %>% mutate(ccre_class = relabel_ccre(ccre_class))
+
+# Drop variants with unknown mutation class (missing Roulette pentanucleotide context)
+skew_mc    <- skew_mc %>% filter(mut_class != "unknown")
+skew_af_mc <- skew_af_mc %>% filter(mut_class != "unknown")
+
+totals <- totals %>%
+  filter(ccre_class != "TOTAL") %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order))
+
+skew <- skew %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order))
+
+activity <- activity %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         activity_bin = factor(activity_bin, levels = activity_bin_order))
+
+emvar <- emvar %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order))
+
+skew_af <- skew_af %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         af_class = factor(af_class, levels = af_order))
+
+skew_af_mc <- skew_af_mc %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         af_class = factor(af_class, levels = af_order),
+         mut_class = factor(mut_labels[mut_class], levels = mut_labels))
+
+skew_mc <- skew_mc %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         mut_class = factor(mut_labels[mut_class], levels = mut_labels))
+```
+
+# Section 1: Descriptive plots
+
+```{r pie-chart-totals}
+ggplot(totals, aes(x = "", y = n, fill = ccre_class)) +
+  geom_col() +
+  geom_text(aes(label = paste0(round(n / 1e6, 1), "M")),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  scale_fill_manual(values = ccre_colors) +
+  labs(fill = "ENCODE cCREs")
+ggsave(paste0(save_path, "gnomAD_snp_counts_totals_by_ccre.pdf"), scale = 0.6)
+write_tsv(totals, paste0(save_path, "gnomAD_snp_counts_totals_by_ccre.txt"))
+```
+
+```{r barplot-emvar-counts-per-ccre}
+emvar_any <- emvar %>%
+  filter(emvar_class != "none") %>%
+  group_by(ccre_class) %>%
+  summarise(n = sum(n)) %>%
+  ungroup() %>%
+  filter(ccre_class != "Other cCREs")
+
+emvar_any %>%
+  tidyplot(x = ccre_class, y = n, color = ccre_class) %>%
+  add_mean_bar() %>%
+  adjust_x_axis(rotate_labels = TRUE) +
+  geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3,
+            position = position_dodge(.9), show.legend = FALSE) +
+  scale_fill_manual(values = ccre_colors, name = "ENCODE cCREs") +
+  scale_color_manual(values = ccre_colors, name = "ENCODE cCREs") +
+  xlab("ENCODE cCREs") +
+  ylab("Count")
+ggsave(paste0(save_path, "gnomAD_snp_counts_emvar_by_ccre.pdf"))
+write_tsv(emvar_any, paste0(save_path, "gnomAD_snp_counts_emvar_by_ccre.txt"))
+```
+
+```{r barplot-skew-bins}
+skew_total <- skew %>%
+  group_by(skew_type, skew_bin) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+skew_config <- tibble(
+  skew_type = c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew"),
+  color     = c("grey50",    "#00A79D",   "#FBB040",    "#ED1C24"),
+  label     = c("Mean allelic skew", "K562 allelic skew", "HepG2 allelic skew", "SKNSH allelic skew"),
+  tag       = c("mean",      "K562",      "HepG2",      "SKNSH")
+)
+
+for (i in seq_len(nrow(skew_config))) {
+  cfg <- skew_config[i, ]
+  skew_total %>% filter(skew_type == cfg$skew_type) %>%
+    tidyplot(x = skew_bin, y = n) %>%
+    add_barstack_absolute(fill = cfg$color) %>%
+    remove_legend() %>%
+    adjust_x_axis(rotate_labels = TRUE) +
+    geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3, color = cfg$color) +
+    xlab(cfg$label) +
+    ylab("Count")
+  ggsave(paste0(save_path, "gnomAD_snp_counts_skew_", cfg$tag, ".pdf"))
+}
+
+write_tsv(skew_total, paste0(save_path, "gnomAD_snp_counts_skew_all.txt"))
+```
+
+```{r barplot-activity-bins}
+activity_total <- activity %>%
+  group_by(activity_type, activity_bin) %>%
+  summarise(n = sum(n)) %>%
+  ungroup()
+
+activity_config <- tibble(
+  activity_type = c("mean_activity", "K562_activity", "HepG2_activity", "SKNSH_activity"),
+  color         = c("grey50",        "#00A79D",       "#FBB040",        "#ED1C24"),
+  label         = c("Mean activity", "K562 activity", "HepG2 activity", "SKNSH activity"),
+  tag           = c("mean",          "K562",          "HepG2",          "SKNSH")
+)
+
+for (i in seq_len(nrow(activity_config))) {
+  cfg <- activity_config[i, ]
+  activity_total %>% filter(activity_type == cfg$activity_type) %>%
+    tidyplot(x = activity_bin, y = n) %>%
+    add_barstack_absolute(fill = cfg$color) %>%
+    remove_legend() %>%
+    adjust_x_axis(rotate_labels = TRUE) +
+    geom_text(aes(label = n), angle = 90, hjust = -0.1, size = 3, color = cfg$color) +
+    xlab(cfg$label) +
+    ylab("Count")
+  ggsave(paste0(save_path, "gnomAD_snp_counts_activity_", cfg$tag, ".pdf"))
+}
+
+write_tsv(activity_total, paste0(save_path, "gnomAD_snp_counts_activity_all.txt"))
+```
+
+```{r faceted-barplot-mean-activity-by-ccre, fig.width=8, fig.height=8}
+activity_mean <- activity %>% filter(activity_type == "mean_activity", ccre_class != "Other cCREs")
+
+ggplot(activity_mean) +
+  geom_bar(aes(x = activity_bin, y = n, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean activity", y = "Count", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_counts_activity_mean_by_ccre.pdf"), scale = 0.5)
+write_tsv(activity_mean, paste0(save_path, "gnomAD_snp_counts_activity_mean_by_ccre.txt"))
+```
+
+```{r faceted-barplot-mean-skew-by-ccre}
+skew_mean <- skew %>% filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(skew_mean) +
+  geom_bar(aes(x = skew_bin, y = n, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Count", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_counts_skew_mean_by_ccre.pdf"), scale = 0.6)
+write_tsv(skew_mean, paste0(save_path, "gnomAD_snp_counts_skew_mean_by_ccre.txt"))
+```
+
+```{r faceted-barplot-emvar-specificity-by-ccre}
+emvar_cat_order <- c("K562", "HepG2", "SKNSH", "K562+HepG2", "K562+SKNSH", "HepG2+SKNSH", "K562+HepG2+SKNSH")
+
+emvar_prop <- emvar %>%
+  filter(emvar_class != "none", ccre_class != "Other cCREs") %>%
+  mutate(emvar_class = factor(emvar_class, levels = emvar_cat_order)) %>%
+  group_by(ccre_class) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup()
+
+ggplot(emvar_prop) +
+  geom_bar(aes(x = emvar_class, y = prop, fill = ccre_class), stat = "identity", position = "stack") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(), axis.line.y = element_blank(),
+        aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "emVars (MPAC)", y = "Proportion of emVars", color = "ENCODE cCREs") +
+  facet_grid(rows = vars(ccre_class), scales = "free") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_prop_emvar_by_ccre.pdf"), scale = 0.75)
+write_tsv(emvar_prop, paste0(save_path, "gnomAD_snp_prop_emvar_by_ccre.txt"))
+```
+
+```{r barplot-emvar-pleiotropy-by-ccre}
+emvar_pleio <- emvar %>%
+  filter(emvar_class != "none", ccre_class != "Other cCREs") %>%
+  mutate(n_cell_lines = case_when(
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ "1 cell line",
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ "2 cell lines",
+    emvar_class == "K562+HepG2+SKNSH" ~ "3 cell lines"
+  )) %>%
+  mutate(n_cell_lines = factor(n_cell_lines, levels = c("1 cell line", "2 cell lines", "3 cell lines"))) %>%
+  group_by(ccre_class, n_cell_lines) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(ccre_class) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
+
+ggplot(emvar_pleio) +
+  geom_bar(aes(x = ccre_class, y = prop, fill = ccre_class),
+           stat = "identity", position = position_dodge2(width = 0.9, preserve = "single")) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "ENCODE cCREs", y = "Proportion of emVars", fill = "ENCODE cCREs") +
+  facet_wrap(~ n_cell_lines, ncol = 3) +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_prop_emvar_by_pleiotropy.pdf"), scale = 0.6)
+write_tsv(emvar_pleio, paste0(save_path, "gnomAD_snp_prop_emvar_by_pleiotropy.txt"))
+```
+
+# Section 2: emVar x phyloP conservation
+
+```{r emvar-phylop}
+# Denominator: total conserved and unconserved variants per cCRE (all emvar classes including "none")
+ccre_by_cons <- emvar %>%
+  group_by(ccre_class) %>%
+  summarise(
+    total_conserved   = sum(n_conserved),
+    total_unconserved = sum(n - n_conserved)
+  ) %>%
+  ungroup()
+
+# Numerator: emVar conserved and unconserved counts per cCRE
+emvar_by_ccre <- emvar %>%
+  filter(emvar_class != "none") %>%
+  group_by(ccre_class) %>%
+  summarise(
+    emvar_conserved   = sum(n_conserved),
+    emvar_unconserved = sum(n - n_conserved)
+  ) %>%
+  ungroup()
+
+# Add genome-wide rows (sum across all cCREs including Other)
+ccre_by_cons_gw <- ccre_by_cons %>%
+  summarise(ccre_class = "Genome-wide",
+            total_conserved = sum(total_conserved),
+            total_unconserved = sum(total_unconserved))
+
+emvar_gw <- emvar_by_ccre %>%
+  summarise(ccre_class = "Genome-wide",
+            emvar_conserved = sum(emvar_conserved),
+            emvar_unconserved = sum(emvar_unconserved))
+
+# Combine, compute proportion of emVars among conserved/unconserved variants
+emvar_phylop <- bind_rows(
+    emvar_by_ccre %>% filter(ccre_class != "Other cCREs"),
+    emvar_gw
+  ) %>%
+  left_join(
+    bind_rows(ccre_by_cons %>% filter(ccre_class != "Other cCREs"), ccre_by_cons_gw),
+    by = "ccre_class"
+  ) %>%
+  mutate(
+    prop_conserved   = emvar_conserved / total_conserved,
+    prop_unconserved = emvar_unconserved / total_unconserved
+  ) %>%
+  pivot_longer(
+    cols = c(prop_conserved, prop_unconserved),
+    names_to = "conserved_status",
+    values_to = "count_prop"
+  ) %>%
+  mutate(
+    phyloP = conserved_status == "prop_conserved",
+    count  = ifelse(phyloP, emvar_conserved, emvar_unconserved),
+    ccre_class = factor(ccre_class, levels = c("PLS", "pELS", "dELS", "non-cCRE", "Genome-wide"))
+  )
+
+# Proportion plot
+emvar_phylop %>%
+  tidyplot(x = ccre_class, y = count_prop, color = phyloP) %>%
+  add_mean_bar() %>%
+  adjust_x_axis(rotate_labels = TRUE) +
+  xlab("ENCODE cCREs") +
+  ylab("emVar proportion") +
+  labs(fill = "Constrained") +
+  theme(aspect.ratio = 1.6, strip.background = element_blank())
+ggsave(paste0(save_path, "gnomAD_snp_prop_emvar_by_ccre_phylop.pdf"), scale = 0.7)
+
+# Count plot
+emvar_phylop %>%
+  tidyplot(x = ccre_class, y = count, color = phyloP) %>%
+  add_mean_bar() %>%
+  adjust_x_axis(rotate_labels = TRUE) +
+  geom_text(aes(label = count), angle = 90, hjust = -0.1, size = 3,
+            position = position_dodge(.9), show.legend = FALSE) +
+  xlab("ENCODE cCREs") +
+  ylab("emVar count") +
+  labs(fill = "Constrained") +
+  theme(aspect.ratio = 1.6, strip.background = element_blank())
+ggsave(paste0(save_path, "gnomAD_snp_counts_emvar_by_ccre_phylop.pdf"), scale = 0.7)
+
+write_tsv(emvar_phylop, paste0(save_path, "gnomAD_snp_emvar_by_ccre_phylop.txt"))
+```
+
+```{r emvar-pleiotropy-phylop}
+# Compute mean phyloP by emVar pleiotropy and cCRE class
+emvar_pleio_phylop <- emvar %>%
+  filter(ccre_class != "Other cCREs") %>%
+  mutate(pleio = case_when(
+    emvar_class == "none" ~ 0L,
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ 1L,
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ 2L,
+    emvar_class == "K562+HepG2+SKNSH" ~ 3L
+  )) %>%
+  group_by(ccre_class, pleio) %>%
+  summarise(
+    n_phyloP      = sum(n_phyloP),
+    sum_phyloP    = sum(sum_phyloP),
+    sum_phyloP_sq = sum(sum_phyloP_sq),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    phyloP_mean = sum_phyloP / n_phyloP,
+    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
+    phyloP_se   = sqrt(phyloP_var / n_phyloP),
+    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
+    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se,
+    pleio       = as.factor(pleio)
+  )
+
+ggplot(emvar_pleio_phylop) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_bar(aes(pleio, phyloP_mean, fill = pleio), stat = "identity") +
+  geom_errorbar(aes(pleio, ymin = phyloP_lci, ymax = phyloP_uci), width = 0.2) +
+  cowplot::theme_cowplot() +
+  theme(axis.line.x = element_blank()) +
+  scale_fill_viridis_d() +
+  scale_color_viridis_d() +
+  labs(x = "MPAC emVar pleiotropy", y = "Mean conservation (phyloP)") +
+  guides(fill = "none") +
+  facet_wrap(~ ccre_class) +
+  theme(aspect.ratio = 1, strip.background = element_blank())
+ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_emvar_pleiotropy_by_ccre.pdf"), scale = 0.8)
+write_tsv(emvar_pleio_phylop, paste0(save_path, "gnomAD_snp_mean_phylop_emvar_pleiotropy_by_ccre.txt"))
+```
+
+```{r emvar-pleiotropy-prop-conserved}
+emvar_pleio_cons <- emvar %>%
+  filter(ccre_class != "Other cCREs") %>%
+  mutate(pleio = case_when(
+    emvar_class == "none" ~ 0L,
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ 1L,
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ 2L,
+    emvar_class == "K562+HepG2+SKNSH" ~ 3L
+  )) %>%
+  group_by(ccre_class, pleio) %>%
+  summarise(
+    n           = sum(n),
+    n_conserved = sum(n_conserved),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    frac_conserved     = n_conserved / n,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
+    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se,
+    pleio              = as.factor(pleio)
+  )
+
+ggplot(emvar_pleio_cons) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_bar(aes(pleio, frac_conserved, fill = pleio), stat = "identity") +
+  geom_errorbar(aes(pleio, ymin = frac_conserved_lci, ymax = frac_conserved_uci), width = 0.2) +
+  cowplot::theme_cowplot() +
+  theme(axis.line.x = element_blank()) +
+  scale_fill_viridis_d() +
+  scale_color_viridis_d() +
+  labs(x = "MPAC emVar pleiotropy", y = "Proportion conserved (phyloP > 2.27)") +
+  guides(fill = "none") +
+  facet_wrap(~ ccre_class) +
+  theme(aspect.ratio = 1, strip.background = element_blank())
+ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_emvar_pleiotropy_by_ccre.pdf"), scale = 0.8)
+write_tsv(emvar_pleio_cons, paste0(save_path, "gnomAD_snp_prop_conserved_emvar_pleiotropy_by_ccre.txt"))
+```
+
+```{r emvar-pleiotropy-mutrate}
+emvar_pleio_mutrate <- emvar %>%
+  filter(ccre_class != "Other cCREs") %>%
+  mutate(pleio = case_when(
+    emvar_class == "none" ~ 0L,
+    emvar_class %in% c("K562", "HepG2", "SKNSH") ~ 1L,
+    emvar_class %in% c("K562+HepG2", "K562+SKNSH", "HepG2+SKNSH") ~ 2L,
+    emvar_class == "K562+HepG2+SKNSH" ~ 3L
+  )) %>%
+  group_by(ccre_class, pleio) %>%
+  summarise(
+    n_MR      = sum(n_MR),
+    sum_MR    = sum(sum_MR),
+    sum_MR_sq = sum(sum_MR_sq),
+    .groups = "drop"
+  ) %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se,
+    pleio        = as.factor(pleio)
+  )
+
+ggplot(emvar_pleio_mutrate) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_bar(aes(pleio, mutrate_mean, fill = pleio), stat = "identity") +
+  geom_errorbar(aes(pleio, ymin = mutrate_lci, ymax = mutrate_uci), width = 0.2) +
+  cowplot::theme_cowplot() +
+  theme(axis.line.x = element_blank()) +
+  scale_fill_viridis_d() +
+  labs(x = "MPAC emVar pleiotropy", y = "Mean mutation rate (Roulette)") +
+  guides(fill = "none") +
+  facet_wrap(~ ccre_class) +
+  theme(aspect.ratio = 1, strip.background = element_blank())
+ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_emvar_pleiotropy_by_ccre.pdf"), scale = 0.8)
+write_tsv(emvar_pleio_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_emvar_pleiotropy_by_ccre.txt"))
+```
+
+# Section 3: Mean phyloP across skew bins
+
+```{r phylop-ribbon}
+skew_phylop <- skew %>%
+  filter(n >= min_n) %>%
+  mutate(
+    phyloP_mean = sum_phyloP / n_phyloP,
+    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
+    phyloP_se   = sqrt(phyloP_var / n_phyloP),
+    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
+    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se
+  )
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- skew_phylop %>%
+    filter(skew_type == st, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = phyloP_mean, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st], y = "Mean conservation (phyloP)", color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_skew_", skew_save_map[st], ".pdf"))
+}
+
+# Skinny version for mean skew
+skew_phylop %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = phyloP_mean, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Mean conservation (phyloP)", color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_skew_mean_skinny.pdf"), scale = 1)
+
+write_tsv(skew_phylop, paste0(save_path, "gnomAD_snp_mean_phylop_skew.txt"))
+```
+
+# Section 4: Heatmaps by AF class
+
+## PhyloP heatmaps
+
+```{r phylop-heatmap-skew-x-af}
+skew_af_phylop <- skew_af %>%
+  mutate(phyloP_mean = ifelse(n >= min_n, sum_phyloP / n_phyloP, NA))
+
+heatmap_data <- skew_af_phylop %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(heatmap_data) +
+  geom_tile(aes(x = skew_bin, y = af_class, fill = phyloP_mean)) +
+  geom_text(aes(x = skew_bin, y = af_class,
+                label = round(phyloP_mean, 2)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(na.value = "grey80") +
+  labs(x = "Mean allelic skew", y = "AF class", fill = "Mean conservation (phyloP)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_phylop_skew_mean_by_af.pdf"), width = 8, height = 8)
+write_tsv(heatmap_data, paste0(save_path, "gnomAD_snp_heatmap_phylop_skew_mean_by_af.txt"))
+```
+
+```{r phylop-heatmap-marginal}
+marginal_phylop <- skew_af %>%
+  filter(ccre_class != "Other cCREs") %>%
+  group_by(ccre_class, af_class) %>%
+  summarise(
+    phyloP_mean = sum(sum_phyloP) / sum(n_phyloP),
+    .groups = "drop"
+  )
+
+phylop_range <- range(heatmap_data$phyloP_mean, na.rm = TRUE)
+
+ggplot(marginal_phylop) +
+  geom_tile(aes(x = 1, y = af_class, fill = phyloP_mean)) +
+  geom_text(aes(x = 1, y = af_class,
+                label = round(phyloP_mean, 2)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(limits = phylop_range, na.value = "grey80") +
+  labs(x = "", y = "AF class", fill = "Mean conservation (phyloP)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_phylop_marginal_by_af.pdf"), width = 8, height = 8)
+write_tsv(marginal_phylop, paste0(save_path, "gnomAD_snp_heatmap_phylop_marginal_by_af.txt"))
+```
+
+## Roulette heatmaps
+
+```{r mutrate-heatmap-skew-x-af}
+skew_af_mutrate <- skew_af %>%
+  mutate(mutrate_mean = ifelse(n_MR >= min_n, sum_MR / n_MR, NA))
+
+heatmap_mutrate <- skew_af_mutrate %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(heatmap_mutrate) +
+  geom_tile(aes(x = skew_bin, y = af_class, fill = mutrate_mean)) +
+  geom_text(aes(x = skew_bin, y = af_class,
+                label = signif(mutrate_mean, 2)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(na.value = "grey80") +
+  labs(x = "Mean allelic skew", y = "AF class", fill = "Mean mutation rate\n(Roulette)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_mutrate_skew_mean_by_af.pdf"), width = 8, height = 8)
+write_tsv(heatmap_mutrate, paste0(save_path, "gnomAD_snp_heatmap_mutrate_skew_mean_by_af.txt"))
+```
+
+```{r mutrate-heatmap-marginal}
+marginal_mutrate <- skew_af %>%
+  filter(ccre_class != "Other cCREs") %>%
+  group_by(ccre_class, af_class) %>%
+  summarise(
+    mutrate_mean = sum(sum_MR) / sum(n_MR),
+    .groups = "drop"
+  )
+
+mutrate_range <- range(heatmap_mutrate$mutrate_mean, na.rm = TRUE)
+
+ggplot(marginal_mutrate) +
+  geom_tile(aes(x = 1, y = af_class, fill = mutrate_mean)) +
+  geom_text(aes(x = 1, y = af_class,
+                label = signif(mutrate_mean, 2)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(limits = mutrate_range, na.value = "grey80") +
+  labs(x = "", y = "AF class", fill = "Mean mutation rate\n(Roulette)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_mutrate_marginal_by_af.pdf"), width = 8, height = 8)
+write_tsv(marginal_mutrate, paste0(save_path, "gnomAD_snp_heatmap_mutrate_marginal_by_af.txt"))
+```
+
+# Section 5: Fraction conserved ribbon plots
+
+```{r fraction-conserved}
+skew_frac_cons <- skew %>%
+  filter(n >= min_n) %>%
+  mutate(
+    frac_conserved     = n_conserved / n,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
+    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
+  )
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- skew_frac_cons %>%
+    filter(skew_type == st, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = frac_conserved, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                       color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st], y = "Proportion conserved (phyloP > 2.27)", color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_", skew_save_map[st], ".pdf"))
+}
+
+# Skinny version for mean skew
+skew_frac_cons %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = frac_conserved, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                     color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Proportion conserved (phyloP > 2.27)", color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_mean_skinny.pdf"), scale = 1)
+
+write_tsv(skew_frac_cons, paste0(save_path, "gnomAD_snp_prop_conserved_skew.txt"))
+```
+
+# Section 6: Mean Roulette mutation rate across skew bins
+
+```{r mutrate-ribbon}
+skew_mutrate <- skew %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- skew_mutrate %>%
+    filter(skew_type == st, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st], y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], ".pdf"))
+}
+
+# Skinny version for mean skew
+skew_mutrate %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_skinny.pdf"), scale = 1)
+
+write_tsv(skew_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_skew.txt"))
+```
+
+# Section 7: Roulette mutation rate by mutation class
+
+```{r mutrate-by-mutclass}
+skew_mc_mutrate <- skew_mc %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+# Skinny version for mean skew
+skew_mc_mutrate %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+  guides(fill = "none") +
+  facet_wrap(~ mut_class, ncol = 3)
+ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_by_mutclass_skinny.pdf"), scale = 1)
+
+# All skew types
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- skew_mc_mutrate %>%
+    filter(skew_type == st, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 3 / 2) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st], y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+    guides(fill = "none") +
+    facet_wrap(~ mut_class, ncol = 3) +
+    scale_y_log10()
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass.pdf"), scale = 1.1)
+}
+
+write_tsv(skew_mc_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_skew_by_mutclass.txt"))
+```
+
+```{r mutclass-proportion-by-skew}
+mc_prop <- skew_mc %>%
+  filter(ccre_class != "Other cCREs") %>%
+  group_by(skew_type, skew_bin, ccre_class) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup()
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- mc_prop %>%
+    filter(skew_type == st) %>%
+    ggplot() +
+    geom_bar(aes(x = skew_bin, y = prop, fill = mut_class), stat = "identity", position = "stack") +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(), axis.line.y = element_blank(),
+          aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+    scale_fill_manual(values = mut_colors) +
+    labs(x = skew_labels_map[st], y = "Proportion of mutation class", fill = "Mutation class") +
+    facet_grid(rows = vars(ccre_class), scales = "free")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_mutclass_skew_", skew_save_map[st], ".pdf"), scale = 1.1)
+}
+
+write_tsv(mc_prop, paste0(save_path, "gnomAD_snp_prop_mutclass_skew.txt"))
+```
+
+# Section 8: TF footprint plots — genome-wide
+
+```{r tf-footprint-gw-data}
+tf_foot_gw <- skew %>%
+  filter(skew_type == "mean_skew") %>%
+  group_by(skew_bin) %>%
+  summarise(
+    n_in    = sum(n_tf_footprint),
+    n_out   = sum(n - n_tf_footprint),
+    n_total = sum(n),
+    .groups = "drop"
+  ) %>%
+  mutate(prop_in = n_in / n_total)
+
+gw_tf_foot <- tf_foot_gw %>%
+  summarise(gw_in = sum(n_in), gw_out = sum(n_out))
+```
+
+```{r tf-footprint-gw-proportion}
+tf_foot_gw_long <- tf_foot_gw %>%
+  select(skew_bin, n_total, `In TF footprint` = n_in, `Not in TF footprint` = n_out) %>%
+  pivot_longer(cols = c(`In TF footprint`, `Not in TF footprint`),
+               names_to = "TF_footprint", values_to = "count") %>%
+  mutate(proportion = count / n_total,
+         TF_footprint = factor(TF_footprint, levels = c("Not in TF footprint", "In TF footprint")))
+
+ggplot(tf_foot_gw_long, aes(x = skew_bin, y = count, fill = TF_footprint)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(data = tf_foot_gw_long %>% filter(TF_footprint == "In TF footprint"),
+            aes(x = skew_bin, y = proportion, label = sprintf("%.3f", proportion)),
+            size = 3, angle = 90, vjust = 0.5, hjust = -0.1, color = "black") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        legend.position = "bottom") +
+  scale_fill_manual(values = c("In TF footprint" = "#56BCC2", "Not in TF footprint" = "grey80")) +
+  labs(x = "Mean allelic skew", y = "Proportion of variants in TF footprint", fill = NULL)
+ggsave(paste0(save_path, "gnomAD_snp_prop_tf_footprint_skew_mean.pdf"), scale = 0.7)
+```
+
+```{r tf-footprint-gw-fet}
+tf_foot_gw_fet <- tf_foot_gw %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(
+      n_in + 1L, n_out + 1L,
+      gw_tf_foot$gw_in - n_in + 1L,
+      gw_tf_foot$gw_out - n_out + 1L
+    ), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2],
+    pval = fet$p.value
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+ggplot(tf_foot_gw_fet, aes(x = skew_bin)) +
+  geom_col(aes(y = odds), fill = "#56BCC2") +
+  geom_errorbar(aes(ymin = lci, ymax = uci), width = 0.3) +
+  geom_text(aes(y = uci, label = sprintf("%.2f", odds)),
+            angle = 90, vjust = 0.5, hjust = -0.1, size = 3) +
+  geom_hline(yintercept = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank()) +
+  labs(x = "Mean allelic skew", y = "Odds ratio (in TF footprint vs. genome-wide)")
+ggsave(paste0(save_path, "gnomAD_snp_fet_tf_footprint_skew_mean.pdf"), scale = 0.7)
+write_tsv(tf_foot_gw_fet, paste0(save_path, "gnomAD_snp_fet_tf_footprint_skew_mean.txt"))
+```
+
+# Section 9: TF ChIP-seq plots — genome-wide
+
+```{r tf-chip-gw-data}
+tf_chip_gw <- skew %>%
+  filter(skew_type == "mean_skew") %>%
+  group_by(skew_bin) %>%
+  summarise(
+    n_in    = sum(n_tf_chip_peak),
+    n_out   = sum(n - n_tf_chip_peak),
+    n_total = sum(n),
+    .groups = "drop"
+  ) %>%
+  mutate(prop_in = n_in / n_total)
+
+gw_tf_chip <- tf_chip_gw %>%
+  summarise(gw_in = sum(n_in), gw_out = sum(n_out))
+```
+
+```{r tf-chip-gw-proportion}
+tf_chip_gw_long <- tf_chip_gw %>%
+  select(skew_bin, n_total, `In TF ChIP-seq peak` = n_in, `Not in TF ChIP-seq peak` = n_out) %>%
+  pivot_longer(cols = c(`In TF ChIP-seq peak`, `Not in TF ChIP-seq peak`),
+               names_to = "TF_chip", values_to = "count") %>%
+  mutate(proportion = count / n_total,
+         TF_chip = factor(TF_chip, levels = c("Not in TF ChIP-seq peak", "In TF ChIP-seq peak")))
+
+ggplot(tf_chip_gw_long, aes(x = skew_bin, y = count, fill = TF_chip)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(data = tf_chip_gw_long %>% filter(TF_chip == "In TF ChIP-seq peak"),
+            aes(x = skew_bin, y = proportion, label = sprintf("%.3f", proportion)),
+            size = 3, angle = 90, vjust = 0.5, hjust = -0.1, color = "black") +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        legend.position = "bottom") +
+  scale_fill_manual(values = c("In TF ChIP-seq peak" = "#56BCC2", "Not in TF ChIP-seq peak" = "grey80")) +
+  labs(x = "Mean allelic skew", y = "Proportion of variants in TF ChIP-seq peak", fill = NULL)
+ggsave(paste0(save_path, "gnomAD_snp_prop_tf_chip_skew_mean.pdf"), scale = 0.7)
+```
+
+```{r tf-chip-gw-fet}
+tf_chip_gw_fet <- tf_chip_gw %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(
+      n_in + 1L, n_out + 1L,
+      gw_tf_chip$gw_in - n_in + 1L,
+      gw_tf_chip$gw_out - n_out + 1L
+    ), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2],
+    pval = fet$p.value
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+ggplot(tf_chip_gw_fet, aes(x = skew_bin)) +
+  geom_col(aes(y = odds), fill = "#56BCC2") +
+  geom_errorbar(aes(ymin = lci, ymax = uci), width = 0.3) +
+  geom_text(aes(y = uci, label = sprintf("%.2f", odds)),
+            angle = 90, vjust = 0.5, hjust = -0.1, size = 3) +
+  geom_hline(yintercept = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank()) +
+  labs(x = "Mean allelic skew", y = "Odds ratio (in TF ChIP-seq peak vs. genome-wide)")
+ggsave(paste0(save_path, "gnomAD_snp_fet_tf_chip_skew_mean.pdf"), scale = 0.7)
+write_tsv(tf_chip_gw_fet, paste0(save_path, "gnomAD_snp_fet_tf_chip_skew_mean.txt"))
+```
+
+# Section 10: TF footprint plots — stratified by cCRE
+
+```{r tf-footprint-ccre-data}
+tf_foot_ccre <- skew %>%
+  filter(skew_type == "mean_skew") %>%
+  mutate(
+    n_in  = n_tf_footprint,
+    n_out = n - n_tf_footprint,
+    prop_in = n_in / n
+  )
+
+gw_tf_foot_ccre <- tf_foot_ccre %>%
+  group_by(ccre_class) %>%
+  summarise(gw_in = sum(n_in), gw_out = sum(n_out), .groups = "drop")
+```
+
+```{r tf-footprint-ccre-proportion}
+tf_foot_ccre_long <- tf_foot_ccre %>%
+  filter(ccre_class != "Other cCREs") %>%
+  select(skew_bin, ccre_class, n, `In TF footprint` = n_in, `Not in TF footprint` = n_out) %>%
+  pivot_longer(cols = c(`In TF footprint`, `Not in TF footprint`),
+               names_to = "TF_footprint", values_to = "count") %>%
+  mutate(proportion = count / n,
+         TF_footprint = factor(TF_footprint, levels = c("Not in TF footprint", "In TF footprint")),
+         fill_group = interaction(ccre_class, TF_footprint, sep = " : "))
+
+# Map: cCRE color for "in", grey for "not in"
+tf_foot_fill <- setNames(
+  c(ccre_colors[as.character(unique(tf_foot_ccre_long$ccre_class))],
+    rep("grey80", length(unique(tf_foot_ccre_long$ccre_class)))),
+  c(paste(unique(tf_foot_ccre_long$ccre_class), ": In TF footprint"),
+    paste(unique(tf_foot_ccre_long$ccre_class), ": Not in TF footprint"))
+)
+
+ggplot(tf_foot_ccre_long, aes(x = skew_bin, y = count, fill = fill_group)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(data = tf_foot_ccre_long %>% filter(TF_footprint == "In TF footprint"),
+            aes(x = skew_bin, y = proportion, label = sprintf("%.3f", proportion)),
+            size = 2, angle = 90, vjust = 0.5, hjust = -0.1, color = "black",
+            inherit.aes = FALSE) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = tf_foot_fill, guide = "none") +
+  labs(x = "Mean allelic skew", y = "Proportion of variants in TF footprint") + 
+  facet_wrap(~ ccre_class, ncol = 2)
+ggsave(paste0(save_path, "gnomAD_snp_prop_tf_footprint_skew_mean_by_ccre.pdf"), scale = 1)
+```
+
+```{r tf-footprint-ccre-fet}
+tf_foot_ccre_fet <- tf_foot_ccre %>%
+  filter(ccre_class != "Other cCREs") %>%
+  left_join(gw_tf_foot_ccre, by = "ccre_class") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(
+      n_in + 1L, n_out + 1L,
+      gw_in - n_in + 1L,
+      gw_out - n_out + 1L
+    ), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2],
+    pval = fet$p.value
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+ggplot(tf_foot_ccre_fet, aes(x = skew_bin)) +
+  geom_col(aes(y = odds, fill = ccre_class)) +
+  geom_errorbar(aes(ymin = lci, ymax = uci), width = 0.3) +
+  geom_text(aes(y = uci, label = sprintf("%.2f", odds)),
+            angle = 90, vjust = 0.5, hjust = -0.1, size = 2) +
+  geom_hline(yintercept = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  theme_cowplot() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Odds ratio (in TF footprint vs. cCRE baseline)", fill = "ENCODE cCREs") +
+  facet_wrap(~ ccre_class, ncol = 2, scales = "free_y") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_fet_tf_footprint_skew_mean_by_ccre.pdf"), scale = 1)
+write_tsv(tf_foot_ccre_fet, paste0(save_path, "gnomAD_snp_fet_tf_footprint_skew_mean_by_ccre.txt"))
+```
+
+# Section 11: TF ChIP-seq plots — stratified by cCRE
+
+```{r tf-chip-ccre-data}
+tf_chip_ccre <- skew %>%
+  filter(skew_type == "mean_skew") %>%
+  mutate(
+    n_in  = n_tf_chip_peak,
+    n_out = n - n_tf_chip_peak,
+    prop_in = n_in / n
+  )
+
+gw_tf_chip_ccre <- tf_chip_ccre %>%
+  group_by(ccre_class) %>%
+  summarise(gw_in = sum(n_in), gw_out = sum(n_out), .groups = "drop")
+```
+
+```{r tf-chip-ccre-proportion}
+tf_chip_ccre_long <- tf_chip_ccre %>%
+  filter(ccre_class != "Other cCREs") %>%
+  select(skew_bin, ccre_class, n, `In TF ChIP-seq peak` = n_in, `Not in TF ChIP-seq peak` = n_out) %>%
+  pivot_longer(cols = c(`In TF ChIP-seq peak`, `Not in TF ChIP-seq peak`),
+               names_to = "TF_chip", values_to = "count") %>%
+  mutate(proportion = count / n,
+         TF_chip = factor(TF_chip, levels = c("Not in TF ChIP-seq peak", "In TF ChIP-seq peak")),
+         fill_group = interaction(ccre_class, TF_chip, sep = " : "))
+
+# Map: cCRE color for "in", grey for "not in"
+tf_chip_fill <- setNames(
+  c(ccre_colors[as.character(unique(tf_chip_ccre_long$ccre_class))],
+    rep("grey80", length(unique(tf_chip_ccre_long$ccre_class)))),
+  c(paste(unique(tf_chip_ccre_long$ccre_class), ": In TF ChIP-seq peak"),
+    paste(unique(tf_chip_ccre_long$ccre_class), ": Not in TF ChIP-seq peak"))
+)
+
+ggplot(tf_chip_ccre_long, aes(x = skew_bin, y = count, fill = fill_group)) +
+  geom_bar(stat = "identity", position = "fill") +
+  geom_text(data = tf_chip_ccre_long %>% filter(TF_chip == "In TF ChIP-seq peak"),
+            aes(x = skew_bin, y = proportion, label = sprintf("%.3f", proportion)),
+            size = 2, angle = 90, vjust = 0.5, hjust = -0.1, color = "black",
+            inherit.aes = FALSE) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = tf_chip_fill, guide = "none") +
+  labs(x = "Mean allelic skew", y = "Proportion of variants in TF ChIP-seq peak") +
+  facet_wrap(~ ccre_class, ncol = 2)
+ggsave(paste0(save_path, "gnomAD_snp_prop_tf_chip_skew_mean_by_ccre.pdf"), scale = 1)
+```
+
+```{r tf-chip-ccre-fet}
+tf_chip_ccre_fet <- tf_chip_ccre %>%
+  filter(ccre_class != "Other cCREs") %>%
+  left_join(gw_tf_chip_ccre, by = "ccre_class") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(
+      n_in + 1L, n_out + 1L,
+      gw_in - n_in + 1L,
+      gw_out - n_out + 1L
+    ), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2],
+    pval = fet$p.value
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+ggplot(tf_chip_ccre_fet, aes(x = skew_bin)) +
+  geom_col(aes(y = odds, fill = ccre_class)) +
+  geom_errorbar(aes(ymin = lci, ymax = uci), width = 0.3) +
+  geom_text(aes(y = uci, label = sprintf("%.2f", odds)),
+            angle = 90, vjust = 0.5, hjust = -0.1, size = 2) +
+  geom_hline(yintercept = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  theme_cowplot() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7),
+        axis.line.x = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Odds ratio (in TF ChIP-seq peak vs. cCRE baseline)", fill = "ENCODE cCREs") +
+  facet_wrap(~ ccre_class, ncol = 2, scales = "free_y") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_fet_tf_chip_skew_mean_by_ccre.pdf"), scale = 1)
+write_tsv(tf_chip_ccre_fet, paste0(save_path, "gnomAD_snp_fet_tf_chip_skew_mean_by_ccre.txt"))
+```
+
+# Section 12: Singleton vs. common Fisher's exact tests
+
+```{r compute-gw-totals}
+# Genome-wide singleton and common totals, computed once and reused for all FETs.
+# group_by(skew_type) avoids 4x inflation from the four skew types sharing the same variants.
+gw_totals <- skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  group_by(skew_type, af_class) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  pivot_wider(names_from = af_class, values_from = n, names_prefix = "gw_")
+```
+
+```{r singleton-common-fet}
+af_wide <- skew_af %>%
+  filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+  pivot_wider(names_from = af_class, values_from = c(n, n_MR, sum_MR, sum_MR_sq,
+              n_phyloP, sum_phyloP, sum_phyloP_sq, n_conserved,
+              n_tf_chip_peak, n_tf_footprint),
+              values_fill = 0)
+
+af_wide <- af_wide %>%
+  filter(n_SINGLETON + n_COMMON >= min_n) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(n_SINGLETON + 1L, n_COMMON + 1L,
+                                    gw_SINGLETON - n_SINGLETON + 1L,
+                                    gw_COMMON - n_COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2]
+  ) %>%
+  mutate(
+    log2odds = log2(odds),
+    log2lci  = log2(lci),
+    log2uci  = log2(uci)
+  ) %>%
+  ungroup() %>%
+  select(-fet)
+
+# Linear OR — all skew types
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide %>% filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 1, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = lci, ymax = uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = "OR singleton vs. common (gnomAD)",
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_", skew_save_map[st], ".pdf"))
+}
+
+# log2 OR — all skew types
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  d <- af_wide %>% filter(skew_type == st, ccre_class != "Other cCREs")
+  p <- ggplot(d) +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = log2lci, ymax = log2uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = log2odds, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st],
+         y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+         color = "ENCODE cCREs") +
+    guides(fill = "none")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_", skew_save_map[st], "_log2.pdf"))
+}
+
+write_tsv(af_wide, paste0(save_path, "gnomAD_snp_fet_singleton_common_skew.txt"))
+
+# Skinny OR (linear) — mean skew only
+d <- af_wide %>% filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+ggplot(d) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = lci, ymax = uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = odds, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = "OR singleton vs. common (gnomAD)",
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_mean_skinny.pdf"))
+
+# Skinny log2 OR — mean skew only
+ggplot(d) +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = log2lci, ymax = log2uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = log2odds, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = log2lci, ymax = log2uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = expression(log[2]*OR*" singleton vs. common (gnomAD)"),
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_mean_log2_skinny.pdf"))
+```
+
+```{r singleton-common-fet-main}
+# Skinny OR (linear) — mean skew, shared y-axis with indels
+SHARED_YLIM <- c(0.1, 7.3)  # keep identical in SNP and indel scripts
+
+d <- af_wide %>% filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(d) +
+  geom_hline(yintercept = 1, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = lci, ymax = uci,
+                  fill = ccre_class, group = ccre_class), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = odds, color = ccre_class)) +
+  geom_errorbar(aes(x = skew_bin, ymin = lci, ymax = uci, color = ccre_class),
+                width = 0.5) +
+  coord_cartesian(ylim = SHARED_YLIM) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew",
+       y = "OR singleton vs. common (gnomAD)",
+       color = "ENCODE cCREs") +
+  guides(fill = "none")
+ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_mean_skinny_coarse.pdf"))
+```
