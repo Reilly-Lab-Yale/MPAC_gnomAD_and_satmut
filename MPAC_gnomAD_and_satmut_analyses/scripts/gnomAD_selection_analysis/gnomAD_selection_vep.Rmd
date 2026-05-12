@@ -205,8 +205,8 @@ write_tsv(af_wide_vep, paste0(save_path, "gnomAD_vep_fet_singleton_common_by_con
 consq_frac_cons <- consq %>%
   filter(n >= 50) %>%
   mutate(
-    frac_conserved     = n_conserved / n,
-    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved     = n_conserved / n_phyloP,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
     frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
     frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
   )
@@ -325,8 +325,8 @@ snp_cons <- snp_skew %>%
   mutate(
     ccre_class = factor(ccre_class, levels = snp_ccre_order),
     skew_bin = factor(skew_bin, levels = skew_bin_order),
-    frac_conserved     = n_conserved / n,
-    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved     = n_conserved / n_phyloP,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
     frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
     frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
   )

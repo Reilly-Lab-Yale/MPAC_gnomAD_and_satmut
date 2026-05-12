@@ -425,13 +425,13 @@ emvar_pleio_cons <- emvar %>%
   )) %>%
   group_by(ccre_class, pleio) %>%
   summarise(
-    n           = sum(n),
+    n_phyloP           = sum(n_phyloP),
     n_conserved = sum(n_conserved),
     .groups = "drop"
   ) %>%
   mutate(
-    frac_conserved     = n_conserved / n,
-    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved     = n_conserved / n_phyloP,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
     frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
     frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se,
     pleio              = as.factor(pleio)
@@ -610,6 +610,58 @@ ggsave(paste0(save_path, "gnomAD_snp_heatmap_phylop_marginal_by_af.pdf"), width 
 write_tsv(marginal_phylop, paste0(save_path, "gnomAD_snp_heatmap_phylop_marginal_by_af.txt"))
 ```
 
+## Proportion conserved heatmaps
+
+```{r propcons-heatmap-skew-x-af}
+skew_af_prop_cons <- skew_af %>%
+  mutate(prop_conserved = ifelse(n_phyloP >= min_n, n_conserved / n_phyloP, NA))
+
+heatmap_prop_cons <- skew_af_prop_cons %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs")
+
+ggplot(heatmap_prop_cons) +
+  geom_tile(aes(x = skew_bin, y = af_class, fill = prop_conserved)) +
+  geom_text(aes(x = skew_bin, y = af_class,
+                label = sprintf("%.3f", prop_conserved)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(na.value = "grey80") +
+  labs(x = "Mean allelic skew", y = "AF class", fill = "Proportion conserved\n(phyloP > 2.27)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_prop_conserved_skew_mean_by_af.pdf"), width = 8, height = 8)
+write_tsv(heatmap_prop_cons, paste0(save_path, "gnomAD_snp_heatmap_prop_conserved_skew_mean_by_af.txt"))
+```
+
+```{r propcons-heatmap-marginal}
+marginal_prop_cons <- skew_af %>%
+  filter(ccre_class != "Other cCREs") %>%
+  group_by(ccre_class, af_class) %>%
+  summarise(
+    prop_conserved = sum(n_conserved) / sum(n_phyloP),
+    .groups = "drop"
+  )
+
+prop_cons_range <- range(heatmap_prop_cons$prop_conserved, na.rm = TRUE)
+
+ggplot(marginal_prop_cons) +
+  geom_tile(aes(x = 1, y = af_class, fill = prop_conserved)) +
+  geom_text(aes(x = 1, y = af_class,
+                label = sprintf("%.3f", prop_conserved)),
+            color = "white", size = 2.5) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line = element_blank(),
+        strip.background = element_blank()) +
+  scale_fill_viridis_c(limits = prop_cons_range, na.value = "grey80") +
+  labs(x = "", y = "AF class", fill = "Proportion conserved\n(phyloP > 2.27)") +
+  facet_grid(rows = vars(ccre_class)) +
+  coord_fixed()
+ggsave(paste0(save_path, "gnomAD_snp_heatmap_prop_conserved_marginal_by_af.pdf"), width = 8, height = 8)
+write_tsv(marginal_prop_cons, paste0(save_path, "gnomAD_snp_heatmap_prop_conserved_marginal_by_af.txt"))
+```
+
 ## Roulette heatmaps
 
 ```{r mutrate-heatmap-skew-x-af}
@@ -668,8 +720,8 @@ write_tsv(marginal_mutrate, paste0(save_path, "gnomAD_snp_heatmap_mutrate_margin
 skew_frac_cons <- skew %>%
   filter(n >= min_n) %>%
   mutate(
-    frac_conserved     = n_conserved / n,
-    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n),
+    frac_conserved     = n_conserved / n_phyloP,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
     frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
     frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
   )
