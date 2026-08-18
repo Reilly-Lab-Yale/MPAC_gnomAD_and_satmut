@@ -16,8 +16,6 @@ pred_path     <- "../../data/gnomAD_snp_predictions/"
 gnomad_path   <- "../../data/gnomAD_genomes_v3/"
 roulette_path <- "../../data/gnomAD_roulette_predictions/"
 ccre_path     <- "../../data/gene_regulatory_elements/"
-ccre_indiv_path <- "../../data/gene_regulatory_elements_indiv/"
-cgi_path      <- "../../data/gnomAD_cpg_islands_hg38/cpgIslandExt.txt.gz"
 mask_path     <- "../../data/gencode_filtered_regions/gencode.v44.basic.annotation.exons.splice.autosomes.v2.bed"
 phylop_path   <- "../../data/zoonomia_phylop/data_download/241-mammalian-2020v2.phylop-Homo_sapiens.bigWig"
 tf_chip_path  <- "../../data/gnomAD_miscellaneous/tf_chip_seq/chip.for.steve.regions.hg38.bed.gz"
@@ -25,24 +23,6 @@ tf_foot_path  <- "../../data/gnomAD_miscellaneous/tf_footprints/tf.footprints.re
 output_path   <- "../../data/gnomAD_snp_summaries/"
 
 dir.create(output_path, showWarnings = FALSE, recursive = TRUE)
-
-# Cell lines with biosample-specific cCRE annotations
-# (first three used in MPAC training, last three untrained)
-cell_lines <- c("K562", "HepG2", "SK-N-SH", "MCF-7", "HCT116", "H1")
-
-# Assign cCRE class to each row of dt, returning a vector aligned to dt's rows.
-# Does NOT deduplicate dt: where a variant overlaps several cCREs, the
-# highest-priority (lowest priority value) class wins.
-assign_ccre_class <- function(dt, ccre_dt) {
-	tmp <- dt[, .(row_id = .I, chr = chr, start = pos, end = pos)]
-	setkey(tmp, chr, start, end)
-	ov <- foverlaps(tmp, ccre_dt, type = "any", nomatch = NA)
-	ov[is.na(ccre_class), `:=`(ccre_class = "non-cCRE", priority = 6L)]
-	setorder(ov, row_id, priority)
-	ov <- unique(ov, by = "row_id")
-	setorder(ov, row_id)
-	ov$ccre_class
-}
 
 # Funnel tracking
 funnel <- data.table(step = integer(), description = character(), n = integer())
@@ -52,20 +32,17 @@ add_funnel <- function(step, desc, n) {
 }
 
 # Mutation classification
-# CpG transitions are further split by whether the site falls in a UCSC
-# CpG island (masked cpgIslandExt track).
-classify_mutation <- function(ref, alt, pn, is_cgi) {
+classify_mutation <- function(ref, alt, pn) {
 	is_ti <- (ref == "C" & alt == "T") | (ref == "T" & alt == "C") |
 	         (ref == "A" & alt == "G") | (ref == "G" & alt == "A")
 	is_cpg <- (ref == "C" & alt == "T" & substr(pn, 4, 4) == "G") |
 	          (ref == "G" & alt == "A" & substr(pn, 2, 2) == "C")
 	has_pn <- !is.na(pn)
 	fcase(
-		!has_pn,             "unknown",
-		is_cpg &  is_cgi,    "CpG-CGI",
-		is_cpg & !is_cgi,    "CpG-nonCGI",
-		is_ti,               "non-CpG-ti",
-		default =            "non-CpG-tv"
+		!has_pn,           "unknown",
+		is_cpg,            "CpG",
+		is_ti,             "non-CpG-ti",
+		default =          "non-CpG-tv"
 	)
 }
 
@@ -101,63 +78,6 @@ ccre[, priority := fcase(
 ccre <- ccre[chr == chr_str, .(chr, start, end, ccre_class, priority)]
 setkey(ccre, chr, start, end)
 cat(paste0("  cCRE intervals: ", nrow(ccre), "\n"))
-
-# Load per-cell-line cCRE annotations
-# Each biosample file contains the full V4 registry, with column 10 giving the
-# biosample-specific classification. "Low-DNase" = element present in the
-# registry but not accessible in this cell line.
-cat("Loading per-cell-line cCRE annotations\n")
-known_indiv_classes <- c("PLS", "pELS", "dELS", "Low-DNase",
-                         "CA-CTCF", "CA-TF", "CA-H3K4me3", "CA-only")
-ccre_indiv <- lapply(cell_lines, function(cl) {
-	f <- list.files(paste0(ccre_indiv_path, cl), pattern = "\\.bed\\.gz$", full.names = TRUE)
-	if (length(f) != 1L) stop(paste0("Expected exactly one .bed.gz in ", ccre_indiv_path, cl))
-	dt <- fread(
-		cmd = paste0("gunzip -cd ", f),
-		header = FALSE,
-		select = c(1:3, 10),
-		col.names = c("chr", "start", "end", "class")
-	)
-	dt[, start := start + 1L]
-	dt <- dt[chr == chr_str]
-	unknown_classes <- setdiff(unique(dt$class), known_indiv_classes)
-	if (length(unknown_classes) > 0) {
-		stop(paste0("Unrecognized cCRE class(es) in ", cl, ": ",
-		            paste(unknown_classes, collapse = ", ")))
-	}
-	dt[, ccre_class := fcase(
-		class %in% c("PLS", "pELS", "dELS"), class,
-		class == "Low-DNase",                "Inactive cCRE",
-		default =                            "Other cCREs"
-	)]
-	dt[, priority := fcase(
-		ccre_class == "PLS",           1L,
-		ccre_class == "pELS",          2L,
-		ccre_class == "dELS",          3L,
-		ccre_class == "Other cCREs",   4L,
-		default =                      5L
-	)]
-	dt <- dt[, .(chr, start, end, ccre_class, priority)]
-	setkey(dt, chr, start, end)
-	cat(paste0("  ", cl, " intervals: ", nrow(dt), "\n"))
-	dt
-})
-names(ccre_indiv) <- cell_lines
-
-# Load CpG islands (UCSC cpgIslandExt, masked). This is a UCSC table dump,
-# not a BED: column 1 is the bin index, so coordinates are columns 2-4.
-cat("Loading CpG islands\n")
-cgi <- fread(
-	cmd = paste0("gunzip -cd ", cgi_path),
-	header = FALSE,
-	select = 2:4,
-	col.names = c("chr", "start", "end")
-)
-cgi[, start := start + 1L]
-cgi <- cgi[chr == chr_str]
-cgi[, cgi_flag := TRUE]
-setkey(cgi, chr, start, end)
-cat(paste0("  CpG island intervals: ", nrow(cgi), "\n"))
 
 # Load exon/splice mask
 cat("Loading exon/splice mask\n")
@@ -397,19 +317,8 @@ rm(ov_foot, tf_chip, tf_foot)
 cat(paste0("  Variants in TF ChIP-seq peaks: ", sum(merged$is_tf_chip_peak), " / ", nrow(merged), "\n"))
 cat(paste0("  Variants in TF footprints: ", sum(merged$is_tf_footprint), " / ", nrow(merged), "\n"))
 
-# Annotate CpG island overlap
-cat("Annotating CpG island overlap\n")
-merged[, `:=`(start = pos, end = pos)]
-setkey(merged, chr, start, end)
-ov_cgi <- foverlaps(merged, cgi, type = "any", nomatch = NA)
-merged[, is_cgi := !is.na(ov_cgi$cgi_flag)]
-merged[, `:=`(start = NULL, end = NULL)]
-rm(ov_cgi, cgi)
-
-cat(paste0("  Variants in CpG islands: ", sum(merged$is_cgi), " / ", nrow(merged), "\n"))
-
 # Classify mutation type
-merged[, mut_class := classify_mutation(ref, alt, PN, is_cgi)]
+merged[, mut_class := classify_mutation(ref, alt, PN)]
 
 # Annotate cCRE class via foverlaps
 merged[, `:=`(start = pos, end = pos)]
@@ -422,17 +331,6 @@ setorder(ov, i.start, ref, alt, priority)
 annotated <- unique(ov, by = c("i.start", "ref", "alt"))
 add_funnel(8L, "Annotated with cCREs", nrow(annotated))
 rm(merged, ov)
-gc(verbose = FALSE)
-
-# Annotate with per-cell-line cCRE classes. `annotated` is already one row per
-# variant, so these are assigned onto a fixed row set without re-deduplicating.
-cat("Annotating with per-cell-line cCRE classes\n")
-for (cl in cell_lines) {
-	set(annotated, j = paste0("ccre_class_", cl),
-	    value = assign_ccre_class(annotated, ccre_indiv[[cl]]))
-	cat(paste0("  ", cl, " done\n"))
-}
-rm(ccre_indiv)
 gc(verbose = FALSE)
 
 # Bin skew and activity values
@@ -506,28 +404,6 @@ summary1b <- rbindlist(lapply(seq_along(skew_types), function(j) {
 		n_tf_footprint = sum(is_tf_footprint)
 	), by = .(skew_bin = get(skew_bin_cols[j]), ccre_class)][
 		, skew_type := skew_types[j]]
-}))
-
-# Summary 1c: skew x per-cell-line cCRE x cell line
-cat("Computing summary 1c (skew x per-cell-line cCRE)\n")
-summary1c <- rbindlist(lapply(cell_lines, function(cl) {
-	cl_col <- paste0("ccre_class_", cl)
-	rbindlist(lapply(seq_along(skew_types), function(j) {
-		out <- annotated[, .(
-			n              = .N,
-			n_MR           = sum(!is.na(MR)),
-			sum_MR         = sum(MR, na.rm = TRUE),
-			sum_MR_sq      = sum(MR^2, na.rm = TRUE),
-			n_phyloP       = sum(!is.na(phyloP_score)),
-			sum_phyloP     = sum(phyloP_score, na.rm = TRUE),
-			sum_phyloP_sq  = sum(phyloP_score^2, na.rm = TRUE),
-			n_conserved    = sum(is_conserved),
-			n_tf_chip_peak = sum(is_tf_chip_peak),
-			n_tf_footprint = sum(is_tf_footprint)
-		), by = c(skew_bin_cols[j], cl_col)]
-		setnames(out, c(skew_bin_cols[j], cl_col), c("skew_bin", "ccre_class"))
-		out[, `:=`(skew_type = skew_types[j], cell_line = cl)]
-	}))
 }))
 
 # Summary 2: activity x cCRE
@@ -643,7 +519,6 @@ summary5 <- rbind(
 # Write per-chromosome outputs
 fwrite(summary1a, paste0(output_path, "snp_skew_by_ccre_mutclass_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary1b, paste0(output_path, "snp_skew_by_ccre_", chr_str, ".tsv"), sep = "\t")
-fwrite(summary1c, paste0(output_path, "snp_skew_by_ccre_indiv_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary2, paste0(output_path, "snp_activity_by_ccre_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary3, paste0(output_path, "snp_emvar_by_ccre_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary4a, paste0(output_path, "snp_skew_by_ccre_af_mutclass_", chr_str, ".tsv"), sep = "\t")
@@ -655,7 +530,6 @@ fwrite(funnel, paste0(output_path, "funnel_snp_", chr_str, ".tsv"), sep = "\t")
 cat(paste0("Done: ", chr_str, "\n"))
 cat(paste0("  Summary 1a rows: ", nrow(summary1a), "\n"))
 cat(paste0("  Summary 1b rows: ", nrow(summary1b), "\n"))
-cat(paste0("  Summary 1c rows: ", nrow(summary1c), "\n"))
 cat(paste0("  Summary 2 rows:  ", nrow(summary2), "\n"))
 cat(paste0("  Summary 3 rows:  ", nrow(summary3), "\n"))
 cat(paste0("  Summary 4a rows: ", nrow(summary4a), "\n"))

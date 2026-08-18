@@ -8,7 +8,6 @@ path <- "../../data/gnomAD_snp_summaries/"
 prefixes <- c(
 	"snp_skew_by_ccre_mutclass",
 	"snp_skew_by_ccre",
-	"snp_skew_by_ccre_indiv",
 	"snp_activity_by_ccre",
 	"snp_emvar_by_ccre",
 	"snp_skew_by_ccre_af_mutclass",
@@ -89,14 +88,6 @@ s1b <- read_chr_files("snp_skew_by_ccre") |>
 	sum_suf_stats()
 write_tsv(s1b, paste0(path, "gnomAD_snp_skew_by_ccre.tsv"))
 cat(paste0("  Rows: ", nrow(s1b), "\n"))
-
-# Summary 1c: skew x per-cell-line cCRE x cell line
-cat("Combining summary 1c (skew x per-cell-line cCRE)\n")
-s1c <- read_chr_files("snp_skew_by_ccre_indiv") |>
-	group_by(skew_type, skew_bin, ccre_class, cell_line) |>
-	sum_suf_stats()
-write_tsv(s1c, paste0(path, "gnomAD_snp_skew_by_ccre_indiv.tsv"))
-cat(paste0("  Rows: ", nrow(s1c), "\n"))
 
 # Summary 2: activity x cCRE
 cat("Combining summary 2 (activity x cCRE)\n")

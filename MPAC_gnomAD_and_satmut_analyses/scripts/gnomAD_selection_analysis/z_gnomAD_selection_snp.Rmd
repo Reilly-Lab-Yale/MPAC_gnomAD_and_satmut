@@ -45,25 +45,9 @@ skew_labels_map <- c(mean_skew = "Mean allelic skew", K562_skew = "K562 allelic 
                      HepG2_skew = "HepG2 allelic skew", SKNSH_skew = "SKNSH allelic skew")
 skew_save_map <- c(mean_skew = "mean", K562_skew = "K562", HepG2_skew = "HepG2", SKNSH_skew = "SKNSH")
 
-mut_order <- c("CpG-CGI", "CpG-nonCGI", "non-CpG-ti", "non-CpG-tv")
-mut_labels <- c(`CpG-CGI` = "CpG transition (CGI)", `CpG-nonCGI` = "CpG transition (non-CGI)",
-                `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
-mut_colors <- c(`CpG transition (CGI)` = "#E41A1C", `CpG transition (non-CGI)` = "#FB9A99",
-                `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
-
-# Per-cell-line cCRE classes (biosample-specific ENCODE V4 classification).
-# "Inactive cCRE" = registry element with no DNase signal in that cell line
-# (ENCODE "Low-DNase").
-ccre_indiv_colors <- c(PLS = "#3E0751", pELS = "#405187", dELS = "#468E8B",
-                       `Other cCREs` = "grey50", `Inactive cCRE` = "grey65",
-                       `non-cCRE` = "#79C66E")
-ccre_indiv_order <- c("PLS", "pELS", "dELS", "Other cCREs", "Inactive cCRE", "non-cCRE")
-
-# First three cell lines used in MPAC training, last three untrained
-cell_line_order <- c("K562", "HepG2", "SK-N-SH", "MCF-7", "HCT116", "H1")
-cell_line_trained <- c("K562", "HepG2", "SK-N-SH")
-# Map skew type to the matching cCRE cell line, for the trained-only analysis
-skew_to_cell <- c(K562_skew = "K562", HepG2_skew = "HepG2", SKNSH_skew = "SK-N-SH")
+mut_order <- c("CpG", "non-CpG-ti", "non-CpG-tv")
+mut_labels <- c(CpG = "CpG transition", `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
+mut_colors <- c(`CpG transition` = "#E41A1C", `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
 ```
 
 ```{r load-data}
@@ -74,7 +58,6 @@ emvar     <- fread(paste0(data_path, "gnomAD_snp_emvar_by_ccre.tsv"))
 skew_af   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af.tsv"))
 skew_af_mc <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af_mutclass.tsv"))
 skew_mc   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_mutclass.tsv"))
-skew_indiv <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_indiv.tsv"))
 
 # Relabel non-cCRE -> non-cCRE (revert by commenting out this block)
 relabel_ccre <- function(x) ifelse(x == "non-cCRE", "non-cCRE", x)
@@ -120,11 +103,6 @@ skew_mc <- skew_mc %>%
   mutate(ccre_class = factor(ccre_class, levels = ccre_order),
          skew_bin = factor(skew_bin, levels = skew_bin_order),
          mut_class = factor(mut_labels[mut_class], levels = mut_labels))
-
-skew_indiv <- skew_indiv %>%
-  mutate(ccre_class = factor(ccre_class, levels = ccre_indiv_order),
-         skew_bin = factor(skew_bin, levels = skew_bin_order),
-         cell_line = factor(cell_line, levels = cell_line_order))
 ```
 
 # Section 1: Descriptive plots
@@ -894,7 +872,7 @@ skew_mc_mutrate %>%
   scale_color_manual(values = ccre_colors) +
   labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
   guides(fill = "none") +
-  facet_wrap(~ mut_class, ncol = 4)
+  facet_wrap(~ mut_class, ncol = 3)
 ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_by_mutclass_skinny.pdf"), scale = 1)
 
 # All skew types
@@ -918,7 +896,7 @@ for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
     scale_color_manual(values = ccre_colors) +
     labs(x = skew_labels_map[st], y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
     guides(fill = "none") +
-    facet_wrap(~ mut_class, ncol = 4) +
+    facet_wrap(~ mut_class, ncol = 3) +
     scale_y_log10()
   print(p)
   ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass.pdf"), scale = 1.1)
@@ -1434,147 +1412,4 @@ ggplot(d) +
        color = "ENCODE cCREs") +
   guides(fill = "none")
 ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_skew_mean_skinny_coarse.pdf"))
-```
-# Section 13: Conservation by per-cell-line cCRE class
-
-```{r indiv-ccre-stats}
-# Mean phyloP and proportion conserved, stratified by biosample-specific cCRE
-# class instead of the cell-agnostic ENCODE classification.
-skew_indiv_stats <- skew_indiv %>%
-  filter(n >= min_n) %>%
-  mutate(
-    phyloP_mean = sum_phyloP / n_phyloP,
-    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
-    phyloP_se   = sqrt(phyloP_var / n_phyloP),
-    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
-    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se,
-    frac_conserved     = n_conserved / n_phyloP,
-    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
-    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
-    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se
-  )
-
-write_tsv(skew_indiv_stats, paste0(save_path, "gnomAD_snp_conservation_skew_by_ccre_indiv.txt"))
-
-# Bin occupancy, to check which panels are supported before interpreting them
-skew_indiv %>%
-  filter(skew_type == "mean_skew") %>%
-  count(cell_line, ccre_class, wt = n) %>%
-  pivot_wider(names_from = ccre_class, values_from = n) %>%
-  as.data.frame()
-```
-
-```{r indiv-ccre-mean-phylop, fig.width=12, fig.height=8}
-skew_indiv_stats %>%
-  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
-  ggplot() +
-  geom_hline(yintercept = 0, color = "black") +
-  geom_ribbon(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci,
-                  fill = ccre_class, group = ccre_class),
-              position = position_dodge(width = 0), alpha = 0.5) +
-  geom_point(aes(x = skew_bin, y = phyloP_mean, color = ccre_class),
-             position = position_dodge(width = 0)) +
-  geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci, color = ccre_class),
-                width = 0.5, position = position_dodge(width = 0)) +
-  theme_cowplot() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        axis.line.x = element_blank(),
-        aspect.ratio = 1, strip.background = element_blank()) +
-  scale_fill_manual(values = ccre_indiv_colors) +
-  scale_color_manual(values = ccre_indiv_colors) +
-  labs(x = "Mean allelic skew", y = "Mean conservation (phyloP)", color = "ENCODE cCREs") +
-  guides(fill = "none") +
-  facet_wrap(~ cell_line, ncol = 3)
-ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_skew_mean_by_ccre_indiv.pdf"), scale = 1.1)
-```
-
-```{r indiv-ccre-prop-conserved, fig.width=12, fig.height=8}
-skew_indiv_stats %>%
-  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
-  ggplot() +
-  geom_hline(yintercept = 0, color = "black") +
-  geom_ribbon(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
-                  fill = ccre_class, group = ccre_class),
-              position = position_dodge(width = 0), alpha = 0.5) +
-  geom_point(aes(x = skew_bin, y = frac_conserved, color = ccre_class),
-             position = position_dodge(width = 0)) +
-  geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
-                     color = ccre_class),
-                width = 0.5, position = position_dodge(width = 0)) +
-  theme_cowplot() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        axis.line.x = element_blank(),
-        aspect.ratio = 1, strip.background = element_blank()) +
-  scale_fill_manual(values = ccre_indiv_colors) +
-  scale_color_manual(values = ccre_indiv_colors) +
-  labs(x = "Mean allelic skew", y = "Proportion conserved (phyloP > 2.27)", color = "ENCODE cCREs") +
-  guides(fill = "none") +
-  facet_wrap(~ cell_line, ncol = 3)
-ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_mean_by_ccre_indiv.pdf"), scale = 1.1)
-```
-
-# Section 14: Matched vs. mismatched cell line (trained cell lines only)
-
-```{r matched-cell-line-data}
-# Cell-line-specific allelic skew against cell-line-specific cCRE classes, for
-# the three cell lines MPAC was trained on. The diagonal is matched, the
-# off-diagonal mismatched.
-skew_indiv_matched <- skew_indiv_stats %>%
-  filter(skew_type %in% names(skew_to_cell), cell_line %in% cell_line_trained) %>%
-  mutate(skew_cell = factor(skew_to_cell[as.character(skew_type)], levels = cell_line_trained),
-         cell_line = factor(as.character(cell_line), levels = cell_line_trained),
-         matched = ifelse(as.character(skew_cell) == as.character(cell_line), "Matched", "Mismatched"))
-
-write_tsv(skew_indiv_matched, paste0(save_path, "gnomAD_snp_conservation_skew_by_ccre_indiv_matched.txt"))
-```
-
-```{r matched-cell-line-mean-phylop, fig.width=12, fig.height=12}
-skew_indiv_matched %>%
-  filter(ccre_class != "Other cCREs") %>%
-  ggplot() +
-  geom_hline(yintercept = 0, color = "black") +
-  geom_ribbon(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci,
-                  fill = ccre_class, group = ccre_class),
-              position = position_dodge(width = 0), alpha = 0.5) +
-  geom_point(aes(x = skew_bin, y = phyloP_mean, color = ccre_class),
-             position = position_dodge(width = 0)) +
-  geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci, color = ccre_class),
-                width = 0.5, position = position_dodge(width = 0)) +
-  theme_cowplot() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        axis.line.x = element_blank(),
-        aspect.ratio = 1, strip.background = element_blank()) +
-  scale_fill_manual(values = ccre_indiv_colors) +
-  scale_color_manual(values = ccre_indiv_colors) +
-  labs(x = "Allelic skew (rows) by cCRE cell line (columns)",
-       y = "Mean conservation (phyloP)", color = "ENCODE cCREs") +
-  guides(fill = "none") +
-  facet_grid(rows = vars(skew_cell), cols = vars(cell_line))
-ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_skew_by_ccre_indiv_matched.pdf"), scale = 1.2)
-```
-
-```{r matched-cell-line-prop-conserved, fig.width=12, fig.height=12}
-skew_indiv_matched %>%
-  filter(ccre_class != "Other cCREs") %>%
-  ggplot() +
-  geom_hline(yintercept = 0, color = "black") +
-  geom_ribbon(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
-                  fill = ccre_class, group = ccre_class),
-              position = position_dodge(width = 0), alpha = 0.5) +
-  geom_point(aes(x = skew_bin, y = frac_conserved, color = ccre_class),
-             position = position_dodge(width = 0)) +
-  geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
-                     color = ccre_class),
-                width = 0.5, position = position_dodge(width = 0)) +
-  theme_cowplot() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        axis.line.x = element_blank(),
-        aspect.ratio = 1, strip.background = element_blank()) +
-  scale_fill_manual(values = ccre_indiv_colors) +
-  scale_color_manual(values = ccre_indiv_colors) +
-  labs(x = "Allelic skew (rows) by cCRE cell line (columns)",
-       y = "Proportion conserved (phyloP > 2.27)", color = "ENCODE cCREs") +
-  guides(fill = "none") +
-  facet_grid(rows = vars(skew_cell), cols = vars(cell_line))
-ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_by_ccre_indiv_matched.pdf"), scale = 1.2)
 ```

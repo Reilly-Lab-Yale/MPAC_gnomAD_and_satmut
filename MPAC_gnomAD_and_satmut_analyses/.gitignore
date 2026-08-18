@@ -62,6 +62,15 @@ data/gene_regulatory_elements/*.bigWig
 data/gene_regulatory_elements/*.bed.gz
 data/gene_regulatory_elements/*.bed.gz.tbi
 
+# ENCODE per-cell-line regulatory elements (downloaded via script)
+data/gene_regulatory_elements_indiv/**/*.bed
+data/gene_regulatory_elements_indiv/**/*.bed.gz
+data/gene_regulatory_elements_indiv/**/*.bed.gz.tbi
+
+# UCSC CpG islands (downloaded via script)
+data/gnomAD_cpg_islands_hg38/*.txt.gz
+data/gnomAD_cpg_islands_hg38/*.sql
+
 # Saturation mutagenesis predictions (large VCFs)
 data/satmut_promoters_predictions/*.vcf.gz
 
