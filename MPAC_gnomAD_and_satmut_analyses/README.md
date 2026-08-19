@@ -35,7 +35,11 @@ Code used to analyze and visualize MPAC gnomAD and saturation mutagenesis predic
 
 - **data/gene_regulatory_elements**: ENCODE cCRE annotations and cell-line-specific BigWig signal tracks.
 
+- **data/gene_regulatory_elements_indiv**: ENCODE cCRE annotations for K562, HepG2, SK-N-SH, MCF-7, HCT116, and H1.
+
 - **data/gnomAD_genomes_v3**: gnomAD v3.1.2 VCFs and subsetted annotations.
+
+- **data/gnomAD_cpg_islands_hg38**: UCSC CpG island annotations.
 
 - **data/gnomAD_indels_predictions**: MPAC gnomAD indel predictions.
 
