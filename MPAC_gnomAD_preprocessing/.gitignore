@@ -16,4 +16,4 @@ __pycache__
 helper/intuition/dump100.csv/*
 helper/intuition/counts_broken.csv/*
 3.6.remove_non_snp/remove_non_snp.py
-helper/intuition/counts.csv/*
+helper/intuition/counts.csv/*.DS_Store
