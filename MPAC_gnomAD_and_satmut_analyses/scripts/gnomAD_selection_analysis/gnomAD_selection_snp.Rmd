@@ -45,11 +45,20 @@ skew_labels_map <- c(mean_skew = "Mean allelic skew", K562_skew = "K562 allelic 
                      HepG2_skew = "HepG2 allelic skew", SKNSH_skew = "SKNSH allelic skew")
 skew_save_map <- c(mean_skew = "mean", K562_skew = "K562", HepG2_skew = "HepG2", SKNSH_skew = "SKNSH")
 
-mut_order <- c("CpG-CGI", "CpG-nonCGI", "non-CpG-ti", "non-CpG-tv")
-mut_labels <- c(`CpG-CGI` = "CpG transition (CGI)", `CpG-nonCGI` = "CpG transition (non-CGI)",
-                `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
-mut_colors <- c(`CpG transition (CGI)` = "#E41A1C", `CpG transition (non-CGI)` = "#FB9A99",
-                `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
+mut_order <- c("CpG", "non-CpG-ti", "non-CpG-tv")
+mut_labels <- c(CpG = "CpG transition", `non-CpG-ti` = "non-CpG transition", `non-CpG-tv` = "non-CpG transversion")
+mut_colors <- c(`CpG transition` = "#E41A1C", `non-CpG transition` = "#1F78B4", `non-CpG transversion` = "#A6CEE3")
+
+# CpG transitions split by overlap with a UCSC CpG island (masked cpgIslandExt).
+# The preprocessing emits these as separate mut_class levels; the original
+# three-class figures are reproduced by collapsing them back to "CpG".
+mut_order_cgi <- c("CpG-CGI", "CpG-nonCGI", "non-CpG-ti", "non-CpG-tv")
+# Abbreviated labels: with four panels the full "CpG transition (non-CGI)" is
+# too wide for the facet strip. ti = transition, tv = transversion.
+mut_labels_cgi <- c(`CpG-CGI` = "CpG ti (CGI)", `CpG-nonCGI` = "CpG ti (non-CGI)",
+                    `non-CpG-ti` = "non-CpG ti", `non-CpG-tv` = "non-CpG tv")
+mut_colors_cgi <- c(`CpG ti (CGI)` = "#E41A1C", `CpG ti (non-CGI)` = "#FB9A99",
+                    `non-CpG ti` = "#1F78B4", `non-CpG tv` = "#A6CEE3")
 
 # Per-cell-line cCRE classes (biosample-specific ENCODE V4 classification).
 # "Inactive cCRE" = registry element with no DNase signal in that cell line
@@ -109,6 +118,34 @@ skew_af <- skew_af %>%
   mutate(ccre_class = factor(ccre_class, levels = ccre_order),
          skew_bin = factor(skew_bin, levels = skew_bin_order),
          af_class = factor(af_class, levels = af_order))
+
+# Keep the four-class (CpG-island-split) tables, and collapse the CpG classes
+# back together so the original three-class figures are unchanged.
+suf_stat_cols <- c("n", "n_MR", "sum_MR", "sum_MR_sq", "n_phyloP", "sum_phyloP",
+                   "sum_phyloP_sq", "n_conserved", "n_tf_chip_peak", "n_tf_footprint")
+
+collapse_cgi <- function(df, keys) {
+  df %>%
+    mutate(mut_class = ifelse(mut_class %in% c("CpG-CGI", "CpG-nonCGI"), "CpG", mut_class)) %>%
+    group_by(across(all_of(keys))) %>%
+    summarise(across(all_of(suf_stat_cols), sum), .groups = "drop")
+}
+
+skew_mc_cgi    <- skew_mc
+skew_af_mc_cgi <- skew_af_mc
+skew_mc    <- collapse_cgi(skew_mc,    c("skew_type", "skew_bin", "ccre_class", "mut_class"))
+skew_af_mc <- collapse_cgi(skew_af_mc, c("skew_type", "skew_bin", "ccre_class", "af_class", "mut_class"))
+
+skew_mc_cgi <- skew_mc_cgi %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         mut_class = factor(mut_labels_cgi[mut_class], levels = mut_labels_cgi))
+
+skew_af_mc_cgi <- skew_af_mc_cgi %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         af_class = factor(af_class, levels = af_order),
+         mut_class = factor(mut_labels_cgi[mut_class], levels = mut_labels_cgi))
 
 skew_af_mc <- skew_af_mc %>%
   mutate(ccre_class = factor(ccre_class, levels = ccre_order),
@@ -894,7 +931,7 @@ skew_mc_mutrate %>%
   scale_color_manual(values = ccre_colors) +
   labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
   guides(fill = "none") +
-  facet_wrap(~ mut_class, ncol = 4)
+  facet_wrap(~ mut_class, ncol = 3)
 ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_by_mutclass_skinny.pdf"), scale = 1)
 
 # All skew types
@@ -918,7 +955,7 @@ for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
     scale_color_manual(values = ccre_colors) +
     labs(x = skew_labels_map[st], y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
     guides(fill = "none") +
-    facet_wrap(~ mut_class, ncol = 4) +
+    facet_wrap(~ mut_class, ncol = 3) +
     scale_y_log10()
   print(p)
   ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass.pdf"), scale = 1.1)
@@ -1577,4 +1614,98 @@ skew_indiv_matched %>%
   guides(fill = "none") +
   facet_grid(rows = vars(skew_cell), cols = vars(cell_line))
 ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_by_ccre_indiv_matched.pdf"), scale = 1.2)
+```
+
+# Section 15: Mutation class plots split by CpG island
+
+```{r mutrate-by-mutclass-cgi}
+# As Section 7, but with CpG transitions split by whether the site falls in a
+# UCSC CpG island (masked cpgIslandExt track).
+skew_mc_cgi_mutrate <- skew_mc_cgi %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+# Skinny version for mean skew
+skew_mc_cgi_mutrate %>%
+  filter(skew_type == "mean_skew", ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_hline(yintercept = 0, color = "black") +
+  geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                  fill = ccre_class, group = ccre_class),
+              position = position_dodge(width = 0), alpha = 0.5) +
+  geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+             position = position_dodge(width = 0)) +
+  geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                width = 0.5, position = position_dodge(width = 0)) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.line.x = element_blank(),
+        aspect.ratio = 3 / 2) +
+  scale_fill_manual(values = ccre_colors) +
+  scale_color_manual(values = ccre_colors) +
+  labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+  guides(fill = "none") +
+  facet_wrap(~ mut_class, ncol = 4)
+ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_by_mutclass_cgi_skinny.pdf"), scale = 1)
+
+# All skew types
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- skew_mc_cgi_mutrate %>%
+    filter(skew_type == st, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                    fill = ccre_class, group = ccre_class),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = mutrate_mean, color = ccre_class),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = ccre_class),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 3 / 2) +
+    scale_fill_manual(values = ccre_colors) +
+    scale_color_manual(values = ccre_colors) +
+    labs(x = skew_labels_map[st], y = "Mean mutation rate (Roulette)", color = "ENCODE cCREs") +
+    guides(fill = "none") +
+    facet_wrap(~ mut_class, ncol = 4) +
+    scale_y_log10()
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass_cgi.pdf"), scale = 1.2)
+}
+
+write_tsv(skew_mc_cgi_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_skew_by_mutclass_cgi.txt"))
+```
+
+```{r mutclass-proportion-by-skew-cgi}
+mc_prop_cgi <- skew_mc_cgi %>%
+  filter(ccre_class != "Other cCREs") %>%
+  group_by(skew_type, skew_bin, ccre_class) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup()
+
+for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
+  p <- mc_prop_cgi %>%
+    filter(skew_type == st) %>%
+    ggplot() +
+    geom_bar(aes(x = skew_bin, y = prop, fill = mut_class), stat = "identity", position = "stack") +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(), axis.line.y = element_blank(),
+          aspect.ratio = 1 / (1.6 * 4), strip.background = element_blank()) +
+    scale_fill_manual(values = mut_colors_cgi) +
+    labs(x = skew_labels_map[st], y = "Proportion of mutation class", fill = "Mutation class") +
+    facet_grid(rows = vars(ccre_class), scales = "free")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_mutclass_cgi_skew_", skew_save_map[st], ".pdf"), scale = 1.2)
+}
+
+write_tsv(mc_prop_cgi, paste0(save_path, "gnomAD_snp_prop_mutclass_cgi_skew.txt"))
 ```
