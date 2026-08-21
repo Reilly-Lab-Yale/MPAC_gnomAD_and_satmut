@@ -84,6 +84,7 @@ skew_af   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af.tsv"))
 skew_af_mc <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_af_mutclass.tsv"))
 skew_mc   <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_mutclass.tsv"))
 skew_indiv <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_indiv.tsv"))
+skew_pleio <- fread(paste0(data_path, "gnomAD_snp_skew_by_ccre_pleiotropy.tsv"))
 
 # Relabel non-cCRE -> non-cCRE (revert by commenting out this block)
 relabel_ccre <- function(x) ifelse(x == "non-cCRE", "non-cCRE", x)
@@ -162,6 +163,37 @@ skew_indiv <- skew_indiv %>%
   mutate(ccre_class = factor(ccre_class, levels = ccre_indiv_order),
          skew_bin = factor(skew_bin, levels = skew_bin_order),
          cell_line = factor(cell_line, levels = cell_line_order))
+
+# Pleiotropy: number of cell lines in which the element is active. The table
+# carries trained (0-3), untrained (0-3), and all-six (0-6) counts. Two versions
+# are plotted: the trained three (K562, HepG2, SK-N-SH) and all six.
+pleio_sets <- c("trained", "all")
+pleio_colors <- list(
+  trained = c(`0` = "#D9D9D9", `1` = "#BDD7E7", `2` = "#6BAED6", `3` = "#2171B5"),
+  all     = c(`0` = "#D9D9D9", `1` = "#DEEBF7", `2` = "#C6DBEF", `3` = "#9ECAE1",
+              `4` = "#6BAED6", `5` = "#3182BD", `6` = "#08519C")
+)
+
+# Long form with one row per (pleiotropy set, bin). Summing over the counts not
+# in use marginalizes them out.
+collapse_pleio <- function(df, count_col, levels) {
+  df %>%
+    group_by(skew_type, skew_bin, ccre_class, pleio_bin = .data[[count_col]]) %>%
+    summarise(across(all_of(suf_stat_cols), sum), .groups = "drop") %>%
+    mutate(pleio_bin = factor(pleio_bin, levels = levels))
+}
+
+# Full-resolution copy, before the collapse below marginalizes over mut_class
+# and af_class. Used by Sections 17 and 18.
+pleio_raw <- skew_pleio
+
+skew_pleio <- bind_rows(
+  collapse_pleio(skew_pleio, "n_active_trained", 0:3) %>% mutate(pleio_set = "trained"),
+  collapse_pleio(skew_pleio, "n_active_all",     0:6) %>% mutate(pleio_set = "all")
+) %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         pleio_set = factor(pleio_set, levels = pleio_sets))
 ```
 
 # Section 1: Descriptive plots
@@ -1678,7 +1710,7 @@ for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
     facet_wrap(~ mut_class, ncol = 4) +
     scale_y_log10()
   print(p)
-  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass_cgi.pdf"), scale = 1.2)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_", skew_save_map[st], "_by_mutclass_cgi.pdf"), scale = 1.1)
 }
 
 write_tsv(skew_mc_cgi_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_skew_by_mutclass_cgi.txt"))
@@ -1704,8 +1736,317 @@ for (st in c("mean_skew", "K562_skew", "HepG2_skew", "SKNSH_skew")) {
     labs(x = skew_labels_map[st], y = "Proportion of mutation class", fill = "Mutation class") +
     facet_grid(rows = vars(ccre_class), scales = "free")
   print(p)
-  ggsave(paste0(save_path, "gnomAD_snp_prop_mutclass_cgi_skew_", skew_save_map[st], ".pdf"), scale = 1.2)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_mutclass_cgi_skew_", skew_save_map[st], ".pdf"), scale = 1.1)
 }
 
 write_tsv(mc_prop_cgi, paste0(save_path, "gnomAD_snp_prop_mutclass_cgi_skew.txt"))
+```
+
+# Section 16: Conservation by pleiotropy across cell lines
+
+```{r pleiotropy-stats}
+# Conservation stratified by the number of cell lines in which the element is
+# active, within each cell-agnostic cCRE class. Two versions: the three trained
+# cell lines (0-3) and all six (0-6).
+skew_pleio_stats <- skew_pleio %>%
+  filter(n >= min_n) %>%
+  mutate(
+    phyloP_mean = sum_phyloP / n_phyloP,
+    phyloP_var  = (sum_phyloP_sq - (sum_phyloP^2) / n_phyloP) / (n_phyloP - 1),
+    phyloP_se   = sqrt(phyloP_var / n_phyloP),
+    phyloP_lci  = phyloP_mean - 1.96 * phyloP_se,
+    phyloP_uci  = phyloP_mean + 1.96 * phyloP_se,
+    frac_conserved     = n_conserved / n_phyloP,
+    frac_conserved_se  = sqrt(frac_conserved * (1 - frac_conserved) / n_phyloP),
+    frac_conserved_lci = frac_conserved - 1.96 * frac_conserved_se,
+    frac_conserved_uci = frac_conserved + 1.96 * frac_conserved_se,
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se
+  )
+
+write_tsv(skew_pleio_stats, paste0(save_path, "gnomAD_snp_conservation_skew_by_pleiotropy.txt"))
+
+# Bin occupancy. non-cCRE variants lie outside the registry entirely and so are
+# inactive in every cell line by construction; that stratum has only level 0.
+skew_pleio %>%
+  filter(skew_type == "mean_skew") %>%
+  count(pleio_set, ccre_class, pleio_bin, wt = n) %>%
+  pivot_wider(names_from = pleio_bin, values_from = n) %>%
+  as.data.frame()
+```
+
+```{r pleiotropy-composition, fig.width=8, fig.height=5}
+# Proportion of variants in each cCRE class falling into each pleiotropy bin.
+# Note this is the composition of variants, not of elements: larger and more
+# variable elements contribute more variants.
+pleio_comp <- skew_pleio %>%
+  filter(skew_type == "mean_skew") %>%
+  group_by(pleio_set, ccre_class, pleio_bin) %>%
+  summarise(n = sum(n), .groups = "drop") %>%
+  group_by(pleio_set, ccre_class) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup()
+
+for (ps in pleio_sets) {
+  p <- pleio_comp %>%
+    filter(pleio_set == ps) %>%
+    ggplot() +
+    geom_bar(aes(x = ccre_class, y = prop, fill = pleio_bin), stat = "identity", position = "stack") +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(), axis.line.y = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = pleio_colors[[ps]]) +
+    labs(x = "ENCODE cCREs", y = "Proportion of variants",
+         fill = "Active cell lines")
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_pleiotropy_by_ccre_", ps, ".pdf"), scale = 0.8)
+}
+
+write_tsv(pleio_comp, paste0(save_path, "gnomAD_snp_prop_pleiotropy_by_ccre.txt"))
+```
+
+```{r pleiotropy-mean-phylop, fig.width=12, fig.height=4}
+for (ps in pleio_sets) {
+  p <- skew_pleio_stats %>%
+    filter(skew_type == "mean_skew", pleio_set == ps, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci,
+                    fill = pleio_bin, group = pleio_bin),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = phyloP_mean, color = pleio_bin),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = phyloP_lci, ymax = phyloP_uci, color = pleio_bin),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = pleio_colors[[ps]]) +
+    scale_color_manual(values = pleio_colors[[ps]]) +
+    labs(x = "Mean allelic skew", y = "Mean conservation (phyloP)",
+         color = "Active cell lines") +
+    guides(fill = "none") +
+    facet_wrap(~ ccre_class, ncol = 4)
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_phylop_skew_mean_by_pleiotropy_", ps, ".pdf"), scale = 1.1)
+}
+```
+
+```{r pleiotropy-prop-conserved, fig.width=12, fig.height=4}
+for (ps in pleio_sets) {
+  p <- skew_pleio_stats %>%
+    filter(skew_type == "mean_skew", pleio_set == ps, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                    fill = pleio_bin, group = pleio_bin),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = frac_conserved, color = pleio_bin),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = frac_conserved_lci, ymax = frac_conserved_uci,
+                       color = pleio_bin),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = pleio_colors[[ps]]) +
+    scale_color_manual(values = pleio_colors[[ps]]) +
+    labs(x = "Mean allelic skew", y = "Proportion conserved (phyloP > 2.27)",
+         color = "Active cell lines") +
+    guides(fill = "none") +
+    facet_wrap(~ ccre_class, ncol = 4)
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_conserved_skew_mean_by_pleiotropy_", ps, ".pdf"), scale = 1.1)
+}
+```
+
+```{r pleiotropy-mutrate-control, fig.width=12, fig.height=4}
+# Control: mutation rate should not show a pleiotropy gradient if the effect
+# above is selective rather than mutational.
+for (ps in pleio_sets) {
+  p <- skew_pleio_stats %>%
+    filter(skew_type == "mean_skew", pleio_set == ps,
+           ccre_class != "Other cCREs", n_MR >= min_n) %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci,
+                    fill = pleio_bin, group = pleio_bin),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = mutrate_mean, color = pleio_bin),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = pleio_bin),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = pleio_colors[[ps]]) +
+    scale_color_manual(values = pleio_colors[[ps]]) +
+    labs(x = "Mean allelic skew", y = "Mean mutation rate (Roulette)",
+         color = "Active cell lines") +
+    guides(fill = "none") +
+    facet_wrap(~ ccre_class, ncol = 4)
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_skew_mean_by_pleiotropy_", ps, ".pdf"), scale = 1.1)
+}
+```
+
+# Section 17: Mutation class composition by pleiotropy
+
+```{r pleiotropy-mutclass-composition, fig.width=10, fig.height=5}
+# Proportion of variants of each mutation class within each pleiotropy bin.
+# Roulette mutation rates differ by roughly an order of magnitude between CpG
+# transitions and transversions, so mutation class composition largely
+# determines the mean mutation rate in a bin. This is the control for the
+# mutation rate gradients in Section 16.
+pleio_mc_comp <- bind_rows(
+  pleio_raw %>%
+    filter(skew_type == "mean_skew", mut_class != "unknown") %>%
+    group_by(ccre_class, mut_class, pleio_bin = n_active_trained) %>%
+    summarise(n = sum(n), .groups = "drop") %>%
+    mutate(pleio_set = "trained"),
+  pleio_raw %>%
+    filter(skew_type == "mean_skew", mut_class != "unknown") %>%
+    group_by(ccre_class, mut_class, pleio_bin = n_active_all) %>%
+    summarise(n = sum(n), .groups = "drop") %>%
+    mutate(pleio_set = "all")
+) %>%
+  group_by(pleio_set, ccre_class, pleio_bin) %>%
+  mutate(total = sum(n), prop = n / total) %>%
+  ungroup() %>%
+  mutate(ccre_class = factor(ccre_class, levels = ccre_order),
+         mut_class = factor(mut_labels_cgi[mut_class], levels = mut_labels_cgi))
+
+for (ps in pleio_sets) {
+  p <- pleio_mc_comp %>%
+    filter(pleio_set == ps, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_bar(aes(x = factor(pleio_bin), y = prop, fill = mut_class),
+             stat = "identity", position = "stack") +
+    theme_cowplot() +
+    theme(axis.line.x = element_blank(), axis.line.y = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = mut_colors_cgi) +
+    labs(x = "Active cell lines", y = "Proportion of mutation class",
+         fill = "Mutation class") +
+    facet_wrap(~ ccre_class, ncol = 4)
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_prop_mutclass_by_pleiotropy_", ps, ".pdf"), scale = 0.8)
+}
+
+write_tsv(pleio_mc_comp, paste0(save_path, "gnomAD_snp_prop_mutclass_by_pleiotropy.txt"))
+```
+
+```{r pleiotropy-mutrate-within-mutclass, fig.width=12, fig.height=8}
+# Mean mutation rate by pleiotropy, within mutation class. If the Section 16
+# gradients are compositional, they should flatten here.
+pleio_mc_mutrate <- pleio_raw %>%
+  filter(skew_type == "mean_skew", mut_class != "unknown") %>%
+  group_by(ccre_class, mut_class, pleio_bin = n_active_trained) %>%
+  summarise(across(all_of(suf_stat_cols), sum), .groups = "drop") %>%
+  filter(n_MR >= min_n) %>%
+  mutate(
+    mutrate_mean = sum_MR / n_MR,
+    mutrate_var  = (sum_MR_sq - (sum_MR^2) / n_MR) / (n_MR - 1),
+    mutrate_se   = sqrt(mutrate_var / n_MR),
+    mutrate_lci  = mutrate_mean - 1.96 * mutrate_se,
+    mutrate_uci  = mutrate_mean + 1.96 * mutrate_se,
+    ccre_class = factor(ccre_class, levels = ccre_order),
+    mut_class = factor(mut_labels_cgi[mut_class], levels = mut_labels_cgi),
+    pleio_bin = factor(pleio_bin, levels = 0:3)
+  )
+
+pleio_mc_mutrate %>%
+  filter(ccre_class != "Other cCREs") %>%
+  ggplot() +
+  geom_point(aes(x = pleio_bin, y = mutrate_mean, color = pleio_bin)) +
+  geom_errorbar(aes(x = pleio_bin, ymin = mutrate_lci, ymax = mutrate_uci, color = pleio_bin),
+                width = 0.5) +
+  theme_cowplot() +
+  theme(axis.line.x = element_blank(),
+        aspect.ratio = 1, strip.background = element_blank()) +
+  scale_color_manual(values = pleio_colors[["trained"]]) +
+  labs(x = "Active cell lines", y = "Mean mutation rate (Roulette)",
+       color = "Active cell lines") +
+  facet_grid(rows = vars(ccre_class), cols = vars(mut_class), scales = "free_y")
+ggsave(paste0(save_path, "gnomAD_snp_mean_mutrate_by_pleiotropy_mutclass.pdf"), scale = 1.2)
+
+write_tsv(pleio_mc_mutrate, paste0(save_path, "gnomAD_snp_mean_mutrate_by_pleiotropy_mutclass.txt"))
+```
+
+# Section 18: Singleton vs. common tests by pleiotropy
+
+```{r pleiotropy-fet}
+# As Section 12, but with pleiotropy as an additional stratum. Each cell is
+# compared against the genome-wide singleton/common ratio using the same +1
+# Haldane correction and the gw_totals computed there. Cells with fewer than
+# min_n singleton+common variants are dropped, so sparse skew bins in the
+# less populated pleiotropy levels will be missing.
+pleio_af_wide <- bind_rows(
+  pleio_raw %>%
+    filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+    group_by(skew_type, skew_bin, ccre_class, af_class, pleio_bin = n_active_trained) %>%
+    summarise(n = sum(n), .groups = "drop") %>%
+    mutate(pleio_set = "trained"),
+  pleio_raw %>%
+    filter(af_class %in% c("SINGLETON", "COMMON")) %>%
+    group_by(skew_type, skew_bin, ccre_class, af_class, pleio_bin = n_active_all) %>%
+    summarise(n = sum(n), .groups = "drop") %>%
+    mutate(pleio_set = "all")
+) %>%
+  pivot_wider(names_from = af_class, values_from = n, values_fill = 0) %>%
+  filter(SINGLETON + COMMON >= min_n) %>%
+  left_join(gw_totals, by = "skew_type") %>%
+  rowwise() %>%
+  mutate(
+    fet = list(fisher.test(matrix(c(SINGLETON + 1L, COMMON + 1L,
+                                    gw_SINGLETON - SINGLETON + 1L,
+                                    gw_COMMON - COMMON + 1L), nrow = 2))),
+    odds = fet$estimate,
+    lci  = fet$conf.int[1],
+    uci  = fet$conf.int[2],
+    pval = fet$p.value
+  ) %>%
+  ungroup() %>%
+  select(-fet) %>%
+  mutate(log2odds = log2(odds), log2lci = log2(lci), log2uci = log2(uci),
+         ccre_class = factor(ccre_class, levels = ccre_order),
+         skew_bin = factor(skew_bin, levels = skew_bin_order),
+         pleio_bin = factor(pleio_bin))
+
+write_tsv(pleio_af_wide, paste0(save_path, "gnomAD_snp_fet_singleton_common_by_pleiotropy.txt"))
+```
+
+```{r pleiotropy-fet-plot, fig.width=12, fig.height=4}
+for (ps in pleio_sets) {
+  p <- pleio_af_wide %>%
+    filter(skew_type == "mean_skew", pleio_set == ps, ccre_class != "Other cCREs") %>%
+    ggplot() +
+    geom_hline(yintercept = 0, color = "black") +
+    geom_ribbon(aes(x = skew_bin, ymin = log2lci, ymax = log2uci,
+                    fill = pleio_bin, group = pleio_bin),
+                position = position_dodge(width = 0), alpha = 0.5) +
+    geom_point(aes(x = skew_bin, y = log2odds, color = pleio_bin),
+               position = position_dodge(width = 0)) +
+    geom_errorbar(aes(x = skew_bin, ymin = log2lci, ymax = log2uci, color = pleio_bin),
+                  width = 0.5, position = position_dodge(width = 0)) +
+    theme_cowplot() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          axis.line.x = element_blank(),
+          aspect.ratio = 1, strip.background = element_blank()) +
+    scale_fill_manual(values = pleio_colors[[ps]]) +
+    scale_color_manual(values = pleio_colors[[ps]]) +
+    labs(x = "Mean allelic skew", y = "log2 OR singleton vs. common (gnomAD)",
+         color = "Active cell lines") +
+    guides(fill = "none") +
+    facet_wrap(~ ccre_class, ncol = 4)
+  print(p)
+  ggsave(paste0(save_path, "gnomAD_snp_fet_singleton_common_by_pleiotropy_", ps, ".pdf"), scale = 1.1)
+}
 ```

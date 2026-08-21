@@ -435,6 +435,22 @@ for (cl in cell_lines) {
 rm(ccre_indiv)
 gc(verbose = FALSE)
 
+# Pleiotropy: number of cell lines in which the element is active, i.e. has any
+# biosample-specific classification other than "Inactive cCRE" (ENCODE
+# "Low-DNase"). Variants outside the registry entirely are "non-cCRE" in every
+# cell line and so always score 0.
+cat("Computing pleiotropy counts\n")
+active_in <- function(dt, cl) {
+	as.integer(!dt[[paste0("ccre_class_", cl)]] %in% c("Inactive cCRE", "non-cCRE"))
+}
+annotated[, n_active_trained :=
+	active_in(annotated, "K562") + active_in(annotated, "HepG2") +
+	active_in(annotated, "SK-N-SH")]
+annotated[, n_active_untrained :=
+	active_in(annotated, "MCF-7") + active_in(annotated, "HCT116") +
+	active_in(annotated, "H1")]
+annotated[, n_active_all := n_active_trained + n_active_untrained]
+
 # Bin skew and activity values
 annotated[, `:=`(
 	mean_skew_bin     = cut(mean_skew,     breaks = skew_breaks,     labels = skew_labels,     right = FALSE),
@@ -528,6 +544,31 @@ summary1c <- rbindlist(lapply(cell_lines, function(cl) {
 		setnames(out, c(skew_bin_cols[j], cl_col), c("skew_bin", "ccre_class"))
 		out[, `:=`(skew_type = skew_types[j], cell_line = cl)]
 	}))
+}))
+
+# Summary 1d: skew x cCRE x pleiotropy
+# Stratified on the cell-agnostic cCRE class, with all three pleiotropy counts
+# as grouping keys so the trained-only, untrained-only, and all-six versions
+# can each be recovered downstream by marginalizing over the other two.
+# mut_class and af_class are also kept, so mutation class composition and
+# singleton-vs-common tests can be done by pleiotropy; both marginalize out.
+cat("Computing summary 1d (skew x cCRE x pleiotropy)\n")
+summary1d <- rbindlist(lapply(seq_along(skew_types), function(j) {
+	out <- annotated[, .(
+		n              = .N,
+		n_MR           = sum(!is.na(MR)),
+		sum_MR         = sum(MR, na.rm = TRUE),
+		sum_MR_sq      = sum(MR^2, na.rm = TRUE),
+		n_phyloP       = sum(!is.na(phyloP_score)),
+		sum_phyloP     = sum(phyloP_score, na.rm = TRUE),
+		sum_phyloP_sq  = sum(phyloP_score^2, na.rm = TRUE),
+		n_conserved    = sum(is_conserved),
+		n_tf_chip_peak = sum(is_tf_chip_peak),
+		n_tf_footprint = sum(is_tf_footprint)
+	), by = c(skew_bin_cols[j], "ccre_class", "mut_class", "af_class",
+	          "n_active_trained", "n_active_untrained", "n_active_all")]
+	setnames(out, skew_bin_cols[j], "skew_bin")
+	out[, skew_type := skew_types[j]]
 }))
 
 # Summary 2: activity x cCRE
@@ -644,6 +685,7 @@ summary5 <- rbind(
 fwrite(summary1a, paste0(output_path, "snp_skew_by_ccre_mutclass_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary1b, paste0(output_path, "snp_skew_by_ccre_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary1c, paste0(output_path, "snp_skew_by_ccre_indiv_", chr_str, ".tsv"), sep = "\t")
+fwrite(summary1d, paste0(output_path, "snp_skew_by_ccre_pleiotropy_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary2, paste0(output_path, "snp_activity_by_ccre_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary3, paste0(output_path, "snp_emvar_by_ccre_", chr_str, ".tsv"), sep = "\t")
 fwrite(summary4a, paste0(output_path, "snp_skew_by_ccre_af_mutclass_", chr_str, ".tsv"), sep = "\t")
@@ -656,6 +698,7 @@ cat(paste0("Done: ", chr_str, "\n"))
 cat(paste0("  Summary 1a rows: ", nrow(summary1a), "\n"))
 cat(paste0("  Summary 1b rows: ", nrow(summary1b), "\n"))
 cat(paste0("  Summary 1c rows: ", nrow(summary1c), "\n"))
+cat(paste0("  Summary 1d rows: ", nrow(summary1d), "\n"))
 cat(paste0("  Summary 2 rows:  ", nrow(summary2), "\n"))
 cat(paste0("  Summary 3 rows:  ", nrow(summary3), "\n"))
 cat(paste0("  Summary 4a rows: ", nrow(summary4a), "\n"))

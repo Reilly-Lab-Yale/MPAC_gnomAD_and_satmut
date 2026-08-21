@@ -9,6 +9,7 @@ prefixes <- c(
 	"snp_skew_by_ccre_mutclass",
 	"snp_skew_by_ccre",
 	"snp_skew_by_ccre_indiv",
+	"snp_skew_by_ccre_pleiotropy",
 	"snp_activity_by_ccre",
 	"snp_emvar_by_ccre",
 	"snp_skew_by_ccre_af_mutclass",
@@ -97,6 +98,15 @@ s1c <- read_chr_files("snp_skew_by_ccre_indiv") |>
 	sum_suf_stats()
 write_tsv(s1c, paste0(path, "gnomAD_snp_skew_by_ccre_indiv.tsv"))
 cat(paste0("  Rows: ", nrow(s1c), "\n"))
+
+# Summary 1d: skew x cCRE x pleiotropy
+cat("Combining summary 1d (skew x cCRE x pleiotropy)\n")
+s1d <- read_chr_files("snp_skew_by_ccre_pleiotropy") |>
+	group_by(skew_type, skew_bin, ccre_class, mut_class, af_class,
+	         n_active_trained, n_active_untrained, n_active_all) |>
+	sum_suf_stats()
+write_tsv(s1d, paste0(path, "gnomAD_snp_skew_by_ccre_pleiotropy.tsv"))
+cat(paste0("  Rows: ", nrow(s1d), "\n"))
 
 # Summary 2: activity x cCRE
 cat("Combining summary 2 (activity x cCRE)\n")
