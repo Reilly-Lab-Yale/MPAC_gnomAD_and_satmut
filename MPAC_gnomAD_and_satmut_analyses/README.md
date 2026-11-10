@@ -8,7 +8,7 @@ Code used to analyze and visualize MPAC gnomAD and saturation mutagenesis predic
 
 **Citation**: John C. Butts, Stephen Rong, Sager J. Gosai, Rodrigo I. Castro, Mackenzie Noon, Kehinde Adeniran, Rohit Ghosh, Pardis C. Sabeti, Ryan Tewhey, Steven K. Reilly. Identifying non-coding variant effects at scale via machine learning models of cis-regulatory reporter assays. *bioRxiv* 2025. https://doi.org/10.1101/2025.04.16.648420
 
-**Last updated**: April 25th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu). Contact corresponding authors or us with questions.
+**Last updated**: November 10th 2026 by Stephen Rong (current: srong AT ic DOT ac DOT uk, previous: stephen DOT rong AT yale DOT edu). Contact corresponding authors or us with questions.
 
 ## Content descriptions
 
@@ -71,21 +71,48 @@ Code used to analyze and visualize MPAC gnomAD and saturation mutagenesis predic
   - `Supplementary_Data_X2_Enrichr_results_for_promoter-level_function_x_constraint_correlation_classes_revised.xlsx`: Enrichr results for promoter-level function x constraint correlation classes.
 
 ## Software dependencies
-Analyses performed on Yale University HPC as Slurm scripts or in RStudio. RMarkdown analysis scripts (`.Rmd`) in `scripts/satmut_promoters_analysis` and `scripts/gnomAD_selection_analysis` were rendered with RStudio.
+Preprocessing scripts (`scripts/*_preprocess`) were run on the Yale University HPC as Slurm jobs in the `mpac` conda environment (`mpac.yaml`; R 4.4.1, Bioconductor 3.20). RMarkdown analysis scripts (`.Rmd`) in `scripts/satmut_promoters_analysis` and `scripts/gnomAD_selection_analysis` were rendered in RStudio with R 4.5.2 (Bioconductor 3.22); package versions are listed below.
 
 ### Environment setup
-All dependencies are managed via conda, with two additional R packages installed after environment creation. To set up:
+All dependencies are managed via conda. To set up:
 ```bash
 conda env create -f mpac.yaml
 conda activate mpac
-R -e 'install.packages(c("enrichR", "remotes")); remotes::install_github("snystrom/memes"); BiocManager::install("universalmotif")'
 ```
 
-Note: The `memes` R package additionally requires the [MEME Suite](https://meme-suite.org/) command-line tools to be installed and available on `$PATH`.
+Note: The `memes` R package requires the [MEME Suite](https://meme-suite.org/) command-line tools on `$PATH` (installed by `mpac.yaml`).
 
 ### Software versions
+Command-line tools (HPC):
 - htslib=1.21
 - bcftools=1.21
-- bedtools=v2.31.1
-- R=4.4.1 (2024-06-14)
+- bedtools=2.31.1
 - MEME Suite=5.5.5 (required by memes R package)
+
+R preprocessing (HPC): R=4.4.1 (2024-06-14); package versions in `mpac.yaml`.
+
+R analysis notebooks (RStudio):
+- R=4.5.2 (2025-10-31)
+- tidyverse=2.0.0
+- data.table=1.18.2.1
+- stringi=1.8.7
+- scales=1.4.0
+- rstatix=0.7.3
+- ggpubr=0.6.2
+- enrichR=3.4
+- memes=1.18.0
+- universalmotif=1.28.0
+- rtracklayer=1.70.1
+- plyranges=1.30.1
+- BSgenome.Hsapiens.UCSC.hg38=1.4.5
+- ComplexHeatmap=2.26.0
+- circlize=0.4.17
+- cowplot=1.2.0
+- patchwork=1.3.2
+- tidyplots=0.4.0
+- ggthemes=5.2.0
+- ggrepel=0.9.6
+- viridis=0.6.5
+- corrplot=0.95
+- GGally=2.4.0
+- Cairo=1.7.0
