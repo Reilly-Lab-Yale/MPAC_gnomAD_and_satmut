@@ -341,6 +341,62 @@ sig_palette <- c(
   "Positive"        = "#8da0cb"
 )
 
+# Format P values as plotmath strings (parsed by geom_bracket, so superscripts
+# are drawn properly in one font): "0.0060", "8.0 x 10^-19". P values that
+# underflow (smaller than floor_p) are shown as "< 10^-300".
+format_p_expr <- function(p, floor_p = 1e-300) {
+  vapply(p, function(x) {
+    if (is.na(x)) return(NA_character_)
+    if (x < floor_p) return(sprintf('"< "*10^{%d}', as.integer(round(log10(floor_p)))))
+    if (x >= 1e-3) return(sprintf('"%s"', formatC(signif(x, 2), format = "fg", digits = 2, flag = "#")))
+    e <- floor(log10(x))
+    m <- signif(x / 10^e, 2)
+    if (m >= 10) { m <- m / 10; e <- e + 1 }
+    sprintf('"%s x "*10^{%d}', formatC(m, format = "f", digits = 1), as.integer(e))
+  }, character(1), USE.NAMES = FALSE)
+}
+
+# Pairwise two-sided Wilcoxon rank-sum tests between classes, BH-adjusted across
+# the six comparisons in a panel (same tests geom_pwc ran before). Also records
+# the data maximum and range on the plotted scale (log10 for log panels; ranks
+# and therefore P are unchanged) for placing brackets.
+pairwise_wilcox <- function(df, col, log_scale = FALSE) {
+  d <- df %>% filter(!is.na(.data[[col]]))
+  if (log_scale) d <- d %>% filter(.data[[col]] > 0)
+  d$y_test <- if (log_scale) log10(d[[col]]) else d[[col]]
+  d %>%
+    rstatix::wilcox_test(y_test ~ sig_class, p.adjust.method = "BH") %>%
+    mutate(metric = col,
+           p.adj.label = format_p_expr(p.adj),
+           y_max = max(d$y_test),
+           y_range = diff(range(d$y_test)),
+           log_scale = log_scale)
+}
+
+# Add brackets for comparisons with adjusted P < 0.05, stacked above the data.
+# step is the gap between brackets as a fraction of the data range; increase it
+# if labels still touch the bracket above.
+add_pwc_brackets <- function(p, pwc, step = 0.14, label_size = 2.8) {
+  pwc_sig <- pwc %>% filter(p.adj < 0.05)
+  if (nrow(pwc_sig) == 0) return(p)
+  k <- seq_len(nrow(pwc_sig))
+  pwc_sig$y.position <- pwc_sig$y_max + pwc_sig$y_range * (0.06 + step * (k - 1))
+  # extend the axis one more step above the top bracket so its label is not clipped
+  y_top <- max(pwc_sig$y.position) + pwc_sig$y_range[1] * step
+  # geom_bracket reads y.position on the transformed (plotted) scale, so log
+  # panels keep log10 positions; expand_limits goes through the scale
+  # transformation, so it needs the value on the original scale
+  if (pwc_sig$log_scale[1]) y_top <- 10^y_top
+  p + expand_limits(y = y_top) + geom_bracket(
+    data = pwc_sig,
+    aes(xmin = group1, xmax = group2, label = p.adj.label, y.position = y.position),
+    type = "expression", tip.length = 0.01, label.size = label_size,
+    vjust = 0, inherit.aes = FALSE
+  )
+}
+
+pwc_cols <- c("metric", "group1", "group2", "n1", "n2", "statistic", "p", "p.adj")
+
 metrics <- list(
   list(col = "s_het",   label = expression(italic(s)[het])),
   list(col = "loeuf",   label = "LOEUF"),
@@ -358,23 +414,25 @@ metrics <- list(
 
 # collect test statistics across all metrics
 violin_stats <- list()
+violin_pwc <- list()
 
 for (m in metrics) {
   df_plot <- satmut_promoters_pred_final_prom_level_real %>%
     filter(!is.na(sig_pos_0.999_neg_0.001)) %>%
     mutate(sig_class = factor(sig_labels[sig_pos_0.999_neg_0.001],
                               levels = names(sig_palette)))
-  
+
+  log_y <- m$col %in% c("s_het")
+  pwc <- pairwise_wilcox(df_plot, m$col, log_scale = log_y)
+  violin_pwc[[m$col]] <- pwc %>% dplyr::select(all_of(pwc_cols))
+
   p <- ggviolin(
-    df_plot, 
+    df_plot,
     x = "sig_class", y = m$col,
-    fill = "sig_class", 
-    palette = sig_palette, 
+    fill = "sig_class",
+    palette = sig_palette,
     draw_quantiles = c(0.5)
-  ) + 
-    scale_y_continuous(expand = expansion(mult = c(0.05, 0.20))) + 
-    geom_pwc(method = "wilcox_test", p.adjust.method = "BH",
-             label = "p.adj.format", hide.ns = TRUE, bracket.nudge.y = 0.15) + 
+  ) +
     theme(
       axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
       axis.line.x = element_blank(),
@@ -386,11 +444,12 @@ for (m in metrics) {
       aspect.ratio = 1.6
     ) + 
     labs(y = m$label, x = "", fill = "")
-  if (m$col %in% c("s_het")) {
-    p <- p + scale_y_log10(expand = expansion(mult = c(0.05, 0.15)))
+  if (log_y) {
+    p <- p + scale_y_log10(expand = expansion(mult = c(0.05, 0.05)))
   } else {
-    p <- p + scale_y_continuous(expand = expansion(mult = c(0.05, 0.15)))
+    p <- p + scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)))
   }
+  p <- add_pwc_brackets(p, pwc)
   print(p)
   ggsave(paste0(save_path, "satmut_prom_violin_", m$col, ".pdf"), scale = 0.9, device = cairo_pdf)
   
@@ -410,6 +469,9 @@ for (m in metrics) {
 
 # write combined violin summary stats
 write_tsv(bind_rows(violin_stats), paste0(save_path, "satmut_prom_violin_summary_stats.txt"))
+
+# write exact pairwise test results (source data for exact P values)
+write_tsv(bind_rows(violin_pwc), paste0(save_path, "satmut_prom_violin_pairwise_wilcox.txt"))
 ```
 
 ```{r prom emVar pos emVar neg and cors}
@@ -424,16 +486,17 @@ for (m in emvar_metrics) {
     mutate(sig_class = factor(sig_labels[sig_pos_0.999_neg_0.001],
                               levels = names(sig_palette)))
   
+  pwc <- pairwise_wilcox(df_plot, m$col)
+  violin_pwc[[m$col]] <- pwc %>% dplyr::select(all_of(pwc_cols))
+
   p <- ggviolin(
-    df_plot, 
+    df_plot,
     x = "sig_class", y = m$col,
-    fill = "sig_class", 
-    palette = sig_palette, 
+    fill = "sig_class",
+    palette = sig_palette,
     draw_quantiles = c(0.5)
-  ) + 
-    scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) + 
-    geom_pwc(method = "wilcox_test", p.adjust.method = "BH",
-             label = "p.adj.format", hide.ns = TRUE, bracket.nudge.y = 0.15) + 
+  ) +
+    scale_y_continuous(expand = expansion(mult = c(0.05, 0.05))) +
     theme(
       axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
       axis.line.x = element_blank(),
@@ -445,9 +508,13 @@ for (m in emvar_metrics) {
       aspect.ratio = 1.6
     ) + 
     labs(y = m$label, x = "", fill = "")
+  p <- add_pwc_brackets(p, pwc)
   print(p)
   ggsave(paste0(save_path, "satmut_prom_violin_", m$col, ".pdf"), scale = 0.9, device = cairo_pdf)
 }
+
+# rewrite pairwise results including the emVar metrics
+write_tsv(bind_rows(violin_pwc), paste0(save_path, "satmut_prom_violin_pairwise_wilcox.txt"))
 ```
 
 ```{r pairwise comparison of activity and gene expression}

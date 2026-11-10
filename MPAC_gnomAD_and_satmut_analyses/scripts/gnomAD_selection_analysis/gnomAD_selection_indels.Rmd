@@ -843,7 +843,39 @@ ggsave(paste0(save_path, "gnomAD_comparison_prop_skew_mean_by_ccre_log.pdf"), sc
 ```
 
 ```{r comparison-activity-mean-by-ccre-stats, fig.width=10, fig.height=8}
-# Activity: paired proportion tests (SNP vs Indel) per ccre_class x activity_bin
+# Activity: two-sample proportion tests (SNP vs Indel) per ccre_class x activity_bin.
+# prop.test defaults: two-sided chi-squared test (1 df) with Yates continuity
+# correction. With very large n many P values underflow to 0 in double
+# precision, so P and BH-adjusted P are also computed on the log10 scale.
+
+# log10 of the upper-tail chi-squared P value (does not underflow)
+log10_p_chisq <- function(stat, df = 1) {
+  pchisq(stat, df = df, lower.tail = FALSE, log.p = TRUE) / log(10)
+}
+
+# Benjamini-Hochberg adjustment on the log10 scale (same result as
+# p.adjust(method = "BH") wherever that does not underflow)
+bh_log10 <- function(log10p) {
+  out <- rep(NA_real_, length(log10p))
+  ok <- which(!is.na(log10p))
+  m <- length(ok)
+  o <- ok[order(log10p[ok], decreasing = TRUE)]
+  i <- m:1
+  out[o] <- pmin(0, cummin(log10p[o] + log10(m) - log10(i)))
+  out
+}
+
+# Format a log10 P value as plain text for tables: "0.047" or "3.2 x 10^-45"
+format_log10_p <- function(lp) {
+  vapply(lp, function(x) {
+    if (is.na(x)) return(NA_character_)
+    if (x >= -3) return(formatC(signif(10^x, 2), format = "fg", digits = 2, flag = "#"))
+    e <- floor(x)
+    m <- signif(10^(x - e), 2)
+    if (m >= 10) { m <- m / 10; e <- e + 1 }
+    paste0(formatC(m, format = "f", digits = 1), " x 10^", e)
+  }, character(1), USE.NAMES = FALSE)
+}
 
 # Get counts and totals per variant_type x ccre_class
 activity_counts <- bind_rows(
@@ -871,27 +903,31 @@ activity_wide <- activity_counts %>%
               values_from = c(n, total),
               values_fill = 0)
 
-# Two-proportion z-test for each row
+# Two-sided two-sample proportion test (chi-squared, Yates-corrected) for each row
 activity_stats <- activity_wide %>%
   rowwise() %>%
   mutate(
-    pval = prop.test(x = c(n_SNP, n_Indel),
-                     n = c(total_SNP, total_Indel))$p.value,
+    chisq = unname(prop.test(x = c(n_SNP, n_Indel),
+                             n = c(total_SNP, total_Indel))$statistic),
     prop_SNP   = n_SNP / total_SNP,
     prop_Indel = n_Indel / total_Indel
   ) %>%
   ungroup() %>%
-  mutate(padj = p.adjust(pval, method = "BH"),
+  mutate(log10_pval = log10_p_chisq(chisq),
+         log10_padj = bh_log10(log10_pval),   # BH across all rows in this table
+         pval = 10^log10_pval,                # 0 where it underflows; use log10 columns
+         padj = 10^log10_padj,
+         padj_label = format_log10_p(log10_padj),
          sig = case_when(
-           padj < 0.001 ~ "***",
-           padj < 0.01  ~ "**",
-           padj < 0.05  ~ "*",
-           TRUE         ~ "ns"
+           log10_padj < -3          ~ "***",
+           log10_padj < -2          ~ "**",
+           log10_padj < log10(0.05) ~ "*",
+           TRUE                     ~ "ns"
          ))
 
 # Print results
 activity_stats %>%
-  select(ccre_class, activity_bin, prop_SNP, prop_Indel, pval, padj, sig) %>%
+  select(ccre_class, activity_bin, prop_SNP, prop_Indel, chisq, log10_pval, padj_label, sig) %>%
   print(n = Inf)
 
 # Plot with significance stars
@@ -1001,25 +1037,30 @@ skew_wide <- skew_counts %>%
               values_from = c(n, total),
               values_fill = 0)
 
+# Two-sided two-sample proportion test (chi-squared, Yates-corrected) for each row
 skew_stats <- skew_wide %>%
   rowwise() %>%
   mutate(
-    pval = prop.test(x = c(n_SNP, n_Indel),
-                     n = c(total_SNP, total_Indel))$p.value,
+    chisq = unname(prop.test(x = c(n_SNP, n_Indel),
+                             n = c(total_SNP, total_Indel))$statistic),
     prop_SNP   = n_SNP / total_SNP,
     prop_Indel = n_Indel / total_Indel
   ) %>%
   ungroup() %>%
-  mutate(padj = p.adjust(pval, method = "BH"),
+  mutate(log10_pval = log10_p_chisq(chisq),
+         log10_padj = bh_log10(log10_pval),   # BH across all rows in this table
+         pval = 10^log10_pval,                # 0 where it underflows; use log10 columns
+         padj = 10^log10_padj,
+         padj_label = format_log10_p(log10_padj),
          sig = case_when(
-           padj < 0.001 ~ "***",
-           padj < 0.01  ~ "**",
-           padj < 0.05  ~ "*",
-           TRUE         ~ "ns"
+           log10_padj < -3          ~ "***",
+           log10_padj < -2          ~ "**",
+           log10_padj < log10(0.05) ~ "*",
+           TRUE                     ~ "ns"
          ))
 
 skew_stats %>%
-  select(ccre_class, skew_bin, prop_SNP, prop_Indel, pval, padj, sig) %>%
+  select(ccre_class, skew_bin, prop_SNP, prop_Indel, chisq, log10_pval, padj_label, sig) %>%
   print(n = Inf)
 
 skew_cmp_log <- skew_cmp %>%
