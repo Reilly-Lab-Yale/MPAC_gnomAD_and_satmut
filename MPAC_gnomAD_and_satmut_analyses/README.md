@@ -97,6 +97,9 @@ R analysis notebooks (RStudio):
 - data.table=1.18.2.1
 - stringi=1.8.7
 - scales=1.4.0
+- magrittr=2.0.4
+- rmarkdown=2.30
+- knitr=1.51
 - rstatix=0.7.3
 - ggpubr=0.6.2
 - enrichR=3.4
@@ -104,6 +107,7 @@ R analysis notebooks (RStudio):
 - universalmotif=1.28.0
 - rtracklayer=1.70.1
 - plyranges=1.30.1
+- GenomicRanges=1.62.1
 - BSgenome.Hsapiens.UCSC.hg38=1.4.5
 - ComplexHeatmap=2.26.0
 - circlize=0.4.17
