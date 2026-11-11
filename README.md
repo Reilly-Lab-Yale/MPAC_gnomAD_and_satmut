@@ -1,5 +1,17 @@
 # Identifying non-coding variant effects at scale via machine learning models of cis-regulatory reporter assays
 
+## Related Repositories
+| Repository | Description |
+|---|---|
+| https://github.com/sjgosai/boda2 | Code for original Malinois model (Gosai et al 2024) published at: https://www.nature.com/articles/s41586-024-08070-z |
+| https://github.com/Reilly-Lab-Yale/coda_mpac | Fork of Boda2 and primary code base for MPAC variant effect predictions, includes MPAC-specific command line tools for Indel and Haplotype predictions |
+| https://huggingface.co/saarantras1/MPAC | Huggingface mirror of MPAC model with checkpoints converted to safetensors |
+| https://github.com/john-c-butts/MPAC | Repository for analyses related to: Benchmarking, ClinVar, COSMIC, dELS saturation mutagenesis, seqlet definition, GTEx mechanisms |
+| https://github.com/Reilly-Lab-Yale/MPAC_gnomAD_and_satmut | Repository for analyses related to gnomAD and promoter saturation mutagenesis |
+| https://github.com/Reilly-Lab-Yale/predictions_plusplus | Code for additional prediction tasks, including dELS saturation mutagenesis |
+| https://doi.org/10.5281/zenodo.15178434 | Contains all predictions, supplementary datasets, and model weights used in 'Identifying non-coding variant effects at scale via machine learning models of cis-regulatory reporter assays' |
+| https://huggingface.co/datasets/saarantras1/mpac-predictions | Huggingface mirror of predictions available at https://doi.org/10.5281/zenodo.15178434 |
+
 ## Introduction
 
 Non-coding variants are a major contributor to human disease, yet interpreting their functional impact at scale remains a challenge. MPAC is an ensemble of machine-learning models trained on Massively Parallel Reporter Assay (MPRA) data that predicts the cis-regulatory impact of non-coding variants. This repository contains code to analyze and visualize two MPAC applications: (1) population-level purifying selection analyses using gnomAD variants, quantifying the relationship between predicted regulatory function and evolutionary constraint across ENCODE cis-regulatory elements; and (2) in-silico saturation mutagenesis across human promoters, identifying positions under widespread selection against variants predicted to disrupt promoter activity.
