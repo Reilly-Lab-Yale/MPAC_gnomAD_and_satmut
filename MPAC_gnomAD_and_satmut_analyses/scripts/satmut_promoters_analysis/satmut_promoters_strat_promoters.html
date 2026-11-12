@@ -401,9 +401,19 @@ satmut_promoters_gene_metadata &lt;- as_tibble(fread(&quot;../../data/satmut_pro
   mutate(alphmis_bin = ntile(alphmis, 10))
 
 # constraint measure correlation plot
-pdf(paste0(save_path, &quot;satmut_prom_strat_constraint_corr.pdf&quot;), height=3, width=3)
-corrplot(cor(satmut_promoters_gene_metadata %&gt;% dplyr::select(s_het, loeuf, moeuf, alphmis),
-             use = &quot;pairwise.complete.obs&quot;), 
+constraint_df &lt;- satmut_promoters_gene_metadata %&gt;% dplyr::select(s_het, loeuf, moeuf, alphmis)
+constraint_cor &lt;- cor(constraint_df, use = &quot;pairwise.complete.obs&quot;, method = &quot;spearman&quot;)
+constraint_n &lt;- crossprod(!is.na(as.matrix(constraint_df)))  # genes with both scores, per pair
+write.csv(constraint_cor, paste0(save_path, &quot;satmut_prom_strat_constraint_corr.csv&quot;))
+write.csv(constraint_n, paste0(save_path, &quot;satmut_prom_strat_constraint_corr_n.csv&quot;))
+print(constraint_n)</code></pre>
+<pre><code>##         s_het loeuf moeuf alphmis
+## s_het   17323 16705 16778   15000
+## loeuf   16705 17286 17284   14715
+## moeuf   16778 17284 17431   14814
+## alphmis 15000 14715 14814   15212</code></pre>
+<pre class="r"><code>pdf(paste0(save_path, &quot;satmut_prom_strat_constraint_corr.pdf&quot;), height=3, width=3)
+corrplot(constraint_cor, 
   order=&quot;original&quot;, method=&quot;square&quot;, tl.pos=&quot;lt&quot;, type=&quot;upper&quot;, 
   tl.col=&quot;black&quot;, tl.cex=0.6, tl.srt=90, 
   addCoef.col=&quot;black&quot;,

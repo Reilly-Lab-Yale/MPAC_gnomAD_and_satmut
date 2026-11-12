@@ -27,9 +27,15 @@ satmut_promoters_gene_metadata <- as_tibble(fread("../../data/satmut_promoters_p
   mutate(alphmis_bin = ntile(alphmis, 10))
 
 # constraint measure correlation plot
+constraint_df <- satmut_promoters_gene_metadata %>% dplyr::select(s_het, loeuf, moeuf, alphmis)
+constraint_cor <- cor(constraint_df, use = "pairwise.complete.obs", method = "spearman")
+constraint_n <- crossprod(!is.na(as.matrix(constraint_df)))  # genes with both scores, per pair
+write.csv(constraint_cor, paste0(save_path, "satmut_prom_strat_constraint_corr.csv"))
+write.csv(constraint_n, paste0(save_path, "satmut_prom_strat_constraint_corr_n.csv"))
+print(constraint_n)
+
 pdf(paste0(save_path, "satmut_prom_strat_constraint_corr.pdf"), height=3, width=3)
-corrplot(cor(satmut_promoters_gene_metadata %>% dplyr::select(s_het, loeuf, moeuf, alphmis),
-             use = "pairwise.complete.obs"), 
+corrplot(constraint_cor, 
   order="original", method="square", tl.pos="lt", type="upper", 
   tl.col="black", tl.cex=0.6, tl.srt=90, 
   addCoef.col="black",
