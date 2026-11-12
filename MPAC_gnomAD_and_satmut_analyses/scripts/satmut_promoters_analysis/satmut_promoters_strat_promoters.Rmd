@@ -65,9 +65,10 @@ plot_strat_phylop_by_skew <- function(df, bin_col, bin_label, file_tag,
       avgKHS_skew_base_bin = cut(avgKHS_skew_base, breaks = skew_bins), 
       !!sym(bin_col) := as.factor(.data[[bin_col]])
     ) %>% 
-    filter(dplyr::n() >= 50) %>% 
+    filter(sum(!is.na(phyloP_mam241_base)) >= 50) %>% 
     summarise(
-      count_n = dplyr::n(), 
+      count_n = sum(!is.na(phyloP_mam241_base)),  # positions with a phyloP score
+      n_promoters = n_distinct(id[!is.na(phyloP_mam241_base)]), 
       phyloP_mam241_base_mean = mean(phyloP_mam241_base, na.rm = TRUE), 
       phyloP_mam241_base_sd = sd(phyloP_mam241_base, na.rm = TRUE), 
     ) %>% 
@@ -152,12 +153,16 @@ plot_strat_phylop_by_skew(satmut_promoters_final_base, "moeuf_bin", "MOEUF decil
 strat_cor <- satmut_promoters_final_base %>% 
   filter(!is.na(s_het_bin)) %>% 
   group_by(s_het_bin) %>%
-  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
+  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman"),
+            n_positions = sum(complete.cases(avgKHS_abs_skew_base, phyloP_mam241_pos_base)),
+            n_promoters = n_distinct(id[complete.cases(avgKHS_abs_skew_base, phyloP_mam241_pos_base)])) %>%
   ungroup()
 
 # global correlation, phyloP and skew
 global_cor <- satmut_promoters_final_base %>% 
-  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman")) %>%
+  summarise(cor_abs_avgKHS_phyloP_pos = cor(avgKHS_abs_skew_base, phyloP_mam241_pos_base, use = "pairwise.complete.obs", method = "spearman"),
+            n_positions = sum(complete.cases(avgKHS_abs_skew_base, phyloP_mam241_pos_base)),
+            n_promoters = n_distinct(id[complete.cases(avgKHS_abs_skew_base, phyloP_mam241_pos_base)])) %>%
   ungroup()
 
 # global correlation, phyloP and s_het only
@@ -177,11 +182,15 @@ ggplot(strat_cor) +
   scale_color_viridis_d() + 
   ylim(c(0, 0.3)) + 
   xlab(expression(italic(s)[het] ~ "decile")) + 
-  ylab(expression("Spearman's" ~ rho * "(" * "max(0, phyloP), |allelic skew|" * ")")) + 
+  ylab(expression(atop("Spearman's" ~ rho, "(max(0, phyloP), |allelic skew|)"))) + 
   guides(color = "none") + 
   labs(color = "s_het decile") + 
   theme(aspect.ratio = 1/1.6)
-ggsave(paste0(save_path, "satmut_prom_strat_cor_by_shet.pdf"), scale = 0.7)
+ggsave(paste0(save_path, "satmut_prom_strat_cor_by_shet.pdf"), width = 3.2, height = 2.2)
+
+# skinny version (square panel) for figure layout
+p_strat_cor_skinny <- last_plot() + theme(aspect.ratio = 1)
+ggsave(paste0(save_path, "satmut_prom_strat_cor_by_shet_skinny.pdf"), plot = p_strat_cor_skinny, width = 2.6, height = 2.6)
 
 write_tsv(strat_cor, paste0(save_path, "satmut_prom_strat_cor_by_shet.txt"))
 write_tsv(global_cor, paste0(save_path, "satmut_prom_strat_cor_global.txt"))

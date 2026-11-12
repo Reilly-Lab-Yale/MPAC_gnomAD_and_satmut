@@ -1,2 +1,2 @@
-cor_abs_avgKHS_phyloP_pos
-0.21174389616031974
+cor_abs_avgKHS_phyloP_pos	n_positions	n_promoters
+0.21174389616031974	4050944	17564

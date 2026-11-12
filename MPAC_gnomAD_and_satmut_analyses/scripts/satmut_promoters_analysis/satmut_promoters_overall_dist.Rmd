@@ -73,4 +73,15 @@ p_activity / (p_skew + guides(color = "none")) / p_phyloP # / p_fimo_scan +
   plot_layout(heights = c(1, 1, 1, 2))
 ggsave(paste0(save_path, "satmut_prom_dist_combined.pdf"),
 	width = 6, height = 6)
+
+# skinny versions (square panels) for figure layout
+p_skew_skinny <- p_skew + theme(aspect.ratio = 1)
+p_phyloP_skinny <- p_phyloP + theme(aspect.ratio = 1)
+ggsave(paste0(save_path, "satmut_prom_dist_skew_skinny.pdf"), plot = p_skew_skinny, width = 4, height = 3)
+ggsave(paste0(save_path, "satmut_prom_dist_phylop_skinny.pdf"), plot = p_phyloP_skinny, width = 4, height = 3)
+
+p_combined_skinny <- (p_skew_skinny + labs(x = NULL)) / p_phyloP_skinny
+p_combined_skinny
+ggsave(paste0(save_path, "satmut_prom_dist_skew_phylop_skinny.pdf"), plot = p_combined_skinny,
+	width = 4, height = 6)
 ```
